@@ -16,7 +16,6 @@ services:
     depends_on: 
       - redis
 
-  
   redis-worker-service:
     container_name: redis-worker-service
     build: 
