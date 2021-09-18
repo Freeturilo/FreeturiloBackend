@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://example.org/mr/nextbikesdata"
+           elementFormDefault="qualified"
+           xmlns:lib="http://example.org/mr/nextbikesdata"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:attributeGroup name="country_att">
+        <xs:attribute name="lat" type="xs:decimal"/>
+        <xs:attribute name="lng" type="xs:decimal"/>
+        <xs:attribute name="zoom" type="xs:int"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="hotline" type="xs:string"/>
+        <xs:attribute name="domain" type="xs:string"/>
+        <xs:attribute name="language" type="xs:string"/>
+        <xs:attribute name="email" type="xs:string"/>
+        <xs:attribute name="timezone" type="xs:string"/>
+        <xs:attribute name="currency" type="xs:string"/>
+        <xs:attribute name="country_calling_code" type="xs:string"/>
+        <xs:attribute name="system_operator_address" type="xs:string"/>
+        <xs:attribute name="country" type="xs:string"/>
+        <xs:attribute name="country_name" type="xs:string"/>
+        <xs:attribute name="terms" type="xs:string"/>
+        <xs:attribute name="policy" type="xs:string"/>
+        <xs:attribute name="website" type="xs:string"/>
+        <xs:attribute name="show_free_racks" type="xs:int"/>
+        <xs:attribute name="booked_bikes" type="xs:int"/>
+        <xs:attribute name="set_point_bikes" type="xs:int"/>
+        <xs:attribute name="available_bikes" type="xs:int"/>
+        <xs:attribute name="pricing" type="xs:string"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="city_att">
+        <xs:attribute name="uid" type="xs:int" use="required"/>
+        <xs:attribute name="lat" type="xs:decimal"/>
+        <xs:attribute name="lng" type="xs:decimal"/>
+        <xs:attribute name="zoom" type="xs:int"/>
+        <xs:attribute name="maps_icon" type="xs:string"/>
+        <xs:attribute name="alias" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="break" type="xs:int"/>
+        <xs:attribute name="num_places" type="xs:int"/>
+        <xs:attribute name="refresh_rate" type="xs:int"/>
+        <xs:attribute name="bounds" type="xs:string"/>
+        <xs:attribute name="booked_bikes" type="xs:int"/>
+        <xs:attribute name="set_point_bikes" type="xs:int"/>
+        <xs:attribute name="return_to_official_only" type="xs:int"/>
+        <xs:attribute name="bike_types" type="xs:string"/>
+        <xs:attribute name="website" type="xs:string"/>
+        <xs:attribute name="available_bikes" type="xs:int"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="place_att">
+        <xs:attribute name="uid" type="xs:int"/>
+        <xs:attribute name="lat" type="xs:decimal"/>
+        <xs:attribute name="lng" type="xs:decimal"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="spot" type="xs:int"/>
+        <xs:attribute name="number" type="xs:int"/>
+        <xs:attribute name="booked_bikes" type="xs:int"/>
+        <xs:attribute name="bikes" type="xs:int"/>
+        <xs:attribute name="bikes_available_to_rent" type="xs:int"/>
+        <xs:attribute name="bike_racks" type="xs:int"/>
+        <xs:attribute name="free_racks" type="xs:int"/>
+        <xs:attribute name="free_special_racks" type="xs:int"/>
+        <xs:attribute name="terminal_type" type="xs:string"/>
+        <xs:attribute name="bike_numbers" type="xs:string"/>
+        <xs:attribute name="bike_types" type="xs:string"/>
+        <xs:attribute name="place_type" type="xs:int"/>
+        <xs:attribute name="rack_locks" type="xs:int"/>
+    </xs:attributeGroup>
+
+    <xs:attributeGroup name="bike_att">
+        <xs:attribute name="number" type="xs:int"/>
+        <xs:attribute name="bike_type" type="xs:int"/>
+        <xs:attribute name="lock_types" type="xs:string"/>
+        <xs:attribute name="active" type="xs:int"/>
+        <xs:attribute name="state" type="xs:string"/>
+        <xs:attribute name="pedelec_battery" type="xs:string"/>
+        <xs:attribute name="electric_lock" type="xs:int" use="optional"/>
+        <xs:attribute name="boardcomputer" type="xs:int" use="optional"/>
+    </xs:attributeGroup>
+
+    <xs:element name="markers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="country" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="city" minOccurs="1" maxOccurs="1">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="place" minOccurs="1" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="bike" minOccurs="0" maxOccurs="unbounded">
+                                                        <xs:complexType>
+                                                            <xs:attributeGroup ref="lib:bike_att"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                                <xs:attributeGroup ref="lib:place_att"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attributeGroup ref="lib:city_att"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attributeGroup ref="lib:country_att"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,6 +1,0 @@
-[submodule "NextBikeDataParser"]
-	path = NextBikeDataParser
-	url = https://github.com/hiryleu0/NextBikeDataParser.git
-[submodule "FreeturiloRedisWorkerService"]
-	path = FreeturiloRedisWorkerService
-	url = https://github.com/hiryleu0/FreeturiloRedisWorkerService.git
