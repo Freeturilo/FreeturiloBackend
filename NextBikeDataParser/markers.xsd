@@ -55,6 +55,7 @@
         <xs:attribute name="lng" type="xs:decimal"/>
         <xs:attribute name="name" type="xs:string"/>
         <xs:attribute name="spot" type="xs:int"/>
+		<xs:attribute name="bike" type="xs:int"/>
         <xs:attribute name="number" type="xs:int"/>
         <xs:attribute name="booked_bikes" type="xs:int"/>
         <xs:attribute name="bikes" type="xs:int"/>

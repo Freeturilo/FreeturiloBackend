@@ -4,6 +4,8 @@ services:
     hostname: redis
     image: redis
     container_name: redis
+    ports:
+    - "6379:6379"
 
   redis-commander:
     hostname: redis-commander
@@ -23,5 +25,25 @@ services:
       dockerfile: FreeturiloRedisWorkerService/Dockerfile
     environment:
       - REDIS_HOST=redis:6379
+      - HUB_PATH=http://freeturilo-webapi/nextBike
     depends_on: 
       - redis
+      - freeturilo-webapi
+  
+  freeturilo-webapi:
+    container_name: freeturilo-webapi
+    build: 
+      context: .
+      dockerfile: FreeturiloWebApi/Dockerfile
+    ports: 
+      - "5001:80"
+
+  nextbike-data-presenter:
+    container_name: nextbike-data-presenter
+    depends_on: 
+      - freeturilo-webapi
+    build:
+      context: .
+      dockerfile: NextBikeDataPresenter/Dockerfile
+    ports: 
+      - "3000:3000"

@@ -1,28 +1,24 @@
-import * as signalR from '@microsoft/signalr';
-import './App.css';
+import React from 'react';
+import Map from './Map';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { reducer } from './reducer';
+import { HubProvider } from './HubProvider';
+import { hubMiddleware } from './HubMiddleware';
+
+const store = createStore(
+  reducer,
+  applyMiddleware(hubMiddleware()),
+);
 
 function App() {
-  var connection = new signalR.HubConnectionBuilder()
-  .withUrl("https://localhost:5001/nextBike",{
-    skipNegotiation: true,
-    transport: signalR.HttpTransportType.WebSockets
-  })
-  .build();
-
-  connection.on("UpdateStation", console.log);
-
-  connection.start()
-  .then(() => console.log("starrted"));
-
   return (
-    <div className="App">
-      <button onClick={() => {
-        connection.send("UpdateStation", "Station Rakowiec", 123);
-      }}>
-        Button
-      </button>
-    </div>
-  );
+    <Provider store={store}>
+      <HubProvider>
+        <Map/>
+      </HubProvider>
+    </Provider>
+  )
 }
 
 export default App;
