@@ -25,3 +25,12 @@ services:
       - REDIS_HOST=redis:6379
     depends_on: 
       - redis
+  
+  nextbike-data-presenter:
+    container_name: nextbike-data-presenter
+    build:
+      context: .
+      dockerfile: NextBikeDataPresenter/Dockerfile
+    ports: 
+      - "3000:80"
+  
