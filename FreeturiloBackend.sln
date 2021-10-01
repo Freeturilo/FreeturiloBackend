@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeturiloRedisWorkerService", "FreeturiloRedisWorkerService\FreeturiloRedisWorkerService.csproj", "{23E5D328-3703-4110-8751-408ACC35250B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextBikeDataParser", "NextBikeDataParser\NextBikeDataParser.csproj", "{DD9F14BE-A285-4A15-AC2F-E3A407D2003B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeturiloWebApi", "FreeturiloWebApi\FreeturiloWebApi.csproj", "{D63883CE-9EA8-4AB5-9ECE-A2A5245318BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeturiloWebApi", "FreeturiloWebApi\FreeturiloWebApi.csproj", "{D63883CE-9EA8-4AB5-9ECE-A2A5245318BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NextBikeApiService", "NextBikeApiService\NextBikeApiService.csproj", "{BFAB9A86-4988-472D-9493-FDDA143A078C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{23E5D328-3703-4110-8751-408ACC35250B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23E5D328-3703-4110-8751-408ACC35250B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23E5D328-3703-4110-8751-408ACC35250B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23E5D328-3703-4110-8751-408ACC35250B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD9F14BE-A285-4A15-AC2F-E3A407D2003B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD9F14BE-A285-4A15-AC2F-E3A407D2003B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD9F14BE-A285-4A15-AC2F-E3A407D2003B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +23,10 @@ Global
 		{D63883CE-9EA8-4AB5-9ECE-A2A5245318BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D63883CE-9EA8-4AB5-9ECE-A2A5245318BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D63883CE-9EA8-4AB5-9ECE-A2A5245318BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFAB9A86-4988-472D-9493-FDDA143A078C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFAB9A86-4988-472D-9493-FDDA143A078C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFAB9A86-4988-472D-9493-FDDA143A078C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFAB9A86-4988-472D-9493-FDDA143A078C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

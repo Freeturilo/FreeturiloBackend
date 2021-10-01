@@ -4,7 +4,7 @@ import { reducerActions, reducerConstants } from "./reducer";
 export const hubMiddleware = () => {
     let hub = null;
   
-    return store => next => async action => {
+    return store => next => action => {
       switch (action.type) {
         case reducerConstants.HUB_CONNECT:
           if (hub !== null) {
@@ -12,18 +12,26 @@ export const hubMiddleware = () => {
           }  
 
           hub = new signalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5001/nextBike", {
+            .withUrl("https://localhost:5001/nextBike", {
               skipNegotiation: true,
               transport: signalR.HttpTransportType.WebSockets,
             })
             .build();
 
-          hub.on("updateStation", (station_name, lat, lng, bikes_available) => {
-             store.dispatch(reducerActions.updateMarker({station_name, lat, lng, bikes_available}))
+          hub.on("updateStation", (stations) => {
+             store.dispatch(reducerActions.setAll(stations));
           });
 
-          await hub.start();
-
+          hub.on("getAllStations", (stations) => {
+            store.dispatch(reducerActions.setAll(stations));
+          });
+          
+          hub.start().then(() => {
+            store.dispatch(reducerActions.onConnected());
+          });
+          break;
+        case reducerConstants.GET_ALL:
+          hub.send("GetAllStations");
           break;
         case reducerConstants.HUB_DISCONNECT:
           if (hub !== null) {

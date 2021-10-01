@@ -67,7 +67,8 @@
         <xs:attribute name="bike_numbers" type="xs:string"/>
         <xs:attribute name="bike_types" type="xs:string"/>
         <xs:attribute name="place_type" type="xs:int"/>
-        <xs:attribute name="rack_locks" type="xs:int"/>
+		<xs:attribute name="rack_locks" type="xs:int"/>
+		<xs:attribute name="maintenance" type="xs:string"/>
     </xs:attributeGroup>
 
     <xs:attributeGroup name="bike_att">

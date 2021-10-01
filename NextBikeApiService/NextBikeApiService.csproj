@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <UserSecretsId>dotnet-FreeturiloRedisWorkerService-E8754ACA-CB09-422D-B4C3-D55D8B519A3D</UserSecretsId>
+        <UserSecretsId>dotnet-NextBikeApiService-E8754ACA-CB09-422D-B4C3-D55D8B519A3D</UserSecretsId>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
@@ -14,6 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\FreeturiloWebApi\FreeturiloWebApi.csproj" />
       <ProjectReference Include="..\NextBikeDataParser\NextBikeDataParser.csproj" />
     </ItemGroup>
 </Project>

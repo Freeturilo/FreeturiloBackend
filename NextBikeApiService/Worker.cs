@@ -10,18 +10,16 @@ using System.Xml.Serialization;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NextBikeDataParser;
-using StackExchange.Redis;
 using Microsoft.AspNetCore.SignalR.Client;
+using FreeturiloWebApi.Models;
 
-namespace FreeturiloRedisWorkerService
+namespace NextBikeApiService
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IDatabase _database;
-        private readonly string _redisEndpoint = Environment.GetEnvironmentVariable("REDIS_HOST") ?? "localhost:6379";
         private readonly string _xsdPath = Environment.GetEnvironmentVariable("XSD_PATH") ??  @"../NextBikeDataParser/markers.xsd";
-        private readonly string _hubPath = Environment.GetEnvironmentVariable("HUB_PATH") ??  @"http://localhost:5001/nextBike";
+        private readonly string _hubPath = Environment.GetEnvironmentVariable("HUB_PATH") ??  @"http://localhost:5000/nextBike";
 
         private const string LibUrl = @"http://example.org/mr/nextbikesdata";
         private const string UrlBase = @"https://nextbike.net/maps/nextbike-live.xml";
@@ -32,17 +30,10 @@ namespace FreeturiloRedisWorkerService
         public Worker(ILogger<Worker> logger)
         {
             _logger = logger;
-            _database = ConnectionMultiplexer.Connect(
-                new ConfigurationOptions()
-                {
-                    EndPoints = { _redisEndpoint }
-                }).GetDatabase();
-            _logger.LogInformation($"Connected to redis on host: {_redisEndpoint}");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Connecting to Hub on " + _hubPath);
             var _connection = new HubConnectionBuilder()
                 .WithUrl(_hubPath)
                 .Build();
@@ -52,7 +43,7 @@ namespace FreeturiloRedisWorkerService
             while (!stoppingToken.IsCancellationRequested)
             {
                 HttpResponseMessage response;
-                using (HttpClient client = new() {BaseAddress = new Uri(UrlBase)})
+                using (HttpClient client = new() { BaseAddress = new Uri(UrlBase) })
                 {
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
                     response = client.GetAsync(UrlParameters, stoppingToken).Result;
@@ -64,24 +55,28 @@ namespace FreeturiloRedisWorkerService
                 }
 
                 var xmlContent = response.Content.ReadAsStringAsync(stoppingToken).Result;
-                var xmlContentSplit = xmlContent.Split(new string[] {"markers"}, StringSplitOptions.None);
+                var xmlContentSplit = xmlContent.Split(new string[] { "markers" }, StringSplitOptions.None);
                 var xmlContentJoined = xmlContentSplit[0] + $"markers xmlns=\"{LibUrl}\"" + xmlContentSplit[1] +
                                        "markers" +
                                        xmlContentSplit[2];
                 var nextBikesData = Parser.ReadNextBikesData(xmlContentJoined, _xsdPath, LibUrl);
 
+                var stations = new List<Station>();
                 foreach (var place in nextBikesData.country.city.place)
                 {
-                    string key = $"main:{place.name}:bikes";
-                    string oldBikes = _database.StringGet(key);
-                    string newBikes = place.bikes_available_to_rent.ToString();
-                    if (oldBikes != newBikes)
+                    var station = new Station()
                     {
-                        _database.StringSet(key, newBikes);
-                        await _connection.InvokeAsync("UpdateStation", place.uid, (double)place.lng, (double)place.lat, place.bikes_available_to_rent);
-                        _logger.LogInformation($"Changed value in redis: {key}: {oldBikes} -> {newBikes}");
-                    }
+                        Id = place.uid,
+                        Lng = (double)place.lng,
+                        Lat = (double)place.lat,
+                        Name = place.name,
+                        AvailableBikes = place.bikes_available_to_rent,
+                    };
+
+                    stations.Add(station);
                 }
+
+                await _connection.InvokeAsync("UpdateStations", stations);
                 _logger.LogInformation("Status updated");
                 await Task.Delay(1000 * SecondsDelay, stoppingToken);
             }

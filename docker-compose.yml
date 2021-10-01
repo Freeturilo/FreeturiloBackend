@@ -1,33 +1,21 @@
 version: '3'
 services:
-  redis:
-    hostname: redis
-    image: redis
-    container_name: redis
-    ports:
-    - "6379:6379"
-
-  redis-commander:
-    hostname: redis-commander
-    image: rediscommander/redis-commander:latest
+  freeturilo-database:
+    container_name: 'freeturilo-databse'
+    image: postgres
     environment:
-      - REDIS_HOSTS=local:redis:6379
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
-      - "8081:8081"
-    container_name: redis-commander
-    depends_on: 
-      - redis
-
-  redis-worker-service:
-    container_name: redis-worker-service
+      - "5433:5432"
+  nextbike-api-service:
+    container_name: nextbike-api-service
     build: 
       context: .
-      dockerfile: FreeturiloRedisWorkerService/Dockerfile
+      dockerfile: NextBikeApiService/Dockerfile
     environment:
-      - REDIS_HOST=redis:6379
       - HUB_PATH=http://freeturilo-webapi/nextBike
     depends_on: 
-      - redis
       - freeturilo-webapi
   
   freeturilo-webapi:
@@ -36,7 +24,7 @@ services:
       context: .
       dockerfile: FreeturiloWebApi/Dockerfile
     ports: 
-      - "5001:80"
+      - "5000:80"
 
   nextbike-data-presenter:
     container_name: nextbike-data-presenter
