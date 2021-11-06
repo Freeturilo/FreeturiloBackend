@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FreeturiloWebApi.DTO
+﻿namespace FreeturiloWebApi.DTO
 {
-    public class StationDTO
+    public class StationDTO : LocationDTO
     {
-        public double? Lng { get; set;}
-        public double? Lat { get; set;}
-        public string Name { get; set;}
-        public int Id { get; set;}
-        public int AvailableBikes  { get; set; }
+        public int Id  { get; set; }
+        public int BikeRacks  { get; set; }
+        public int Bikes { get; set; }
+        public int State { get; set; }
     }
 }
