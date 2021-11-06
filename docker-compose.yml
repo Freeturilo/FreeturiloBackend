@@ -5,7 +5,8 @@ services:
     image: postgres
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=freeturilo-database
     ports:
       - "5433:5432"
   nextbike-api-service:
@@ -25,6 +26,8 @@ services:
       dockerfile: FreeturiloWebApi/Dockerfile
     ports: 
       - "5000:80"
+    environment:
+      - CONNECTION_STRING="Database=freeturilo-database;User ID=postgres;Password=password;Host=freeturilo-database;Port=5432"
 
   nextbike-data-presenter:
     container_name: nextbike-data-presenter

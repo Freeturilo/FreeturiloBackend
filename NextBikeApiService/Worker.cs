@@ -67,7 +67,7 @@ namespace NextBikeApiService
                     var station = new Station()
                     {
                         Id = place.uid,
-                        Lng = (double)place.lng,
+                        Lon = (double)place.lng,
                         Lat = (double)place.lat,
                         Name = place.name,
                         AvailableBikes = place.bikes_available_to_rent,
