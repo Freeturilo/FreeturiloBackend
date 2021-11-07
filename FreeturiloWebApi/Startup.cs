@@ -58,6 +58,7 @@ namespace FreeturiloWebApi
                 });
             });*/
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<FreeturiloContext>(options =>
                 options.UseNpgsql(_connectionString ?? Configuration.GetConnectionString("FreeturiloDatabase"))
             );

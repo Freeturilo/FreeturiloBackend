@@ -1,4 +1,5 @@
-﻿using FreeturiloWebApi.Models;
+﻿using FreeturiloWebApi.DTO;
+using FreeturiloWebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace FreeturiloWebApi.Services
 {
     public interface IStationService
     {
-        Station[] GetAllStations();
-        Station AddNewStation(Station newStation);
-        void UpdateAllStations(Station[] newStations);
-        Station GetStation(int stationId);
-        void UpdateStation(int stationId, Station newStation);
+        StationDTO[] GetAllStations();
+        StationDTO AddNewStation(StationDTO newStation);
+        void UpdateAllStations(StationDTO[] newStations);
+        StationDTO GetStation(int stationId);
+        void UpdateStation(int stationId, StationDTO newStation);
         void ReportStation(int stationId);
         void SetStationAsBroken(int stationId);
         void SetStationAsWorking(int stationId);

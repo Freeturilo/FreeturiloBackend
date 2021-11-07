@@ -1,4 +1,6 @@
-﻿using FreeturiloWebApi.Exceptions;
+﻿using AutoMapper;
+using FreeturiloWebApi.DTO;
+using FreeturiloWebApi.Exceptions;
 using FreeturiloWebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -10,32 +12,39 @@ namespace FreeturiloWebApi.Services
     public class StationService : IStationService
     {
         private readonly FreeturiloContext _context;
-        public StationService(FreeturiloContext context)
-        {
-            _context = context;
-        }
-        public Station AddNewStation(Station newStation)
-        {
-            var station = _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault();
-            if (station != null) throw new Exception400("Istnieje już stacja o podanym ID");
+        private readonly IMapper _mapper;
 
-            _context.Stations.Add(newStation);
+        public StationService(FreeturiloContext context, IMapper mapper)
+        { 
+            _context = context;
+            _mapper = mapper;
+        }
+        public StationDTO AddNewStation(StationDTO newStation)
+        {
+            var existingStation = _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault();
+            if (existingStation != null) throw new Exception400("Istnieje już stacja o podanym ID");
+
+            var station = _mapper.Map<Station>(newStation);
+            _context.Stations.Add(station);
             _context.SaveChanges();
             return newStation;
         }
 
-        public Station[] GetAllStations()
+        public StationDTO[] GetAllStations()
         {
             var stations = _context.Stations.ToArray();
-            return stations;
+            var stationDTOs = _mapper.Map<StationDTO[]>(stations);
+            return stationDTOs;
         }
 
-        public Station GetStation(int stationId)
+        public StationDTO GetStation(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
             if (station is null) throw new Exception404("Nie znaleziono stacji o podanym ID");
 
-            return station;
+            var stationDTO = _mapper.Map<StationDTO>(station);
+
+            return stationDTO;
         }
 
         public void ReportStation(int stationId)
@@ -65,7 +74,7 @@ namespace FreeturiloWebApi.Services
             _context.SaveChanges();
         }
 
-        public void UpdateAllStations(Station[] newStations)
+        public void UpdateAllStations(StationDTO[] newStations)
         {
             //TODO do it better
             var routes = _context.Routes.ToArray();
@@ -74,19 +83,20 @@ namespace FreeturiloWebApi.Services
             var stations = _context.Stations.ToArray();
             _context.Stations.RemoveRange(stations);
 
-            _context.Stations.AddRange(newStations);
+            var newStationDTOs = _mapper.Map<Station[]>(newStations);
+            _context.Stations.AddRange(newStationDTOs);
             //TODO fill Routes Table
             
             _context.SaveChanges();
         }
 
-        public void UpdateStation(int stationId, Station newStation)
+        public void UpdateStation(int stationId, StationDTO newStation)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
             if (station == null) throw new Exception404("Nie znaleziono stacji o podanym ID");
 
-            station.AvailableRacks = newStation.AvailableRacks;
-            station.AvailableBikes = newStation.AvailableBikes;
+            station.AvailableRacks = newStation.BikeRacks;
+            station.AvailableBikes = newStation.Bikes;
 
             _context.SaveChanges();
         }

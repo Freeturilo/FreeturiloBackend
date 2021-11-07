@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Data.Common;
 using System.Linq;
 using FreeturiloWebApi.Exceptions;
+using FreeturiloWebApi.Helpers;
+using FreeturiloWebApi.DTO;
+using AutoMapper;
 
 namespace FreeturiloWebApi.Test
 {
@@ -46,7 +49,9 @@ namespace FreeturiloWebApi.Test
             _context = new FreeturiloContext(opt);
             Seed();
 
-            var service = new StationService(_context);
+            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
+            var _mapper = config.CreateMapper();
+            var service = new StationService(_context, _mapper);
             _controller = new StationController(service);
         }
 
@@ -61,7 +66,7 @@ namespace FreeturiloWebApi.Test
         {
             var response = _controller.GetAllStations();
             var result = response.Result as ObjectResult;
-            var value = result.Value as Station[];
+            var value = result.Value as StationDTO[];
 
             Assert.AreEqual(200, result.StatusCode);
             Assert.AreEqual(3, value.Length);
@@ -72,7 +77,7 @@ namespace FreeturiloWebApi.Test
         {
             var response = _controller.GetStation(1);
             var result = response.Result as ObjectResult;
-            var value = result.Value as Station;
+            var value = result.Value as StationDTO;
 
             Assert.AreEqual(200, result.StatusCode);
             Assert.AreEqual(1, value.Id);
@@ -86,9 +91,9 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void AddNewStation()
         {
-            var response = _controller.AddNewStation(new Station(){Id=4});
+            var response = _controller.AddNewStation(new StationDTO(){Id=4});
             var result = response.Result as ObjectResult;
-            var value = result.Value as Station;
+            var value = result.Value as StationDTO;
 
             Assert.AreEqual(200, result.StatusCode);
             Assert.AreEqual(4, value.Id);
@@ -96,18 +101,18 @@ namespace FreeturiloWebApi.Test
 
             Assert.Catch<Exception400>(() =>
             {
-                response = _controller.AddNewStation(new Station(){Id = 1});
+                response = _controller.AddNewStation(new StationDTO(){Id = 1});
             });
         }
 
         [Test]
         public void UpdateAllStations()
         {
-            var newStations = new Station[]
+            var newStations = new StationDTO[]
             {
-                new Station() {Id = 6},
-                new Station() {Id = 7},
-                new Station() {Id = 8},
+                new StationDTO() {Id = 6},
+                new StationDTO() {Id = 7},
+                new StationDTO() {Id = 8},
             };
 
             var response = _controller.UpdateAllStations(newStations) as OkResult;
@@ -120,15 +125,15 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void UpdateStation()
         {
-            var newStation = new Station() {Id = 1, AvailableBikes = 12};
+            var newStation = new StationDTO() {Id = 1, Bikes = 12};
 
             var response = _controller.UpdateStation(1, newStation) as OkResult;
 
             Assert.AreEqual(200, response.StatusCode);
-            Assert.AreEqual(newStation.AvailableBikes, _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault().AvailableBikes);
+            Assert.AreEqual(newStation.Bikes, _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault().AvailableBikes);
             Assert.Catch<Exception404>(() =>
             {
-                _controller.UpdateStation(12, new Station());
+                _controller.UpdateStation(12, new StationDTO());
             });
         }
 

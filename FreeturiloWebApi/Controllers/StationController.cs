@@ -1,4 +1,5 @@
 ﻿using FreeturiloWebApi.Attributes;
+using FreeturiloWebApi.DTO;
 using FreeturiloWebApi.Models;
 using FreeturiloWebApi.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -21,34 +22,34 @@ namespace FreeturiloWebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<Station[]> GetAllStations()
+        public ActionResult<StationDTO[]> GetAllStations()
         {
             var stations = _service.GetAllStations();
             return Ok(stations);
         }
         [HttpPost]
         [Auth]
-        public ActionResult<Station> AddNewStation([FromBody] Station newStation)
+        public ActionResult<StationDTO> AddNewStation([FromBody] StationDTO newStation)
         {
             var station = _service.AddNewStation(newStation);
             return Ok(station);
         }
         [HttpPut]
         [Auth]
-        public ActionResult UpdateAllStations([FromBody] Station[] newStations)
+        public ActionResult UpdateAllStations([FromBody] StationDTO[] newStations)
         {
             _service.UpdateAllStations(newStations);
             return Ok();
         }
         [HttpGet("{id}")]
-        public ActionResult<Station> GetStation([FromRoute] int id)
+        public ActionResult<StationDTO> GetStation([FromRoute] int id)
         {
             var station = _service.GetStation(id);
             return Ok(station);
         }
         [HttpPut("{id}")]
         [Auth]
-        public ActionResult UpdateStation([FromRoute] int id, [FromBody] Station newStation)
+        public ActionResult UpdateStation([FromRoute] int id, [FromBody] StationDTO newStation)
         {
             _service.UpdateStation(id, newStation);
             return Ok();
