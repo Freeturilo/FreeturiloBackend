@@ -21,13 +21,13 @@ namespace FreeturiloWebApi.Test
         private void Seed()
         {
             _context.Administrators.AddRange(
-                new Administrator() { Id=1, Name="Miko³aj", Surname="Ryll", Email="mikolajryll@gmail.com", NotifyThreshold=2, PasswordHash="hash" }
+                new Administrator() { Id=1, Name="Miko³aj", Surname="Ryll", Email="mikolajryll@gmail.com", NotifyThreshold=1, PasswordHash="hash" }
                 );
 
             _context.Stations.AddRange(
-                new Station() { Id = 1, AvailableBikes=10, AvailableRacks=15, State=0, Name="Stacja 1", Reports=0, Lat=52, Lon=48 },
-                new Station() { Id = 2, AvailableBikes=10, AvailableRacks=15, State=1, Name="Stacja 2", Reports=1, Lat=52, Lon=48 },
-                new Station() { Id = 3, AvailableBikes=10, AvailableRacks=15, State=2, Name="Stacja 3", Reports=10, Lat=52, Lon=48 }
+                new Station() { Id = 1, AvailableBikes=10, AvailableRacks=15, State=0, Name="Trasa £azienkowska x Marsza³kowska", Reports=0, Lat=52, Lon=48 },
+                new Station() { Id = 2, AvailableBikes=10, AvailableRacks=15, State=1, Name="Metro Wierzbno", Reports=1, Lat=52, Lon=48 },
+                new Station() { Id = 3, AvailableBikes=10, AvailableRacks=15, State=2, Name="Dworzec Centralny x Emilii Plater", Reports=10, Lat=52, Lon=48 }
                 );
 
             _context.Routes.AddRange(

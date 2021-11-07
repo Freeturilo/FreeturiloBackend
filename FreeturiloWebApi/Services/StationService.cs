@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FreeturiloWebApi.DTO;
 using FreeturiloWebApi.Exceptions;
+using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,15 @@ namespace FreeturiloWebApi.Services
             station.Reports++;
             if (station.State == 0) station.State = 1;
             _context.SaveChanges();
-            //TODO email to administartors
+
+            var administrators = _context.Administrators.ToArray();
+            foreach(var admin in administrators)
+            {
+                if(admin.NotifyThreshold == station.Reports)
+                {
+                    GmailAPIHandler.SendEmail(admin, station);
+                }
+            }
         }
 
         public void SetStationAsBroken(int stationId)
