@@ -1,0 +1,70 @@
+﻿using FreeturiloWebApi.Models;
+using FreeturiloWebApi.Services;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace FreeturiloWebApi.Controllers
+{
+    [Controller]
+    [Route("/station")]
+    public class StationController : ControllerBase
+    {
+        private readonly IStationService _service;
+        public StationController(IStationService service)
+        {
+            _service = service;
+        }
+
+        [HttpGet]
+        public ActionResult<Station[]> GetAllStations()
+        {
+            var stations = _service.GetAllStations();
+            return Ok(stations);
+        }
+        [HttpPost]
+        public ActionResult<Station> AddNewStation([FromBody] Station newStation)
+        {
+            var station = _service.AddNewStation(newStation);
+            return Ok(station);
+        }
+        [HttpPut]
+        public ActionResult UpdateAllStations([FromBody] Station[] newStations)
+        {
+            _service.UpdateAllStations(newStations);
+            return Ok();
+        }
+        [HttpGet("{id}")]
+        public ActionResult<Station> GetStation([FromRoute] int id)
+        {
+            var station = _service.GetStation(id);
+            return Ok(station);
+        }
+        [HttpPut("{id}")]
+        public ActionResult UpdateStation([FromRoute] int id, [FromBody] Station newStation)
+        {
+            _service.UpdateStation(id, newStation);
+            return Ok();
+        }
+        [HttpPost("{id}/report")]
+        public ActionResult ReportStation([FromRoute] int id)
+        {
+            _service.ReportStation(id);
+            return Ok();
+        }
+        [HttpPost("{id}/broken")]
+        public ActionResult SetStationAsBroken([FromRoute] int id)
+        {
+            _service.SetStationAsBroken(id);
+            return Ok();
+        }
+        [HttpPost("{id}/working")]
+        public ActionResult SetStationAsWorking([FromRoute] int id)
+        {
+            _service.SetStationAsWorking(id);
+            return Ok();
+        }
+    }
+}
