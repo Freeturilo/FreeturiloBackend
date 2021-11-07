@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "FreeturiloWebApi.Test": {
+      "commandName": "Project"
+    }
+  }
+}

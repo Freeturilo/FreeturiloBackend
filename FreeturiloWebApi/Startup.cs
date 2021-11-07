@@ -1,5 +1,7 @@
-using FreeturiloWebApi.Hubs;
+using FreeturiloWebApi.Controllers;
+using FreeturiloWebApi.Middlewares;
 using FreeturiloWebApi.Models;
+using FreeturiloWebApi.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,20 +31,20 @@ namespace FreeturiloWebApi
 
         public IConfiguration Configuration { get; }
 
-        private string connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+        private readonly string _connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeturiloWebApi", Version = "v1" });
             });
+            
+            services.AddScoped<IStationService, StationService>();
 
-            services.AddCors(options =>
+            /*services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
                 {
@@ -50,11 +52,13 @@ namespace FreeturiloWebApi
                     .AllowAnyHeader()
                     .AllowAnyOrigin();
                 });
-            });
+            });*/
 
             services.AddDbContext<FreeturiloContext>(options =>
-                options.UseNpgsql(connectionString ?? Configuration.GetConnectionString("FreeturiloDatabase"))
+                options.UseNpgsql(_connectionString ?? Configuration.GetConnectionString("FreeturiloDatabase"))
             );
+
+            services.AddScoped<ExceptionHandlingMiddleware>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,18 +70,18 @@ namespace FreeturiloWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeturiloWebApi v1"));
             }
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
-            app.UseCors();
+            //app.UseCors();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<NextBikeHub>("/nextBike");
                 endpoints.MapControllers();
             });
         }
