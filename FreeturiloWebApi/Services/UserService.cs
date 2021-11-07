@@ -1,0 +1,52 @@
+﻿using FreeturiloWebApi.DTO;
+using FreeturiloWebApi.Exceptions;
+using FreeturiloWebApi.Helpers;
+using FreeturiloWebApi.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FreeturiloWebApi.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly FreeturiloContext _context;
+        private readonly IOptions<AppSettings> appSettings;
+
+        public UserService(FreeturiloContext context, IOptions<AppSettings> appSettings)
+        {
+            _context = context;
+            this.appSettings = appSettings;
+        }
+
+        public string Authenticate(AuthDTO auth)
+        {
+            var hash = PasswordHasher.Hash(auth.Password);
+            var user = _context.Administrators.Where(a => a.Email == auth.Email && a.PasswordHash == hash).FirstOrDefault();
+            if (user == null) throw new Exception401("Brak dostępu");
+
+            var token = generateJwtToken(user);
+            return token;
+        }
+
+        private string generateJwtToken(Administrator user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(appSettings.Value.Secret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+    }
+}

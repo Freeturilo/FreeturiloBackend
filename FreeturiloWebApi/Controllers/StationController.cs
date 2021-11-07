@@ -1,5 +1,7 @@
-﻿using FreeturiloWebApi.Models;
+﻿using FreeturiloWebApi.Attributes;
+using FreeturiloWebApi.Models;
 using FreeturiloWebApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ namespace FreeturiloWebApi.Controllers
 {
     [Controller]
     [Route("/station")]
-    public class StationController : ControllerBase
+    public class StationController : AuthController
     {
         private readonly IStationService _service;
         public StationController(IStationService service)
@@ -25,12 +27,14 @@ namespace FreeturiloWebApi.Controllers
             return Ok(stations);
         }
         [HttpPost]
+        [Auth]
         public ActionResult<Station> AddNewStation([FromBody] Station newStation)
         {
             var station = _service.AddNewStation(newStation);
             return Ok(station);
         }
         [HttpPut]
+        [Auth]
         public ActionResult UpdateAllStations([FromBody] Station[] newStations)
         {
             _service.UpdateAllStations(newStations);
@@ -43,6 +47,7 @@ namespace FreeturiloWebApi.Controllers
             return Ok(station);
         }
         [HttpPut("{id}")]
+        [Auth]
         public ActionResult UpdateStation([FromRoute] int id, [FromBody] Station newStation)
         {
             _service.UpdateStation(id, newStation);
@@ -55,12 +60,14 @@ namespace FreeturiloWebApi.Controllers
             return Ok();
         }
         [HttpPost("{id}/broken")]
+        [Auth]
         public ActionResult SetStationAsBroken([FromRoute] int id)
         {
             _service.SetStationAsBroken(id);
             return Ok();
         }
         [HttpPost("{id}/working")]
+        [Auth]
         public ActionResult SetStationAsWorking([FromRoute] int id)
         {
             _service.SetStationAsWorking(id);

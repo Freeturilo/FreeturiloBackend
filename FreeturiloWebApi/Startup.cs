@@ -1,4 +1,5 @@
 using FreeturiloWebApi.Controllers;
+using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.Middlewares;
 using FreeturiloWebApi.Models;
 using FreeturiloWebApi.Services;
@@ -41,8 +42,11 @@ namespace FreeturiloWebApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeturiloWebApi", Version = "v1" });
             });
-            
+
+            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+
             services.AddScoped<IStationService, StationService>();
+            services.AddScoped<IUserService, UserService>();
 
             /*services.AddCors(options =>
             {
@@ -57,7 +61,8 @@ namespace FreeturiloWebApi
             services.AddDbContext<FreeturiloContext>(options =>
                 options.UseNpgsql(_connectionString ?? Configuration.GetConnectionString("FreeturiloDatabase"))
             );
-
+            
+            services.AddScoped<JwtMiddleware>();
             services.AddScoped<ExceptionHandlingMiddleware>();
         }
 
@@ -70,6 +75,8 @@ namespace FreeturiloWebApi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeturiloWebApi v1"));
             }
+           
+            app.UseMiddleware<JwtMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
