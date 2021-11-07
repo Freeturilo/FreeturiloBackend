@@ -12,5 +12,6 @@ namespace FreeturiloWebApi.Models
         public int AvailableBikes { get; set; }
         public int AvailableRacks { get; set; }
         public int Reports { get; set; }
+        public int State { get; set; }
     }
 }

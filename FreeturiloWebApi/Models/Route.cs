@@ -10,6 +10,6 @@ namespace FreeturiloWebApi.Models
         public int StopId { get; set; }
         public int Time { get; set; }
         public double Cost { get; set; }
-        public object RouteJSON { get; set; }
+        public string RouteJSON { get; set; }
     }
 }
