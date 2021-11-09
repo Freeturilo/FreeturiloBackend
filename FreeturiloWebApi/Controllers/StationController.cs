@@ -22,6 +22,7 @@ namespace FreeturiloWebApi.Controllers
         }
 
         [HttpGet]
+        [AppState]
         public ActionResult<StationDTO[]> GetAllStations()
         {
             var stations = _service.GetAllStations();
@@ -42,6 +43,7 @@ namespace FreeturiloWebApi.Controllers
             return Ok();
         }
         [HttpGet("{id}")]
+        [AppState]
         public ActionResult<StationDTO> GetStation([FromRoute] int id)
         {
             var station = _service.GetStation(id);
@@ -55,6 +57,7 @@ namespace FreeturiloWebApi.Controllers
             return Ok();
         }
         [HttpPost("{id}/report")]
+        [AppState]
         public ActionResult ReportStation([FromRoute] int id)
         {
             _service.ReportStation(id);

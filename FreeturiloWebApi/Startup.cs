@@ -47,6 +47,7 @@ namespace FreeturiloWebApi
 
             services.AddScoped<IStationService, StationService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAppService, AppService>();
 
             /*services.AddCors(options =>
             {
