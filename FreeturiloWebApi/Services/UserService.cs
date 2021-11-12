@@ -27,6 +27,10 @@ namespace FreeturiloWebApi.Services
 
         public string Authenticate(AuthDTO auth)
         {
+            if(auth == null || auth.Email == null || auth.Password == null)
+            {
+                throw new Exception401("Brak dostępu");
+            }
             var hash = PasswordHasher.Hash(auth.Password);
             var user = _context.Administrators.Where(a => a.Email == auth.Email && a.PasswordHash == hash).FirstOrDefault();
             if (user == null) throw new Exception401("Brak dostępu");
