@@ -22,9 +22,9 @@ namespace FreeturiloWebApi.HttpMethods
                 string body;
                 if (auth.Password != null && auth.Email != null)
                     body = @"{" + @"""email"": """ + auth.Email + @""", ""password"": """ + auth.Password + @""" }";
-                else if (auth.Password == null)
+                else if (auth.Email != null)
                     body = @"{" + @"""email"": """ + auth.Email + @""" }";
-                else if (auth.Email == null)
+                else if (auth.Password != null)
                     body = @"{" + @"""password"": """ + auth.Password + @""" }";
                 else
                     body = @"{}";

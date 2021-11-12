@@ -32,6 +32,8 @@ namespace FreeturiloWebApi
 
         public IConfiguration Configuration { get; }
 
+        public int i = new Random().Next();
+
         private void Seed(FreeturiloContext _context)
         {
             _context.Administrators.AddRange(
@@ -67,7 +69,10 @@ namespace FreeturiloWebApi
             services.AddScoped<IAppService, AppService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddDbContext<FreeturiloContext>(options => options.UseInMemoryDatabase("TestStartUpDB"));
+            services.AddDbContext<FreeturiloContext>(options =>
+            {
+                options.UseInMemoryDatabase("TestStartUpDB" + i);
+            });
             
             services.AddScoped<JwtMiddleware>();
             services.AddScoped<ExceptionHandlingMiddleware>();
@@ -75,14 +80,7 @@ namespace FreeturiloWebApi
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeturiloWebApi v1"));
-            }
-           
+        {      
             app.UseMiddleware<JwtMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
