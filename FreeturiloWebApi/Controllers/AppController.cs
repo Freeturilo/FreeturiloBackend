@@ -46,7 +46,7 @@ namespace FreeturiloWebApi.Controllers
 
         [Auth]
         [HttpPost("notify/{number}")]
-        public ActionResult Demo([FromRoute] int number)
+        public ActionResult SetReportTrashold([FromRoute] int number)
         {
             _service.SetReportTrashold(Administrator.Id, number);
             return Ok();

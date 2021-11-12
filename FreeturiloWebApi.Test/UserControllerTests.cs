@@ -10,70 +10,76 @@ using FreeturiloWebApi.Exceptions;
 using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.DTO;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Hosting;
+using System.Configuration;
+using Microsoft.AspNetCore.Hosting;
+using RestSharp;
+using System.Net;
 
 namespace FreeturiloWebApi.Test
 {
     public class UserControllerTests
     {
-        private UserController _controller;
-        private FreeturiloContext _context;
-        private void Seed()
-        {
-            _context.Administrators.AddRange(
-                new Administrator() { Id=1, Name="Miko³aj", Surname="Ryll", Email="mikolajryll@gmail.com", NotifyThreshold=1, PasswordHash= "5f4dcc3b5aa765d61d8327deb882cf99" }
-                );    
-            _context.SaveChanges();
-        }
+        private static readonly string _serwerPath = @"https://localhost:5001/";
+        private const string email = "mikolajryll@gmail.com";
+        private const string password = "password";
+        private const string tokenParameters = "user";
 
-        [SetUp]
+        private IHost host; 
+
+        [OneTimeSetUp]
         public void Setup()
         {
-            var opt = new DbContextOptionsBuilder<FreeturiloContext>().UseInMemoryDatabase(databaseName: "TestsDb").Options;
-            _context = new FreeturiloContext(opt);
-            Seed();
+            host = Host.CreateDefaultBuilder()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<TestStartup>();
+                })
+                .Build();
 
-            var options = Options.Create(new AppSettings { Secret = "very long secret string with very many random characters" });
-            var service = new UserService(_context, options);
-            _controller = new UserController(service);
+            host.Start();
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown()
         {
-            _context.Database.EnsureDeleted();
+            host.StopAsync().Wait();
+            host.Dispose();
         }
 
         [Test]
-        public void Authenticate()
+        public void CorrectAuthenticate()
         {
-            var response = _controller.Authenticate(new AuthDTO { Email = "mikolajryll@gmail.com", Password = "password" });
-            var result = response.Result as ObjectResult;
-            var value = result.Value as string;
-
-            Assert.AreEqual(200, result.StatusCode);
-            Assert.IsTrue(value.Length >= 60);
-
-            Assert.Catch<Exception401>(() =>
+            var client = new RestClient(_serwerPath + tokenParameters)
             {
-                var response = _controller.Authenticate(null);
-            });
+                Timeout = -1
+            };
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            var body = @"{""email"": """ + email + @""", ""password"": """ + password + @""" }";
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
 
-            Assert.Catch<Exception401>(() =>
-            {
-                var response = _controller.Authenticate(new AuthDTO { Email = "mikolajryll@gmail.com" });
-            });
+            string token = response.Content[1..^1];
 
-            Assert.Catch<Exception401>(() =>
-            {
-                var response = _controller.Authenticate(new AuthDTO { Password = "password" });
-            });
-
-            Assert.Catch<Exception401>(() =>
-            {
-                var response = _controller.Authenticate(new AuthDTO());
-            });
+            Assert.IsTrue(token.Length > 40);
         }
 
-       
+        [Test]
+        public void IncorrectAuthenticate()
+        {
+            var client = new RestClient(_serwerPath + tokenParameters)
+            {
+                Timeout = -1
+            };
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            var body = @" ""password"": """ + password + @""" }";
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            string token = response.Content[1..^1];
+
+            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+        }
     }
 }
