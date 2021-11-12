@@ -17,7 +17,6 @@ namespace FreeturiloWebApi.Test
     {
         private StationController _controller;
         private FreeturiloContext _context;
-        private int _testNo;
         private void Seed()
         {
             _context.Administrators.AddRange(
@@ -45,7 +44,7 @@ namespace FreeturiloWebApi.Test
         [SetUp]
         public void Setup()
         {
-            var opt = new DbContextOptionsBuilder<FreeturiloContext>().UseInMemoryDatabase(databaseName: "StationTestsDb"+(_testNo++)).Options;
+            var opt = new DbContextOptionsBuilder<FreeturiloContext>().UseInMemoryDatabase(databaseName: "TestsDb").Options;
             _context = new FreeturiloContext(opt);
             Seed();
 
@@ -58,6 +57,7 @@ namespace FreeturiloWebApi.Test
         [TearDown]
         public void TearDown()
         {
+            _context.Database.EnsureDeleted();
             _context.Dispose();
         }
 
