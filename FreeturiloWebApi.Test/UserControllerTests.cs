@@ -15,6 +15,7 @@ using System.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using RestSharp;
 using System.Net;
+using FreeturiloWebApi.HttpMethods;
 
 namespace FreeturiloWebApi.Test
 {
@@ -50,36 +51,24 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void CorrectAuthenticate()
         {
-            var client = new RestClient(_serwerPath + tokenParameters)
-            {
-                Timeout = -1
-            };
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            var body = @"{""email"": """ + email + @""", ""password"": """ + password + @""" }";
-            request.AddParameter("application/json", body, ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-
-            string token = response.Content[1..^1];
-
+            var token = UserMethods.Authenticate(_serwerPath, new AuthDTO { Email = email, Password = password });
             Assert.IsTrue(token.Length > 40);
         }
 
         [Test]
         public void IncorrectAuthenticate()
         {
-            var client = new RestClient(_serwerPath + tokenParameters)
-            {
-                Timeout = -1
-            };
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            var body = @" ""password"": """ + password + @""" }";
-            request.AddParameter("application/json", body, ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-            string token = response.Content[1..^1];
+            var token = UserMethods.Authenticate(_serwerPath, new AuthDTO { Password = password });
+            Assert.IsFalse(token.Length > 40);
 
-            Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
+            token = UserMethods.Authenticate(_serwerPath, new AuthDTO { Email = email });
+            Assert.IsFalse(token.Length > 40);
+
+            token = UserMethods.Authenticate(_serwerPath, new AuthDTO());
+            Assert.IsFalse(token.Length > 40);
+
+            token = UserMethods.Authenticate(_serwerPath, null);
+            Assert.IsFalse(token.Length > 40);
         }
     }
 }
