@@ -10,6 +10,7 @@
         <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.10" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+        <PackageReference Include="RestSharp" Version="106.13.0" />
         <PackageReference Include="StackExchange.Redis" Version="2.2.50" />
     </ItemGroup>
 
