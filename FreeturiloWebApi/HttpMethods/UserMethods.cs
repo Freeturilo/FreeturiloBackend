@@ -33,7 +33,7 @@ namespace FreeturiloWebApi.HttpMethods
                 request.AddParameter("application/json", body, ParameterType.RequestBody);
             }
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Unauthorized");
+            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
 
             string token = response.Content[1..^1];
             return token;

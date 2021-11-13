@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.Exceptions
 {
-    public class Exception503: Exception
+    public class Exception503: FreeturiloException
     {
-        public Exception503(string message) : base(message) { }
+        public Exception503() : base("Servis unavailable") 
+        {
+            StatusCode = 503;
+        }
     }
 }

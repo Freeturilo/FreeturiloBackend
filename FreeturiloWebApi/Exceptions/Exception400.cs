@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.Exceptions
 {
-    public class Exception400 : Exception
+    public class Exception400 : FreeturiloException
     {
-        public Exception400(string message) : base(message) { }
+        public Exception400() : base("Bad request") 
+        {
+            StatusCode = 400;
+        }
     }
 }

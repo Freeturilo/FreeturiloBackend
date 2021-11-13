@@ -14,7 +14,7 @@ namespace FreeturiloWebApi.Attributes
             var appState = AppState.State;
             if(appState != AppStateEnum.Started)
             {
-                throw new Exception503("System został zatrzymany");
+                throw new Exception503();
             }
         }
     }

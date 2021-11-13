@@ -5,8 +5,11 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.Exceptions
 {
-    public class Exception404 : Exception
+    public class Exception404 : FreeturiloException
     {
-        public Exception404(string message) : base(message) { }
+        public Exception404() : base("Not found") 
+        {
+            StatusCode = 404;
+        }
     }
 }

@@ -13,7 +13,7 @@ namespace FreeturiloWebApi.Attributes
             var user = (Administrator)context.HttpContext.Items["User"];
             if(user == null)
             {
-                throw new Exception401("Brak dostępu");
+                throw new Exception401();
             }
         }
     }

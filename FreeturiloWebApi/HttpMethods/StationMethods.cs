@@ -23,7 +23,7 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Content-Type", "application/json");
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503("Serwer zatrzymany");
+            if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503();
 
             var jsonContent = response.Content;
             var stations = JsonSerializer.Deserialize<StationDTO[]>(jsonContent);
@@ -46,8 +46,8 @@ namespace FreeturiloWebApi.HttpMethods
 
             IRestResponse response = client.Execute(request);
 
-            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400("Złe zapytanie");
-            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400();
+            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
 
             var json = response.Content;
             var station = JsonSerializer.Deserialize<StationDTO>(json);
@@ -70,8 +70,8 @@ namespace FreeturiloWebApi.HttpMethods
             }
 
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400("Złe zapytanie");
-            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400();
+            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
         public static StationDTO GetStation(string serverPath, int id)
@@ -84,8 +84,8 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Accept", "application/json");
             request.AddHeader("Content-Type", "application/json");
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404("Brak stacji");
-            else if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503("Serwer zatrzymany");
+            if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
+            else if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503();
             var jsonContent = response.Content;
 
             var station = JsonSerializer.Deserialize<StationDTO>(jsonContent);
@@ -108,9 +108,9 @@ namespace FreeturiloWebApi.HttpMethods
             }
 
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400("Złe zapytanie");
-            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
-            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404("Brak stacji");
+            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400();
+            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
+            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
         public static void ReportStation(string serverPath, int id)
         {
@@ -122,8 +122,8 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Content-Type", "application/json");
 
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503("Serwer zatrzymany");
-            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404("Brak stacji");
+            if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503();
+            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
         public static void SetStationAsBroken(string serverPath, string token, int id)
         {
@@ -136,8 +136,8 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("api-key", token);
 
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
-            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404("Brak stacji");
+            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
+            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
 
         public static void SetStationAsWorking(string serverPath, string token, int id)
@@ -151,8 +151,8 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("api-key", token);
 
             IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
-            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404("Brak stacji");
+            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
+            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
     }
 }

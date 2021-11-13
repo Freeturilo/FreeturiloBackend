@@ -15,24 +15,9 @@ namespace FreeturiloWebApi.Middlewares
             {
                 await next.Invoke(context);
             }
-            catch (Exception400 e)
+            catch (FreeturiloException e)
             {
-                context.Response.StatusCode = 400;
-                await context.Response.WriteAsync(e.Message);
-            }
-            catch (Exception401 e)
-            {
-                context.Response.StatusCode = 401;
-                await context.Response.WriteAsync(e.Message);
-            }
-            catch (Exception404 e)
-            {
-                context.Response.StatusCode = 404;
-                await context.Response.WriteAsync(e.Message);
-            }
-            catch (Exception503 e)
-            {
-                context.Response.StatusCode = 503;
+                context.Response.StatusCode = e.StatusCode;
                 await context.Response.WriteAsync(e.Message);
             }
         }

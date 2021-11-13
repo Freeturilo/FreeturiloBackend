@@ -29,11 +29,11 @@ namespace FreeturiloWebApi.Services
         {
             if(auth == null || auth.Email == null || auth.Password == null)
             {
-                throw new Exception401("Brak dostępu");
+                throw new Exception401();
             }
             var hash = PasswordHasher.Hash(auth.Password);
             var user = _context.Administrators.Where(a => a.Email == auth.Email && a.PasswordHash == hash).FirstOrDefault();
-            if (user == null) throw new Exception401("Brak dostępu");
+            if (user == null) throw new Exception401();
 
             var token = generateJwtToken(user);
             return token;

@@ -24,7 +24,7 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
             var res = client.Execute(request);
-            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
         public static void Stop(string serverPath, string token)
@@ -37,7 +37,7 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
             var res = client.Execute(request);
-            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
         public static void Demo(string serverPath, string token)
@@ -50,7 +50,7 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
             var res = client.Execute(request);
-            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
         public static void SetReportTrashold(string serverPath, string token, int number)
         {
@@ -62,7 +62,7 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
             var res = client.Execute(request);
-            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
     }
 }

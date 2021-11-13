@@ -22,9 +22,9 @@ namespace FreeturiloWebApi.Services
         }
         public StationDTO AddNewStation(StationDTO newStation)
         {
-            if (newStation == null) throw new Exception400("Bad request");
+            if (newStation == null) throw new Exception400();
             var existingStation = _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault();
-            if (existingStation != null) throw new Exception400("Istnieje już stacja o podanym ID");
+            if (existingStation != null) throw new Exception400();
 
             var station = _mapper.Map<Station>(newStation);
             _context.Stations.Add(station);
@@ -42,7 +42,7 @@ namespace FreeturiloWebApi.Services
         public StationDTO GetStation(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
-            if (station is null) throw new Exception404("Nie znaleziono stacji o podanym ID");
+            if (station is null) throw new Exception404();
 
             var stationDTO = _mapper.Map<StationDTO>(station);
 
@@ -52,7 +52,7 @@ namespace FreeturiloWebApi.Services
         public void ReportStation(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
-            if(station == null) throw new Exception404("Nie znaleziono stacji o podanym ID");
+            if(station == null) throw new Exception404();
             station.Reports++;
             if (station.State == 0) station.State = 1;
             _context.SaveChanges();
@@ -70,7 +70,7 @@ namespace FreeturiloWebApi.Services
         public void SetStationAsBroken(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
-            if (station == null) throw new Exception404("Nie znaleziono stacji o podanym ID");
+            if (station == null) throw new Exception404();
             station.State = 2;
             _context.SaveChanges();
         }
@@ -78,7 +78,7 @@ namespace FreeturiloWebApi.Services
         public void SetStationAsWorking(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
-            if (station == null) throw new Exception404("Nie znaleziono stacji o podanym ID");
+            if (station == null) throw new Exception404();
             station.State = 0;
             station.Reports = 0;
             _context.SaveChanges();
@@ -86,7 +86,7 @@ namespace FreeturiloWebApi.Services
 
         public void UpdateAllStations(StationDTO[] newStations)
         {
-            if (newStations == null) throw new Exception400("Bad request");
+            if (newStations == null) throw new Exception400();
             
             //TODO do it better
             var routes = _context.Routes.ToArray();
@@ -104,9 +104,9 @@ namespace FreeturiloWebApi.Services
 
         public void UpdateStation(int stationId, StationDTO newStation)
         {
-            if (newStation == null) throw new Exception400("Bad request");
+            if (newStation == null) throw new Exception400();
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
-            if (station == null) throw new Exception404("Nie znaleziono stacji o podanym ID");
+            if (station == null) throw new Exception404();
 
             station.AvailableRacks = newStation.BikeRacks;
             station.AvailableBikes = newStation.Bikes;
