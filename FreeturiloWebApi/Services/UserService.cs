@@ -35,11 +35,11 @@ namespace FreeturiloWebApi.Services
             var user = _context.Administrators.Where(a => a.Email == auth.Email && a.PasswordHash == hash).FirstOrDefault();
             if (user == null) throw new Exception401();
 
-            var token = generateJwtToken(user);
+            var token = GenerateJwtToken(user);
             return token;
         }
 
-        private string generateJwtToken(Administrator user)
+        private string GenerateJwtToken(Administrator user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(appSettings.Value.Secret);

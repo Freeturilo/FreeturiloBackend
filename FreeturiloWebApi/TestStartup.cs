@@ -34,7 +34,7 @@ namespace FreeturiloWebApi
 
         public int i = new Random().Next();
 
-        private void Seed(FreeturiloContext _context)
+        private static void Seed(FreeturiloContext _context)
         {
             _context.Administrators.AddRange(
                  new Administrator() { Id = 1, Name = "Miko³aj", Surname = "Ryll", Email = "mikolajryll@gmail.com", NotifyThreshold = 1, PasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99" }
@@ -79,7 +79,7 @@ namespace FreeturiloWebApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {      
             app.UseMiddleware<JwtMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -95,11 +95,9 @@ namespace FreeturiloWebApi
                 endpoints.MapControllers();
             });
 
-            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            using (var context = serviceScope.ServiceProvider.GetService<FreeturiloContext>())
-            {
-                Seed(context);
-            }
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            using var context = serviceScope.ServiceProvider.GetService<FreeturiloContext>();
+            Seed(context);
         }
     }
 }

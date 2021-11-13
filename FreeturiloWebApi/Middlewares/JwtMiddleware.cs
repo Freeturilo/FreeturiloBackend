@@ -30,13 +30,13 @@ namespace FreeturiloWebApi.Middlewares
 
             if(token != null)
             {
-                attachUserToContext(context, token);
+                AttachUserToContext(context, token);
             }
 
             await next(context);
         }
 
-        private void attachUserToContext(HttpContext context, string token)
+        private void AttachUserToContext(HttpContext context, string token)
         {
             try
             {

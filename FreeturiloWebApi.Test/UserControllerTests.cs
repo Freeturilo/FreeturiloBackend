@@ -24,7 +24,6 @@ namespace FreeturiloWebApi.Test
         private static readonly string serverPath = @"https://localhost:5003/";
         private const string email = "mikolajryll@gmail.com";
         private const string password = "password";
-        private const string tokenParameters = "user";
 
         private IHost host; 
 
