@@ -1,4 +1,5 @@
 ﻿using FreeturiloWebApi.DTO;
+using FreeturiloWebApi.Exceptions;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace FreeturiloWebApi.HttpMethods
         private const string start = "app/start";
         private const string demo = "app/demo";
 
-        public static bool Start(string serverPath, string token)
+        public static void Start(string serverPath, string token)
         {
             var client = new RestClient(serverPath + start)
             {
@@ -22,10 +23,11 @@ namespace FreeturiloWebApi.HttpMethods
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
-            return client.Execute(request).StatusCode == System.Net.HttpStatusCode.OK;
+            var res = client.Execute(request);
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
         }
 
-        public static bool Stop(string serverPath, string token)
+        public static void Stop(string serverPath, string token)
         {
             var client = new RestClient(serverPath + stop)
             {
@@ -34,10 +36,11 @@ namespace FreeturiloWebApi.HttpMethods
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
-            return client.Execute(request).StatusCode == System.Net.HttpStatusCode.OK;
+            var res = client.Execute(request);
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
         }
 
-        public static bool Demo(string serverPath, string token)
+        public static void Demo(string serverPath, string token)
         {
             var client = new RestClient(serverPath + demo)
             {
@@ -46,9 +49,20 @@ namespace FreeturiloWebApi.HttpMethods
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/json");
             request.AddHeader("api-key", token);
-            var code = client.Execute(request).StatusCode;
-            return code == System.Net.HttpStatusCode.OK;
-
+            var res = client.Execute(request);
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
+        }
+        public static void SetReportTrashold(string serverPath, string token, int number)
+        {
+            var client = new RestClient(serverPath + $"app/notify/{number}")
+            {
+                Timeout = -1
+            };
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("api-key", token);
+            var res = client.Execute(request);
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401("Brak dostępu");
         }
     }
 }

@@ -1,8 +1,10 @@
 ﻿using FreeturiloWebApi.DTO;
+using FreeturiloWebApi.Exceptions;
 using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.HttpMethods
@@ -28,11 +30,10 @@ namespace FreeturiloWebApi.HttpMethods
                     body = @"{" + @"""password"": """ + auth.Password + @""" }";
                 else
                     body = @"{}";
-
-
                 request.AddParameter("application/json", body, ParameterType.RequestBody);
             }
             IRestResponse response = client.Execute(request);
+            if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401("Unauthorized");
 
             string token = response.Content[1..^1];
             return token;

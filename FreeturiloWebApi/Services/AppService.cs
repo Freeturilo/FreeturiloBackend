@@ -29,7 +29,6 @@ namespace FreeturiloWebApi.Services
         public void SetReportTrashold(int id, int number)
         {
             var admin = _context.Administrators.Where(a => a.Id == id).FirstOrDefault();
-            if (admin == null) throw new Exception404("Brak dostępu");
 
             var oldNumber = admin.NotifyThreshold;
             admin.NotifyThreshold = number;

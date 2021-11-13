@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FreeturiloWebApi.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class StateForStation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

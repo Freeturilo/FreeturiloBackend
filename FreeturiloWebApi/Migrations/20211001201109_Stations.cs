@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FreeturiloWebApi.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class Stations : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

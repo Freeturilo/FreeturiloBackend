@@ -35,11 +35,6 @@ namespace FreeturiloWebApi.Middlewares
                 context.Response.StatusCode = 503;
                 await context.Response.WriteAsync(e.Message);
             }
-            catch (Exception e)
-            {
-                context.Response.StatusCode = 500;
-                await context.Response.WriteAsync(e.Message);
-            }
         }
     }
 }

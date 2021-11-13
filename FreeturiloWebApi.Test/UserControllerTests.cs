@@ -21,7 +21,7 @@ namespace FreeturiloWebApi.Test
 {
     public class UserControllerTests
     {
-        private static readonly string _serwerPath = @"https://localhost:5001/";
+        private static readonly string serverPath = @"https://localhost:5003/";
         private const string email = "mikolajryll@gmail.com";
         private const string password = "password";
         private const string tokenParameters = "user";
@@ -35,6 +35,7 @@ namespace FreeturiloWebApi.Test
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<TestStartup>();
+                    webBuilder.UseUrls(serverPath);
                 })
                 .Build();
 
@@ -51,24 +52,37 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void CorrectAuthenticate()
         {
-            var token = UserMethods.Authenticate(_serwerPath, new AuthDTO { Email = email, Password = password });
+            var token = UserMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
             Assert.IsTrue(token.Length > 40);
         }
 
         [Test]
         public void IncorrectAuthenticate()
         {
-            var token = UserMethods.Authenticate(_serwerPath, new AuthDTO { Password = password });
-            Assert.IsFalse(token.Length > 40);
+            Assert.Catch<Exception401>(() =>
+            {
+                UserMethods.Authenticate(serverPath, new AuthDTO { Email = "incorrect", Password = "made up" });
+            });
 
-            token = UserMethods.Authenticate(_serwerPath, new AuthDTO { Email = email });
-            Assert.IsFalse(token.Length > 40);
+            Assert.Catch<Exception401>(() =>
+            {
+                UserMethods.Authenticate(serverPath, new AuthDTO { Password = password });
+            });
 
-            token = UserMethods.Authenticate(_serwerPath, new AuthDTO());
-            Assert.IsFalse(token.Length > 40);
+            Assert.Catch<Exception401>(() =>
+            {
+                UserMethods.Authenticate(serverPath, new AuthDTO { Email = email });
+            });
 
-            token = UserMethods.Authenticate(_serwerPath, null);
-            Assert.IsFalse(token.Length > 40);
+            Assert.Catch<Exception401>(() =>
+            {
+                UserMethods.Authenticate(serverPath, new AuthDTO());
+            });
+
+            Assert.Catch<Exception401>(() =>
+            {
+                UserMethods.Authenticate(serverPath, null);
+            });
         }
     }
 }

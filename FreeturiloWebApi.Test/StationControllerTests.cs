@@ -10,98 +10,113 @@ using FreeturiloWebApi.Exceptions;
 using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.DTO;
 using AutoMapper;
+using Microsoft.Extensions.Hosting;
+using FreeturiloWebApi.HttpMethods;
+using Microsoft.AspNetCore.Hosting;
+using System.Net;
 
 namespace FreeturiloWebApi.Test
 {
     public class StationControllerTests
     {
-        private StationController _controller;
-        private FreeturiloContext _context;
-        private void Seed()
+        private static readonly string serverPath = @"https://localhost:5002/";
+        private const string email = "mikolajryll@gmail.com";
+        private const string password = "password";
+
+        private readonly StationDTO[] defaultStations = new StationDTO[]
         {
-            _context.Administrators.AddRange(
-                new Administrator() { Id=1, Name="Miko³aj", Surname="Ryll", Email="mikolajryll@gmail.com", NotifyThreshold=1, PasswordHash="hash" }
-                );
+            new() {Id = 1},
+            new() {Id = 2},
+            new() {Id = 3},
+        };
 
-            _context.Stations.AddRange(
-                new Station() { Id = 1, AvailableBikes=10, AvailableRacks=15, State=0, Name="Trasa £azienkowska x Marsza³kowska", Reports=0, Lat=52, Lon=48 },
-                new Station() { Id = 2, AvailableBikes=10, AvailableRacks=15, State=1, Name="Metro Wierzbno", Reports=1, Lat=52, Lon=48 },
-                new Station() { Id = 3, AvailableBikes=10, AvailableRacks=15, State=2, Name="Dworzec Centralny x Emilii Plater", Reports=10, Lat=52, Lon=48 }
-                );
+        private IHost host;
 
-            _context.Routes.AddRange(
-                new Route() { Id=1, Cost=10, RouteJSON="", StartId=1, StopId=2, Time=12},
-                new Route() { Id=2, Cost=10, RouteJSON="", StartId=1, StopId=3, Time=12},
-                new Route() { Id=3, Cost=10, RouteJSON="", StartId=2, StopId=1, Time=12},
-                new Route() { Id=4, Cost=10, RouteJSON="", StartId=2, StopId=3, Time=12},
-                new Route() { Id=5, Cost=10, RouteJSON="", StartId=3, StopId=1, Time=12},
-                new Route() { Id=6, Cost=10, RouteJSON="", StartId=3, StopId=2, Time=12}
-                );
-            
-            _context.SaveChanges();
-        }
-
-        [SetUp]
+        [OneTimeSetUp]
         public void Setup()
         {
-            var opt = new DbContextOptionsBuilder<FreeturiloContext>().UseInMemoryDatabase(databaseName: "TestsDb").Options;
-            _context = new FreeturiloContext(opt);
-            Seed();
+            host = Host.CreateDefaultBuilder()
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<TestStartup>();
+                    webBuilder.UseUrls(serverPath);
+                })
+                .Build();
 
-            var config = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperProfile>());
-            var _mapper = config.CreateMapper();
-            var service = new StationService(_context, _mapper);
-            _controller = new StationController(service);
+            host.Start();
         }
 
-        [TearDown]
+        [OneTimeTearDown]
         public void TearDown()
         {
-            _context.Database.EnsureDeleted();
-            _context.Dispose();
+            host.StopAsync().Wait();
+            host.Dispose();
         }
 
         [Test]
         public void GetAllStations()
         {
-            var response = _controller.GetAllStations();
-            var result = response.Result as ObjectResult;
-            var value = result.Value as StationDTO[];
+            var stations = StationMethods.GetAllStations(serverPath);
+            Assert.AreEqual(stations.Length, 3);
 
-            Assert.AreEqual(200, result.StatusCode);
-            Assert.AreEqual(3, value.Length);
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+
+            Assert.Catch<Exception503>(() =>
+            {
+                AppMethods.Stop(serverPath, token);
+                StationMethods.GetAllStations(serverPath);
+            });
+
+            AppMethods.Start(serverPath, token);
         }
 
         [Test]
         public void GetStation()
         {
-            var response = _controller.GetStation(1);
-            var result = response.Result as ObjectResult;
-            var value = result.Value as StationDTO;
-
-            Assert.AreEqual(200, result.StatusCode);
-            Assert.AreEqual(1, value.Id);
+            var station = StationMethods.GetStation(serverPath, 1);
+            Assert.AreEqual(station.Id, 1);
 
             Assert.Catch<Exception404>(() =>
             {
-                response = _controller.GetStation(10);
+                StationMethods.GetStation(serverPath, 123);
             });
+
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+
+            Assert.Catch<Exception503>(() =>
+            {
+                AppMethods.Stop(serverPath, token);
+                StationMethods.GetStation(serverPath, 1);
+            });
+
+            AppMethods.Start(serverPath, token);
         }
 
         [Test]
         public void AddNewStation()
         {
-            var response = _controller.AddNewStation(new StationDTO(){Id=4});
-            var result = response.Result as ObjectResult;
-            var value = result.Value as StationDTO;
-
-            Assert.AreEqual(200, result.StatusCode);
-            Assert.AreEqual(4, value.Id);
-            Assert.AreEqual(4, _context.Stations.Count());
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            var newStation = new StationDTO() { Id = 4, Bikes = 3 };
+            StationMethods.AddNewStation(serverPath, token, newStation);
+            var stations = StationMethods.GetAllStations(serverPath);
+            Assert.AreEqual(stations.Length, 4);
 
             Assert.Catch<Exception400>(() =>
             {
-                response = _controller.AddNewStation(new StationDTO(){Id = 1});
+                var newStation = new StationDTO() { Id = 1, Bikes = 3 };
+                StationMethods.AddNewStation(serverPath, token, newStation);
+            });
+
+            Assert.Catch<Exception400>(() =>
+            {
+                StationMethods.AddNewStation(serverPath, token, null);
+            });
+
+            StationMethods.UpdateAllStations(serverPath, token, defaultStations);
+
+            Assert.Catch<Exception401>(() =>
+            {
+                StationMethods.AddNewStation(serverPath, "", newStation);
             });
         }
 
@@ -111,70 +126,108 @@ namespace FreeturiloWebApi.Test
             var newStations = new StationDTO[]
             {
                 new StationDTO() {Id = 6},
-                new StationDTO() {Id = 7},
-                new StationDTO() {Id = 8},
             };
 
-            var response = _controller.UpdateAllStations(newStations) as OkResult;
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            StationMethods.UpdateAllStations(serverPath, token, newStations);
+            var stations = StationMethods.GetAllStations(serverPath);
+            Assert.AreEqual(stations.Length, 1);
+            Assert.AreEqual(stations[0].Id, 6);
 
-            Assert.AreEqual(200, response.StatusCode);
-            Assert.IsTrue(newStations.All(ns => _context.Stations.Where(s => s.Id == ns.Id).FirstOrDefault() != null));
-            Assert.AreEqual(0, _context.Routes.Count());
+            Assert.Catch<Exception400>(() =>
+            {
+                StationMethods.UpdateAllStations(serverPath, token, null);
+            });
+
+            StationMethods.UpdateAllStations(serverPath, token, defaultStations);
+
+            Assert.Catch<Exception401>(() =>
+            {
+                StationMethods.UpdateAllStations(serverPath, "", newStations);
+            });
         }
 
         [Test]
         public void UpdateStation()
         {
-            var newStation = new StationDTO() {Id = 1, Bikes = 12};
+            var newStation = new StationDTO() { Id = 1, Bikes = 12 };
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
 
-            var response = _controller.UpdateStation(1, newStation) as OkResult;
+            StationMethods.UpdateStation(serverPath, token, 1, newStation);
+            var station = StationMethods.GetStation(serverPath, 1);
 
-            Assert.AreEqual(200, response.StatusCode);
-            Assert.AreEqual(newStation.Bikes, _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault().AvailableBikes);
+            Assert.AreEqual(station.Bikes, 12);
+
             Assert.Catch<Exception404>(() =>
             {
-                _controller.UpdateStation(12, new StationDTO());
+                StationMethods.UpdateStation(serverPath, token, 123, newStation);
+            });
+
+            Assert.Catch<Exception400>(() =>
+            {
+                StationMethods.UpdateStation(serverPath, token, 1, null);
+            });
+
+            Assert.Catch<Exception401>(() =>
+            {
+                StationMethods.UpdateStation(serverPath, "", 1, newStation);
             });
         }
 
         [Test]
         public void ReportStation()
         {
-            var response = _controller.ReportStation(1) as OkResult;
+            StationMethods.ReportStation(serverPath, 1);
+            var station = StationMethods.GetStation(serverPath, 1);
 
-            Assert.AreEqual(200, response.StatusCode);
-            Assert.AreEqual(1, _context.Stations.Where(s => s.Id == 1).FirstOrDefault().Reports);
-            Assert.AreEqual(1, _context.Stations.Where(s => s.Id == 1).FirstOrDefault().State);
+            Assert.AreEqual(station.State, 1);
+
             Assert.Catch<Exception404>(() =>
             {
-                _controller.ReportStation(12);
+                StationMethods.ReportStation(serverPath, 123);
             });
+
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            AppMethods.Stop(serverPath, token);
+
+            Assert.Catch<Exception503>(() =>
+            {
+                StationMethods.ReportStation(serverPath, 1);
+            });
+
+            AppMethods.Start(serverPath, token);
         }
 
         [Test]
-        public void SetStationAsBroken()
+        public void SetStationAsBrokenOrWorking()
         {
-            var response = _controller.SetStationAsBroken(2) as OkResult;
+            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            StationMethods.SetStationAsBroken(serverPath, token, 1);
+            var station = StationMethods.GetStation(serverPath, 1);
+            Assert.AreEqual(station.State, 2);
 
-            Assert.AreEqual(200, response.StatusCode);
-            Assert.AreEqual(2, _context.Stations.Where(s => s.Id == 2).FirstOrDefault().State);
-            Assert.AreEqual(1, _context.Stations.Where(s => s.Id == 2).FirstOrDefault().Reports);
-            Assert.Catch<Exception404>(() =>
+            StationMethods.SetStationAsWorking(serverPath, token, 1);
+            station = StationMethods.GetStation(serverPath, 1);
+            Assert.AreEqual(station.State, 0);
+
+            Assert.Catch<Exception401>(() =>
             {
-                _controller.SetStationAsBroken(12);
+                StationMethods.SetStationAsBroken(serverPath, "", 1);
             });
-        }
-        [Test]
-        public void SetStationAsWorking()
-        {
-            var response = _controller.SetStationAsWorking(3) as OkResult;
 
-            Assert.AreEqual(200, response.StatusCode);
-            Assert.AreEqual(0, _context.Stations.Where(s => s.Id == 3).FirstOrDefault().State);
-            Assert.AreEqual(0, _context.Stations.Where(s => s.Id == 3).FirstOrDefault().Reports);
+            Assert.Catch<Exception401>(() =>
+            {
+                StationMethods.SetStationAsWorking(serverPath, "", 1);
+            });
+
             Assert.Catch<Exception404>(() =>
             {
-                _controller.SetStationAsWorking(12);
+                StationMethods.SetStationAsBroken(serverPath, token, 123);
+            });
+
+            Assert.Catch<Exception404>(() =>
+            {
+                StationMethods.SetStationAsWorking(serverPath, token, 123);
             });
         }
     }

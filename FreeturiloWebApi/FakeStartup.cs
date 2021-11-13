@@ -16,7 +16,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
@@ -24,47 +23,26 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi
 {
-    [ExcludeFromCodeCoverage]
-    public class Startup
+    public class FakeStartup
     {
-        public Startup(IConfiguration configuration)
+        public FakeStartup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
-        private readonly string _connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeturiloWebApi", Version = "v1" });
-            });
-
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
 
             services.AddScoped<IStationService, StationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAppService, AppService>();
 
-            /*services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                {
-                    builder.AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowAnyOrigin();
-                });
-            });*/
-
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddDbContext<FreeturiloContext>(options =>
-                options.UseNpgsql(_connectionString ?? Configuration.GetConnectionString("FreeturiloDatabase"))
-            );
             
             services.AddScoped<JwtMiddleware>();
             services.AddScoped<ExceptionHandlingMiddleware>();
@@ -72,22 +50,13 @@ namespace FreeturiloWebApi
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeturiloWebApi v1"));
-            }
-           
+        {      
             app.UseMiddleware<JwtMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            //app.UseCors();
 
             app.UseAuthorization();
 
