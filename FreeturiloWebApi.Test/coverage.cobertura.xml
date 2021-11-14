@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.9859" branch-rate="1" version="1.9" timestamp="1636772348" lines-covered="631" lines-valid="640" branches-covered="108" branches-valid="108">
+<coverage line-rate="0.9725" branch-rate="0.9229999999999999" version="1.9" timestamp="1636923008" lines-covered="709" lines-valid="729" branches-covered="120" branches-valid="130">
   <sources>
     <source>C:\Users\hiryleu\Pulpit\FreeturiloBackend\FreeturiloWebApi\</source>
   </sources>
   <packages>
-    <package name="FreeturiloWebApi" line-rate="0.9859" branch-rate="1" complexity="202">
+    <package name="FreeturiloWebApi" line-rate="0.9725" branch-rate="0.9229999999999999" complexity="260">
       <classes>
         <class name="FreeturiloWebApi.FakeStartup" filename="FakeStartup.cs" line-rate="1" branch-rate="1" complexity="4">
           <methods>
@@ -27,7 +27,7 @@
                 <line number="49" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="Configure" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="Configure" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="53" hits="1" branch="False" />
                 <line number="54" hits="1" branch="False" />
@@ -128,7 +128,7 @@
                 <line number="79" hits="3" branch="False" />
               </lines>
             </method>
-            <method name="Configure" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="Configure" signature="(Microsoft.AspNetCore.Builder.IApplicationBuilder)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="83" hits="3" branch="False" />
                 <line number="84" hits="3" branch="False" />
@@ -143,9 +143,7 @@
                 <line number="98" hits="3" branch="False" />
                 <line number="99" hits="3" branch="False" />
                 <line number="100" hits="3" branch="False" />
-                <line number="101" hits="3" branch="False" />
-                <line number="102" hits="3" branch="False" />
-                <line number="103" hits="3" branch="False" />
+                <line number="101" hits="6" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(Microsoft.Extensions.Configuration.IConfiguration)" line-rate="1" branch-rate="1" complexity="1">
@@ -206,9 +204,7 @@
             <line number="98" hits="3" branch="False" />
             <line number="99" hits="3" branch="False" />
             <line number="100" hits="3" branch="False" />
-            <line number="101" hits="3" branch="False" />
-            <line number="102" hits="3" branch="False" />
-            <line number="103" hits="3" branch="False" />
+            <line number="101" hits="6" branch="False" />
             <line number="28" hits="3" branch="False" />
             <line number="29" hits="3" branch="False" />
             <line number="30" hits="3" branch="False" />
@@ -326,9 +322,9 @@
             <line number="23" hits="14" branch="False" />
           </lines>
         </class>
-        <class name="FreeturiloWebApi.Services.StationService" filename="Services\StationService.cs" line-rate="1" branch-rate="1" complexity="26">
+        <class name="FreeturiloWebApi.Services.StationService" filename="Services\StationService.cs" line-rate="1" branch-rate="1" complexity="36">
           <methods>
-            <method name="AddNewStation" signature="(FreeturiloWebApi.DTO.StationDTO)" line-rate="1" branch-rate="1" complexity="4">
+            <method name="AddNewStation" signature="(FreeturiloWebApi.DTO.StationDTO)" line-rate="1" branch-rate="1" complexity="8">
               <lines>
                 <line number="24" hits="3" branch="False" />
                 <line number="25" hits="4" branch="True" condition-coverage="100% (2/2)">
@@ -344,134 +340,171 @@
                 </line>
                 <line number="29" hits="1" branch="False" />
                 <line number="30" hits="1" branch="False" />
-                <line number="31" hits="1" branch="False" />
-                <line number="32" hits="1" branch="False" />
-                <line number="33" hits="1" branch="False" />
-              </lines>
-            </method>
-            <method name="GetAllStations" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
+                <line number="32" hits="9" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="334" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="33" hits="3" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="265" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="34" hits="3" branch="False" />
+                <line number="35" hits="3" branch="False" />
                 <line number="36" hits="3" branch="False" />
                 <line number="37" hits="3" branch="False" />
                 <line number="38" hits="3" branch="False" />
                 <line number="39" hits="3" branch="False" />
-                <line number="40" hits="3" branch="False" />
+                <line number="41" hits="1" branch="False" />
+                <line number="42" hits="1" branch="False" />
+                <line number="43" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="GetAllStations" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="46" hits="3" branch="False" />
+                <line number="47" hits="3" branch="False" />
+                <line number="48" hits="3" branch="False" />
+                <line number="49" hits="3" branch="False" />
+                <line number="50" hits="3" branch="False" />
               </lines>
             </method>
             <method name="GetStation" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="43" hits="6" branch="False" />
-                <line number="44" hits="6" branch="False" />
-                <line number="45" hits="7" branch="True" condition-coverage="100% (2/2)">
+                <line number="53" hits="6" branch="False" />
+                <line number="54" hits="6" branch="False" />
+                <line number="55" hits="7" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="137" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="47" hits="5" branch="False" />
-                <line number="49" hits="5" branch="False" />
-                <line number="50" hits="5" branch="False" />
+                <line number="57" hits="5" branch="False" />
+                <line number="59" hits="5" branch="False" />
+                <line number="60" hits="5" branch="False" />
               </lines>
             </method>
             <method name="ReportStation" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="8">
               <lines>
-                <line number="53" hits="4" branch="False" />
-                <line number="54" hits="4" branch="False" />
-                <line number="55" hits="5" branch="True" condition-coverage="100% (2/2)">
+                <line number="63" hits="4" branch="False" />
+                <line number="64" hits="4" branch="False" />
+                <line number="65" hits="5" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="137" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="56" hits="3" branch="False" />
-                <line number="57" hits="5" branch="True" condition-coverage="100% (2/2)">
+                <line number="66" hits="3" branch="False" />
+                <line number="67" hits="5" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="177" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="58" hits="3" branch="False" />
-                <line number="60" hits="3" branch="False" />
-                <line number="61" hits="15" branch="True" condition-coverage="100% (2/2)">
+                <line number="68" hits="3" branch="False" />
+                <line number="70" hits="3" branch="False" />
+                <line number="71" hits="15" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="278" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="62" hits="3" branch="False" />
-                <line number="63" hits="3" branch="True" condition-coverage="100% (2/2)">
-                  <conditions>
-                    <condition number="252" type="jump" coverage="100%" />
-                  </conditions>
-                </line>
-                <line number="64" hits="1" branch="False" />
-                <line number="65" hits="1" branch="False" />
-                <line number="66" hits="1" branch="False" />
-                <line number="67" hits="3" branch="False" />
-                <line number="68" hits="3" branch="False" />
-              </lines>
-            </method>
-            <method name="SetStationAsBroken" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="2">
-              <lines>
-                <line number="71" hits="2" branch="False" />
-                <line number="72" hits="2" branch="False" />
+                <line number="72" hits="3" branch="False" />
                 <line number="73" hits="3" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="135" type="jump" coverage="100%" />
+                    <condition number="252" type="jump" coverage="100%" />
                   </conditions>
                 </line>
                 <line number="74" hits="1" branch="False" />
                 <line number="75" hits="1" branch="False" />
                 <line number="76" hits="1" branch="False" />
+                <line number="77" hits="3" branch="False" />
+                <line number="78" hits="3" branch="False" />
               </lines>
             </method>
-            <method name="SetStationAsWorking" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="SetStationAsBroken" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="79" hits="2" branch="False" />
-                <line number="80" hits="2" branch="False" />
-                <line number="81" hits="3" branch="True" condition-coverage="100% (2/2)">
+                <line number="81" hits="2" branch="False" />
+                <line number="82" hits="2" branch="False" />
+                <line number="83" hits="3" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="135" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="82" hits="1" branch="False" />
-                <line number="83" hits="1" branch="False" />
                 <line number="84" hits="1" branch="False" />
                 <line number="85" hits="1" branch="False" />
+                <line number="86" hits="1" branch="False" />
               </lines>
             </method>
-            <method name="UpdateAllStations" signature="(FreeturiloWebApi.DTO.StationDTO[])" line-rate="1" branch-rate="1" complexity="2">
+            <method name="SetStationAsWorking" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="88" hits="4" branch="False" />
-                <line number="89" hits="5" branch="True" condition-coverage="100% (2/2)">
+                <line number="89" hits="2" branch="False" />
+                <line number="90" hits="2" branch="False" />
+                <line number="91" hits="3" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
-                    <condition number="7" type="jump" coverage="100%" />
+                    <condition number="135" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="92" hits="3" branch="False" />
-                <line number="93" hits="3" branch="False" />
-                <line number="95" hits="3" branch="False" />
-                <line number="96" hits="3" branch="False" />
-                <line number="98" hits="3" branch="False" />
-                <line number="99" hits="3" branch="False" />
+                <line number="92" hits="1" branch="False" />
+                <line number="93" hits="1" branch="False" />
+                <line number="94" hits="1" branch="False" />
+                <line number="95" hits="1" branch="False" />
+              </lines>
+            </method>
+            <method name="UpdateAllStations" signature="(FreeturiloWebApi.DTO.StationDTO[])" line-rate="1" branch-rate="1" complexity="8">
+              <lines>
+                <line number="98" hits="4" branch="False" />
+                <line number="99" hits="5" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="9" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="101" hits="3" branch="False" />
                 <line number="102" hits="3" branch="False" />
-                <line number="103" hits="3" branch="False" />
+                <line number="104" hits="3" branch="False" />
+                <line number="105" hits="3" branch="False" />
+                <line number="107" hits="3" branch="False" />
+                <line number="108" hits="3" branch="False" />
+                <line number="109" hits="3" branch="False" />
+                <line number="110" hits="23" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="236" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="111" hits="59" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="222" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="112" hits="19" branch="True" condition-coverage="100% (2/2)">
+                  <conditions>
+                    <condition number="165" type="jump" coverage="100%" />
+                  </conditions>
+                </line>
+                <line number="113" hits="12" branch="False" />
+                <line number="114" hits="12" branch="False" />
+                <line number="115" hits="12" branch="False" />
+                <line number="116" hits="12" branch="False" />
+                <line number="117" hits="12" branch="False" />
+                <line number="119" hits="3" branch="False" />
+                <line number="120" hits="3" branch="False" />
               </lines>
             </method>
             <method name="UpdateStation" signature="(System.Int32,FreeturiloWebApi.DTO.StationDTO)" line-rate="1" branch-rate="1" complexity="4">
               <lines>
-                <line number="106" hits="3" branch="False" />
-                <line number="107" hits="4" branch="True" condition-coverage="100% (2/2)">
+                <line number="123" hits="3" branch="False" />
+                <line number="124" hits="4" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="20" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="108" hits="2" branch="False" />
-                <line number="109" hits="3" branch="True" condition-coverage="100% (2/2)">
+                <line number="125" hits="2" branch="False" />
+                <line number="126" hits="3" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="151" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="111" hits="1" branch="False" />
-                <line number="112" hits="1" branch="False" />
-                <line number="114" hits="1" branch="False" />
-                <line number="115" hits="1" branch="False" />
+                <line number="128" hits="1" branch="False" />
+                <line number="129" hits="1" branch="False" />
+                <line number="131" hits="1" branch="False" />
+                <line number="132" hits="1" branch="False" />
               </lines>
             </method>
             <method name=".ctor" signature="(FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)" line-rate="1" branch-rate="1" complexity="1">
@@ -499,106 +532,143 @@
             </line>
             <line number="29" hits="1" branch="False" />
             <line number="30" hits="1" branch="False" />
-            <line number="31" hits="1" branch="False" />
-            <line number="32" hits="1" branch="False" />
-            <line number="33" hits="1" branch="False" />
+            <line number="32" hits="9" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="334" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="33" hits="3" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="265" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="34" hits="3" branch="False" />
+            <line number="35" hits="3" branch="False" />
             <line number="36" hits="3" branch="False" />
             <line number="37" hits="3" branch="False" />
             <line number="38" hits="3" branch="False" />
             <line number="39" hits="3" branch="False" />
-            <line number="40" hits="3" branch="False" />
-            <line number="43" hits="6" branch="False" />
-            <line number="44" hits="6" branch="False" />
-            <line number="45" hits="7" branch="True" condition-coverage="100% (2/2)">
+            <line number="41" hits="1" branch="False" />
+            <line number="42" hits="1" branch="False" />
+            <line number="43" hits="1" branch="False" />
+            <line number="46" hits="3" branch="False" />
+            <line number="47" hits="3" branch="False" />
+            <line number="48" hits="3" branch="False" />
+            <line number="49" hits="3" branch="False" />
+            <line number="50" hits="3" branch="False" />
+            <line number="53" hits="6" branch="False" />
+            <line number="54" hits="6" branch="False" />
+            <line number="55" hits="7" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="137" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="47" hits="5" branch="False" />
-            <line number="49" hits="5" branch="False" />
-            <line number="50" hits="5" branch="False" />
-            <line number="53" hits="4" branch="False" />
-            <line number="54" hits="4" branch="False" />
-            <line number="55" hits="5" branch="True" condition-coverage="100% (2/2)">
+            <line number="57" hits="5" branch="False" />
+            <line number="59" hits="5" branch="False" />
+            <line number="60" hits="5" branch="False" />
+            <line number="63" hits="4" branch="False" />
+            <line number="64" hits="4" branch="False" />
+            <line number="65" hits="5" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="137" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="56" hits="3" branch="False" />
-            <line number="57" hits="5" branch="True" condition-coverage="100% (2/2)">
+            <line number="66" hits="3" branch="False" />
+            <line number="67" hits="5" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="177" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="58" hits="3" branch="False" />
-            <line number="60" hits="3" branch="False" />
-            <line number="61" hits="15" branch="True" condition-coverage="100% (2/2)">
+            <line number="68" hits="3" branch="False" />
+            <line number="70" hits="3" branch="False" />
+            <line number="71" hits="15" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="278" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="62" hits="3" branch="False" />
-            <line number="63" hits="3" branch="True" condition-coverage="100% (2/2)">
-              <conditions>
-                <condition number="252" type="jump" coverage="100%" />
-              </conditions>
-            </line>
-            <line number="64" hits="1" branch="False" />
-            <line number="65" hits="1" branch="False" />
-            <line number="66" hits="1" branch="False" />
-            <line number="67" hits="3" branch="False" />
-            <line number="68" hits="3" branch="False" />
-            <line number="71" hits="2" branch="False" />
-            <line number="72" hits="2" branch="False" />
+            <line number="72" hits="3" branch="False" />
             <line number="73" hits="3" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="135" type="jump" coverage="100%" />
+                <condition number="252" type="jump" coverage="100%" />
               </conditions>
             </line>
             <line number="74" hits="1" branch="False" />
             <line number="75" hits="1" branch="False" />
             <line number="76" hits="1" branch="False" />
-            <line number="79" hits="2" branch="False" />
-            <line number="80" hits="2" branch="False" />
-            <line number="81" hits="3" branch="True" condition-coverage="100% (2/2)">
+            <line number="77" hits="3" branch="False" />
+            <line number="78" hits="3" branch="False" />
+            <line number="81" hits="2" branch="False" />
+            <line number="82" hits="2" branch="False" />
+            <line number="83" hits="3" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="135" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="82" hits="1" branch="False" />
-            <line number="83" hits="1" branch="False" />
             <line number="84" hits="1" branch="False" />
             <line number="85" hits="1" branch="False" />
-            <line number="88" hits="4" branch="False" />
-            <line number="89" hits="5" branch="True" condition-coverage="100% (2/2)">
+            <line number="86" hits="1" branch="False" />
+            <line number="89" hits="2" branch="False" />
+            <line number="90" hits="2" branch="False" />
+            <line number="91" hits="3" branch="True" condition-coverage="100% (2/2)">
               <conditions>
-                <condition number="7" type="jump" coverage="100%" />
+                <condition number="135" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="92" hits="3" branch="False" />
-            <line number="93" hits="3" branch="False" />
-            <line number="95" hits="3" branch="False" />
-            <line number="96" hits="3" branch="False" />
-            <line number="98" hits="3" branch="False" />
-            <line number="99" hits="3" branch="False" />
+            <line number="92" hits="1" branch="False" />
+            <line number="93" hits="1" branch="False" />
+            <line number="94" hits="1" branch="False" />
+            <line number="95" hits="1" branch="False" />
+            <line number="98" hits="4" branch="False" />
+            <line number="99" hits="5" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="9" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="101" hits="3" branch="False" />
             <line number="102" hits="3" branch="False" />
-            <line number="103" hits="3" branch="False" />
-            <line number="106" hits="3" branch="False" />
-            <line number="107" hits="4" branch="True" condition-coverage="100% (2/2)">
+            <line number="104" hits="3" branch="False" />
+            <line number="105" hits="3" branch="False" />
+            <line number="107" hits="3" branch="False" />
+            <line number="108" hits="3" branch="False" />
+            <line number="109" hits="3" branch="False" />
+            <line number="110" hits="23" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="236" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="111" hits="59" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="222" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="112" hits="19" branch="True" condition-coverage="100% (2/2)">
+              <conditions>
+                <condition number="165" type="jump" coverage="100%" />
+              </conditions>
+            </line>
+            <line number="113" hits="12" branch="False" />
+            <line number="114" hits="12" branch="False" />
+            <line number="115" hits="12" branch="False" />
+            <line number="116" hits="12" branch="False" />
+            <line number="117" hits="12" branch="False" />
+            <line number="119" hits="3" branch="False" />
+            <line number="120" hits="3" branch="False" />
+            <line number="123" hits="3" branch="False" />
+            <line number="124" hits="4" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="20" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="108" hits="2" branch="False" />
-            <line number="109" hits="3" branch="True" condition-coverage="100% (2/2)">
+            <line number="125" hits="2" branch="False" />
+            <line number="126" hits="3" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="151" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="111" hits="1" branch="False" />
-            <line number="112" hits="1" branch="False" />
-            <line number="114" hits="1" branch="False" />
-            <line number="115" hits="1" branch="False" />
+            <line number="128" hits="1" branch="False" />
+            <line number="129" hits="1" branch="False" />
+            <line number="131" hits="1" branch="False" />
+            <line number="132" hits="1" branch="False" />
             <line number="18" hits="27" branch="False" />
             <line number="19" hits="27" branch="False" />
             <line number="20" hits="27" branch="False" />
@@ -632,7 +702,7 @@
                 <line number="40" hits="12" branch="False" />
               </lines>
             </method>
-            <method name="generateJwtToken" signature="(FreeturiloWebApi.Models.Administrator)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="GenerateJwtToken" signature="(FreeturiloWebApi.Models.Administrator)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="43" hits="12" branch="False" />
                 <line number="44" hits="12" branch="False" />
@@ -744,12 +814,12 @@
           <methods>
             <method name="get_Stations" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="109" branch="False" />
+                <line number="8" hits="110" branch="False" />
               </lines>
             </method>
             <method name="get_Routes" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="82" branch="False" />
+                <line number="9" hits="100" branch="False" />
               </lines>
             </method>
             <method name="get_Administrators" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -764,8 +834,8 @@
             </method>
           </methods>
           <lines>
-            <line number="8" hits="109" branch="False" />
-            <line number="9" hits="82" branch="False" />
+            <line number="8" hits="110" branch="False" />
+            <line number="9" hits="100" branch="False" />
             <line number="10" hits="123" branch="False" />
             <line number="7" hits="219" branch="False" />
           </lines>
@@ -779,54 +849,54 @@
             </method>
             <method name="get_StartId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="18" branch="False" />
+                <line number="9" hits="36" branch="False" />
               </lines>
             </method>
             <method name="get_StopId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="18" branch="False" />
+                <line number="10" hits="36" branch="False" />
               </lines>
             </method>
             <method name="get_Time" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="11" hits="18" branch="False" />
+                <line number="11" hits="36" branch="False" />
               </lines>
             </method>
             <method name="get_Cost" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="18" branch="False" />
+                <line number="12" hits="36" branch="False" />
               </lines>
             </method>
             <method name="get_RouteJSON" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="13" hits="18" branch="False" />
+                <line number="13" hits="36" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
             <line number="8" hits="18" branch="False" />
-            <line number="9" hits="18" branch="False" />
-            <line number="10" hits="18" branch="False" />
-            <line number="11" hits="18" branch="False" />
-            <line number="12" hits="18" branch="False" />
-            <line number="13" hits="18" branch="False" />
+            <line number="9" hits="36" branch="False" />
+            <line number="10" hits="36" branch="False" />
+            <line number="11" hits="36" branch="False" />
+            <line number="12" hits="36" branch="False" />
+            <line number="13" hits="36" branch="False" />
           </lines>
         </class>
         <class name="FreeturiloWebApi.Models.Station" filename="Models\Station.cs" line-rate="1" branch-rate="1" complexity="8">
           <methods>
             <method name="get_Id" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="32" branch="False" />
+                <line number="8" hits="68" branch="False" />
               </lines>
             </method>
             <method name="get_Lon" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="30" branch="False" />
+                <line number="9" hits="66" branch="False" />
               </lines>
             </method>
             <method name="get_Lat" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="30" branch="False" />
+                <line number="10" hits="66" branch="False" />
               </lines>
             </method>
             <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
@@ -856,9 +926,9 @@
             </method>
           </methods>
           <lines>
-            <line number="8" hits="32" branch="False" />
-            <line number="9" hits="30" branch="False" />
-            <line number="10" hits="30" branch="False" />
+            <line number="8" hits="68" branch="False" />
+            <line number="9" hits="66" branch="False" />
+            <line number="10" hits="66" branch="False" />
             <line number="11" hits="32" branch="False" />
             <line number="12" hits="31" branch="False" />
             <line number="13" hits="31" branch="False" />
@@ -898,7 +968,7 @@
         </class>
         <class name="FreeturiloWebApi.Middlewares.JwtMiddleware" filename="Middlewares\JwtMiddleware.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
-            <method name="attachUserToContext" signature="(Microsoft.AspNetCore.Http.HttpContext,System.String)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="AttachUserToContext" signature="(Microsoft.AspNetCore.Http.HttpContext,System.String)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="40" hits="37" branch="False" />
                 <line number="42" hits="37" branch="False" />
@@ -1838,6 +1908,144 @@
             <line number="15" hits="1" branch="False" />
           </lines>
         </class>
+        <class name="FreeturiloWebApi.Helpers.GoogleMapsAPIHandler" filename="Helpers\GoogleMapsAPIHandler.cs" line-rate="0.7105" branch-rate="0.1666" complexity="12">
+          <methods>
+            <method name="CalculateCost" signature="(System.Int32)" line-rate="0.2666" branch-rate="0.1" complexity="10">
+              <lines>
+                <line number="22" hits="18" branch="False" />
+                <line number="23" hits="18" branch="False" />
+                <line number="24" hits="36" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="30" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="25" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="59" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="26" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="85" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="27" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="114" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="29" hits="0" branch="False" />
+                <line number="30" hits="0" branch="False" />
+                <line number="31" hits="0" branch="True" condition-coverage="0% (0/2)">
+                  <conditions>
+                    <condition number="175" type="jump" coverage="0%" />
+                  </conditions>
+                </line>
+                <line number="32" hits="0" branch="False" />
+                <line number="33" hits="0" branch="False" />
+                <line number="34" hits="0" branch="False" />
+                <line number="35" hits="0" branch="False" />
+                <line number="37" hits="0" branch="False" />
+                <line number="38" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="MakeRoute" signature="(FreeturiloWebApi.Models.Station,FreeturiloWebApi.Models.Station)" line-rate="1" branch-rate="0.5" complexity="2">
+              <lines>
+                <line number="41" hits="18" branch="False" />
+                <line number="42" hits="18" branch="False" />
+                <line number="43" hits="18" branch="False" />
+                <line number="45" hits="18" branch="False" />
+                <line number="47" hits="18" branch="False" />
+                <line number="48" hits="18" branch="False" />
+                <line number="49" hits="18" branch="False" />
+                <line number="50" hits="18" branch="False" />
+                <line number="51" hits="18" branch="False" />
+                <line number="52" hits="18" branch="False" />
+                <line number="53" hits="18" branch="False" />
+                <line number="54" hits="18" branch="True" condition-coverage="50% (1/2)">
+                  <conditions>
+                    <condition number="278" type="jump" coverage="50%" />
+                  </conditions>
+                </line>
+                <line number="56" hits="18" branch="False" />
+                <line number="57" hits="18" branch="False" />
+                <line number="59" hits="18" branch="False" />
+                <line number="60" hits="18" branch="False" />
+                <line number="61" hits="18" branch="False" />
+                <line number="62" hits="18" branch="False" />
+                <line number="63" hits="18" branch="False" />
+                <line number="64" hits="18" branch="False" />
+                <line number="65" hits="18" branch="False" />
+                <line number="66" hits="18" branch="False" />
+                <line number="67" hits="18" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="22" hits="18" branch="False" />
+            <line number="23" hits="18" branch="False" />
+            <line number="24" hits="36" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="30" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="25" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="59" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="26" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="85" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="27" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="114" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="29" hits="0" branch="False" />
+            <line number="30" hits="0" branch="False" />
+            <line number="31" hits="0" branch="True" condition-coverage="0% (0/2)">
+              <conditions>
+                <condition number="175" type="jump" coverage="0%" />
+              </conditions>
+            </line>
+            <line number="32" hits="0" branch="False" />
+            <line number="33" hits="0" branch="False" />
+            <line number="34" hits="0" branch="False" />
+            <line number="35" hits="0" branch="False" />
+            <line number="37" hits="0" branch="False" />
+            <line number="38" hits="18" branch="False" />
+            <line number="41" hits="18" branch="False" />
+            <line number="42" hits="18" branch="False" />
+            <line number="43" hits="18" branch="False" />
+            <line number="45" hits="18" branch="False" />
+            <line number="47" hits="18" branch="False" />
+            <line number="48" hits="18" branch="False" />
+            <line number="49" hits="18" branch="False" />
+            <line number="50" hits="18" branch="False" />
+            <line number="51" hits="18" branch="False" />
+            <line number="52" hits="18" branch="False" />
+            <line number="53" hits="18" branch="False" />
+            <line number="54" hits="18" branch="True" condition-coverage="50% (1/2)">
+              <conditions>
+                <condition number="278" type="jump" coverage="50%" />
+              </conditions>
+            </line>
+            <line number="56" hits="18" branch="False" />
+            <line number="57" hits="18" branch="False" />
+            <line number="59" hits="18" branch="False" />
+            <line number="60" hits="18" branch="False" />
+            <line number="61" hits="18" branch="False" />
+            <line number="62" hits="18" branch="False" />
+            <line number="63" hits="18" branch="False" />
+            <line number="64" hits="18" branch="False" />
+            <line number="65" hits="18" branch="False" />
+            <line number="66" hits="18" branch="False" />
+            <line number="67" hits="18" branch="False" />
+          </lines>
+        </class>
         <class name="FreeturiloWebApi.Helpers.PasswordHasher" filename="Helpers\PasswordHasher.cs" line-rate="1" branch-rate="1" complexity="2">
           <methods>
             <method name="Hash" signature="(System.String)" line-rate="1" branch-rate="1" complexity="2">
@@ -2004,24 +2212,24 @@
           <methods>
             <method name="get_Longitude" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="8" hits="74" branch="False" />
+                <line number="8" hits="79" branch="False" />
               </lines>
             </method>
             <method name="get_Latitude" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="74" branch="False" />
+                <line number="10" hits="79" branch="False" />
               </lines>
             </method>
             <method name="get_Name" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="74" branch="False" />
+                <line number="12" hits="77" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="8" hits="74" branch="False" />
-            <line number="10" hits="74" branch="False" />
-            <line number="12" hits="74" branch="False" />
+            <line number="8" hits="79" branch="False" />
+            <line number="10" hits="79" branch="False" />
+            <line number="12" hits="77" branch="False" />
           </lines>
         </class>
         <class name="FreeturiloWebApi.DTO.RouteDTO" filename="DTO\RouteDTO.cs" line-rate="0" branch-rate="1" complexity="4">
@@ -2093,25 +2301,295 @@
             </method>
             <method name="get_BikeRacks" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="75" branch="False" />
+                <line number="10" hits="78" branch="False" />
               </lines>
             </method>
             <method name="get_Bikes" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="12" hits="79" branch="False" />
+                <line number="12" hits="82" branch="False" />
               </lines>
             </method>
             <method name="get_State" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="14" hits="77" branch="False" />
+                <line number="14" hits="80" branch="False" />
               </lines>
             </method>
           </methods>
           <lines>
             <line number="8" hits="85" branch="False" />
-            <line number="10" hits="75" branch="False" />
-            <line number="12" hits="79" branch="False" />
-            <line number="14" hits="77" branch="False" />
+            <line number="10" hits="78" branch="False" />
+            <line number="12" hits="82" branch="False" />
+            <line number="14" hits="80" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.GeocodedWaypoint" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Status" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="12" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_PlaceId" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="14" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Types" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="16" hits="36" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="12" hits="36" branch="False" />
+            <line number="14" hits="36" branch="False" />
+            <line number="16" hits="36" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.Coords" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Lat" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="21" hits="224" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Lng" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="23" hits="224" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="21" hits="224" branch="False" />
+            <line number="23" hits="224" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.Bounds" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Northeast" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="28" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Southwest" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="30" hits="18" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="28" hits="18" branch="False" />
+            <line number="30" hits="18" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.TextValue" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="2">
+          <methods>
+            <method name="get_Text" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="35" hits="188" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Value" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="37" hits="206" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="35" hits="188" branch="False" />
+            <line number="37" hits="206" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.Polyline" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="1">
+          <methods>
+            <method name="get_Points" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="42" hits="94" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="42" hits="94" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.Step" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="7">
+          <methods>
+            <method name="get_Distance" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="47" hits="76" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Duration" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="49" hits="76" branch="False" />
+              </lines>
+            </method>
+            <method name="get_EndLocation" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="51" hits="76" branch="False" />
+              </lines>
+            </method>
+            <method name="get_StartLocation" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="53" hits="76" branch="False" />
+              </lines>
+            </method>
+            <method name="get_HtmlInstructions" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="55" hits="76" branch="False" />
+              </lines>
+            </method>
+            <method name="get_TravelMode" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="57" hits="76" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Polyline" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="59" hits="76" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="47" hits="76" branch="False" />
+            <line number="49" hits="76" branch="False" />
+            <line number="51" hits="76" branch="False" />
+            <line number="53" hits="76" branch="False" />
+            <line number="55" hits="76" branch="False" />
+            <line number="57" hits="76" branch="False" />
+            <line number="59" hits="76" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.Leg" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="9">
+          <methods>
+            <method name="get_Distance" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="65" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Duration" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="67" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_EndAddress" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="69" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_EndLocation" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="71" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_StartAddress" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="73" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_StartLocation" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="75" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Steps" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="77" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_TrafficSpeedEntry" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="79" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_ViaWaypoint" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="81" hits="18" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="65" hits="18" branch="False" />
+            <line number="67" hits="36" branch="False" />
+            <line number="69" hits="18" branch="False" />
+            <line number="71" hits="18" branch="False" />
+            <line number="73" hits="18" branch="False" />
+            <line number="75" hits="18" branch="False" />
+            <line number="77" hits="18" branch="False" />
+            <line number="79" hits="18" branch="False" />
+            <line number="81" hits="18" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.Route" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="7">
+          <methods>
+            <method name="get_Bounds" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="86" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Copyrights" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="88" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Legs" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="90" hits="36" branch="False" />
+              </lines>
+            </method>
+            <method name="get_OverviewPolyline" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="92" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Summary" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="94" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Warnings" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="96" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_WaypointOrder" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="98" hits="18" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="86" hits="18" branch="False" />
+            <line number="88" hits="18" branch="False" />
+            <line number="90" hits="36" branch="False" />
+            <line number="92" hits="18" branch="False" />
+            <line number="94" hits="18" branch="False" />
+            <line number="96" hits="18" branch="False" />
+            <line number="98" hits="18" branch="False" />
+          </lines>
+        </class>
+        <class name="FreeturiloWebApi.DTO.GoogleDTO.DirectionDTO" filename="DTO\GoogleDTO\DirectionDTO.cs" line-rate="1" branch-rate="1" complexity="3">
+          <methods>
+            <method name="get_Status" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="103" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_GeocodedWaypoints" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="105" hits="18" branch="False" />
+              </lines>
+            </method>
+            <method name="get_Routes" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="107" hits="36" branch="False" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="103" hits="18" branch="False" />
+            <line number="105" hits="18" branch="False" />
+            <line number="107" hits="36" branch="False" />
           </lines>
         </class>
         <class name="FreeturiloWebApi.Controllers.AppController" filename="Controllers\AppController.cs" line-rate="1" branch-rate="1" complexity="5">

@@ -28,6 +28,16 @@ namespace FreeturiloWebApi.Services
 
             var station = _mapper.Map<Station>(newStation);
             _context.Stations.Add(station);
+
+            foreach(var s in _context.Stations)
+                if(s != station)
+                {
+                    var route1 = GoogleMapsAPIHandler.MakeRoute(s, station);
+                    var route2 = GoogleMapsAPIHandler.MakeRoute(station, s);
+                    _context.Routes.Add(route1);
+                    _context.Routes.Add(route2);
+                }
+
             _context.SaveChanges();
             return newStation;
         }
@@ -87,8 +97,7 @@ namespace FreeturiloWebApi.Services
         public void UpdateAllStations(StationDTO[] newStations)
         {
             if (newStations == null) throw new Exception400();
-            
-            //TODO do it better
+          
             var routes = _context.Routes.ToArray();
             _context.Routes.RemoveRange(routes);
 
@@ -97,7 +106,15 @@ namespace FreeturiloWebApi.Services
 
             var newStationDTOs = _mapper.Map<Station[]>(newStations);
             _context.Stations.AddRange(newStationDTOs);
-            //TODO fill Routes Table
+            int i = 0;
+            foreach(var station1 in newStationDTOs)
+                foreach(var station2 in newStationDTOs)
+                    if(station1 != station2)
+                    {
+                        var route = GoogleMapsAPIHandler.MakeRoute(station1, station2);
+                        _context.Routes.Add(route);
+                        Console.WriteLine(i++);
+                    }
             
             _context.SaveChanges();
         }

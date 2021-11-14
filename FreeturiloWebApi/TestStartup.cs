@@ -41,9 +41,9 @@ namespace FreeturiloWebApi
                  );
 
             _context.Stations.AddRange(
-                new Station() { Id = 1, AvailableBikes = 10, AvailableRacks = 15, State = 0, Name = "Trasa £azienkowska x Marsza³kowska", Reports = 0, Lat = 52, Lon = 48 },
-                new Station() { Id = 2, AvailableBikes = 10, AvailableRacks = 15, State = 1, Name = "Metro Wierzbno", Reports = 1, Lat = 52, Lon = 48 },
-                new Station() { Id = 3, AvailableBikes = 10, AvailableRacks = 15, State = 2, Name = "Dworzec Centralny x Emilii Plater", Reports = 10, Lat = 52, Lon = 48 }
+                new Station() { Id = 1, AvailableBikes = 10, AvailableRacks = 15, State = 0, Name = "Trasa £azienkowska x Marsza³kowska", Reports = 0, Lat = 52.296298, Lon = 20.958358 },
+                new Station() { Id = 2, AvailableBikes = 10, AvailableRacks = 15, State = 1, Name = "Metro Wierzbno", Reports = 1, Lat = 52.290974, Lon = 20.929556 },
+                new Station() { Id = 3, AvailableBikes = 10, AvailableRacks = 15, State = 2, Name = "Dworzec Centralny x Emilii Plater", Reports = 10, Lat = 52.290173, Lon = 20.95037 }
                 );
 
             _context.Routes.AddRange(

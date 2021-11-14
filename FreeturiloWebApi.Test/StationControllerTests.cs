@@ -25,9 +25,9 @@ namespace FreeturiloWebApi.Test
 
         private readonly StationDTO[] defaultStations = new StationDTO[]
         {
-            new() {Id = 1},
-            new() {Id = 2},
-            new() {Id = 3},
+                new StationDTO() { Id = 1, Bikes = 10, BikeRacks = 15, State = 0, Name = "Trasa £azienkowska x Marsza³kowska", Latitude = 52.296298, Longitude = 20.958358 },
+                new StationDTO() { Id = 2, Bikes = 10, BikeRacks = 15, State = 1, Name = "Metro Wierzbno", Latitude = 52.290974, Longitude = 20.929556 },
+                new StationDTO() { Id = 3, Bikes = 10, BikeRacks = 15, State = 2, Name = "Dworzec Centralny x Emilii Plater", Latitude = 52.290173, Longitude = 20.95037 }
         };
 
         private IHost host;
@@ -96,7 +96,7 @@ namespace FreeturiloWebApi.Test
         public void AddNewStation()
         {
             var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-            var newStation = new StationDTO() { Id = 4, Bikes = 3 };
+            var newStation = new StationDTO() { Id = 4, Bikes = 3, Latitude = 52.285914, Longitude = 20.940561 };
             StationMethods.AddNewStation(serverPath, token, newStation);
             var stations = StationMethods.GetAllStations(serverPath);
             Assert.AreEqual(stations.Length, 4);
@@ -150,7 +150,7 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void UpdateStation()
         {
-            var newStation = new StationDTO() { Id = 1, Bikes = 12 };
+            var newStation = new StationDTO() { Id = 1, Bikes = 12, Latitude = 52.285914, Longitude = 20.940561 };
             var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
 
             StationMethods.UpdateStation(serverPath, token, 1, newStation);
