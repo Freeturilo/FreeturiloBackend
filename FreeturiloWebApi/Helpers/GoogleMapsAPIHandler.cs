@@ -9,12 +9,16 @@ using RestSharp;
 using FreeturiloWebApi.Exceptions;
 using System.Text.Json;
 using FreeturiloWebApi.DTO.GoogleDTO;
+using System.Text;
 
+
+//TODO ogarnąć to, nie będzie żadnych zmian
 namespace FreeturiloWebApi.Helpers
 {
     static public class GoogleMapsAPIHandler
     {
         private const string serverPath = @"https://maps.googleapis.com/maps/api/directions/json";
+        private const string distanceMatrixApiPath = @"https://maps.googleapis.com/maps/api/distancematrix/json";
         private const string mode = "mode=bicycling";
         private const string units = "units=metric";
         private const string key = "AIzaSyDDYfuFzFNrLnGW-JiyHhd-Aq7-SX1n_Hs";
@@ -32,8 +36,37 @@ namespace FreeturiloWebApi.Helpers
                 minutes -= 60;
                 hour++;
             }
-
             return cost;
+        }
+
+        public static IEnumerable<Models.Route> MakeAllRoutes(IEnumerable<Station> allStations)
+        {
+            StringBuilder orgns = new StringBuilder("origins=");
+            StringBuilder dests = new StringBuilder("destinations=");
+
+            foreach(var station in allStations)
+            {
+                string stationCoords = $"{station.Lat.Value.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture)}," +
+                    $"{station.Lon.Value.ToString("0.000000", System.Globalization.CultureInfo.InvariantCulture)}|";
+                orgns.Append(stationCoords);
+                dests.Append(stationCoords);
+            }
+
+            string path = $"{distanceMatrixApiPath}?{orgns}&{dests}&{mode}&{units}&key={key}";
+            
+            var client = new RestClient(path)
+            {
+                Timeout = -1
+            };
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Content-Type", "application/json");
+            var res = client.Execute(request);
+            if (!res.IsSuccessful) throw new Exception503();
+
+            var direction = JsonSerializer.Deserialize<DirectionDTO>(res.Content);
+            var time = direction.Routes[0].Legs[0].Duration.Value;
+
+            return null;
         }
 
         public static Models.Route MakeRoute(Station station1, Station station2)
