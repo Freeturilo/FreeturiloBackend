@@ -10,37 +10,27 @@ namespace NextBikeApiService.Helpers
 {
     static class BikeDataComparer
     {
-        public static bool Compare(markers nextbikeData, StationDTO[] freeturiloData, out List<StationDTO> toBeAdded, out List<StationDTO> toBeUpdated)
+        public static IEnumerable<StationDTO> Compare(markers nextbikeData, StationDTO[] freeturiloData)
         {
-            toBeAdded = new List<StationDTO>();
-            toBeUpdated = new List<StationDTO>();
+            var toBeUpdated = new List<StationDTO>();
 
-            foreach (var station in nextbikeData.country.city.place)
+            foreach (var station in freeturiloData)
             {
-                var stationDTO = freeturiloData.Where(s => s.Id == station.uid).FirstOrDefault();
-                if (stationDTO == null)
+                var nbStation = nextbikeData.country.city.place.Where(s => s.uid == station.Id).FirstOrDefault();
+                if (nbStation == null)
                 {
-                    toBeAdded.Add(new StationDTO()
-                    {
-                        Id = station.uid,
-                        Latitude = (double)station.lat,
-                        Longitude = (double)station.lng,
-                        Name = station.name,
-                        Bikes = station.bikes_available_to_rent,
-                        BikeRacks = station.free_racks,
-                        State = 0,
-                    });
+                    continue;
                 }
-                else if (stationDTO.Bikes != station.bikes_available_to_rent || stationDTO.BikeRacks != station.free_racks)
+                else if (station.Bikes != nbStation.bikes_available_to_rent || station.BikeRacks != nbStation.free_racks)
                 {
-                    stationDTO.Bikes = station.bikes_available_to_rent;
-                    stationDTO.BikeRacks = station.free_racks;
+                    station.Bikes = nbStation.bikes_available_to_rent;
+                    station.BikeRacks = nbStation.free_racks;
 
-                    toBeUpdated.Add(stationDTO);
+                    toBeUpdated.Add(station);
                 }
             }
 
-            return nextbikeData.country.city.place.Length != freeturiloData.Length;
+            return toBeUpdated;
         }
     }
 }

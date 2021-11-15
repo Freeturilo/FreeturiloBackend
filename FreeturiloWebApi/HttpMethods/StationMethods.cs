@@ -29,30 +29,6 @@ namespace FreeturiloWebApi.HttpMethods
             var stations = JsonSerializer.Deserialize<StationDTO[]>(jsonContent);
             return stations;
         }
-        public static StationDTO AddNewStation(string serverPath, string token, StationDTO newStation)
-        {
-            var client = new RestClient(serverPath + nmspace)
-            {
-                Timeout = -1
-            };
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("api-key", token);
-            if (newStation != null)
-            {
-                string body = JsonSerializer.Serialize(newStation);
-                request.AddParameter("application/json", body, ParameterType.RequestBody);
-            }
-
-            IRestResponse response = client.Execute(request);
-
-            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400();
-            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
-
-            var json = response.Content;
-            var station = JsonSerializer.Deserialize<StationDTO>(json);
-            return station;
-        }
 
         public static void UpdateAllStations(string serverPath, string token, StationDTO[] newStations)
         {
@@ -72,6 +48,7 @@ namespace FreeturiloWebApi.HttpMethods
             IRestResponse response = client.Execute(request);
             if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400();
             else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
+            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
 
         public static StationDTO GetStation(string serverPath, int id)
@@ -92,26 +69,6 @@ namespace FreeturiloWebApi.HttpMethods
             return station;
         }
 
-        public static void UpdateStation(string serverPath, string token, int id, StationDTO newStation)
-        {
-            var client = new RestClient(serverPath + nmspace + @"/" + id.ToString())
-            {
-                Timeout = -1
-            };
-            var request = new RestRequest(Method.PUT);
-            request.AddHeader("Content-Type", "application/json");
-            request.AddHeader("api-key", token);
-            if (newStation != null)
-            {
-                string body = JsonSerializer.Serialize(newStation);
-                request.AddParameter("application/json", body, ParameterType.RequestBody);
-            }
-
-            IRestResponse response = client.Execute(request);
-            if (response.StatusCode == HttpStatusCode.BadRequest) throw new Exception400();
-            else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
-            else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
-        }
         public static void ReportStation(string serverPath, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/report")

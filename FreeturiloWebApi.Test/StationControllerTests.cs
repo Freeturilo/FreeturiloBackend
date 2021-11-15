@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using FreeturiloWebApi.HttpMethods;
 using Microsoft.AspNetCore.Hosting;
 using System.Net;
+using System;
 
 namespace FreeturiloWebApi.Test
 {
@@ -93,46 +94,24 @@ namespace FreeturiloWebApi.Test
         }
 
         [Test]
-        public void AddNewStation()
-        {
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-            var newStation = new StationDTO() { Id = 4, Bikes = 3, Latitude = 52.285914, Longitude = 20.940561 };
-            StationMethods.AddNewStation(serverPath, token, newStation);
-            var stations = StationMethods.GetAllStations(serverPath);
-            Assert.AreEqual(stations.Length, 4);
-
-            Assert.Catch<Exception400>(() =>
-            {
-                var newStation = new StationDTO() { Id = 1, Bikes = 3 };
-                StationMethods.AddNewStation(serverPath, token, newStation);
-            });
-
-            Assert.Catch<Exception400>(() =>
-            {
-                StationMethods.AddNewStation(serverPath, token, null);
-            });
-
-            StationMethods.UpdateAllStations(serverPath, token, defaultStations);
-
-            Assert.Catch<Exception401>(() =>
-            {
-                StationMethods.AddNewStation(serverPath, "", newStation);
-            });
-        }
-
-        [Test]
         public void UpdateAllStations()
         {
             var newStations = new StationDTO[]
             {
-                new StationDTO() {Id = 6},
+                new StationDTO() { Id = 1, Bikes = 10, BikeRacks = 20},
+                new StationDTO() { Id = 2, Bikes = 15, BikeRacks = 20},
             };
-
             var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
             StationMethods.UpdateAllStations(serverPath, token, newStations);
             var stations = StationMethods.GetAllStations(serverPath);
-            Assert.AreEqual(stations.Length, 1);
-            Assert.AreEqual(stations[0].Id, 6);
+            Assert.AreEqual(stations.Length, 3);
+            Assert.AreEqual(stations[0].Bikes, 10);
+            Assert.AreEqual(stations[1].Bikes, 15);
+            Assert.AreEqual(stations[2].Bikes, 10);
+
+            Assert.AreEqual(stations[0].BikeRacks, 20);
+            Assert.AreEqual(stations[1].BikeRacks, 20);
+            Assert.AreEqual(stations[2].BikeRacks, 15);
 
             Assert.Catch<Exception400>(() =>
             {
@@ -143,34 +122,12 @@ namespace FreeturiloWebApi.Test
 
             Assert.Catch<Exception401>(() =>
             {
-                StationMethods.UpdateAllStations(serverPath, "", newStations);
+                StationMethods.UpdateAllStations(serverPath, "", Array.Empty<StationDTO>());
             });
-        }
-
-        [Test]
-        public void UpdateStation()
-        {
-            var newStation = new StationDTO() { Id = 1, Bikes = 12, Latitude = 52.285914, Longitude = 20.940561 };
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-
-            StationMethods.UpdateStation(serverPath, token, 1, newStation);
-            var station = StationMethods.GetStation(serverPath, 1);
-
-            Assert.AreEqual(station.Bikes, 12);
 
             Assert.Catch<Exception404>(() =>
             {
-                StationMethods.UpdateStation(serverPath, token, 123, newStation);
-            });
-
-            Assert.Catch<Exception400>(() =>
-            {
-                StationMethods.UpdateStation(serverPath, token, 1, null);
-            });
-
-            Assert.Catch<Exception401>(() =>
-            {
-                StationMethods.UpdateStation(serverPath, "", 1, newStation);
+                StationMethods.UpdateAllStations(serverPath, token, new[] { new StationDTO() { Id = 19 } });
             });
         }
 

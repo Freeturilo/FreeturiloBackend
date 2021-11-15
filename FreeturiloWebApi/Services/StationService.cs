@@ -20,27 +20,6 @@ namespace FreeturiloWebApi.Services
             _context = context;
             _mapper = mapper;
         }
-        public StationDTO AddNewStation(StationDTO newStation)
-        {
-            if (newStation == null) throw new Exception400();
-            var existingStation = _context.Stations.Where(s => s.Id == newStation.Id).FirstOrDefault();
-            if (existingStation != null) throw new Exception400();
-
-            var station = _mapper.Map<Station>(newStation);
-            _context.Stations.Add(station);
-
-            foreach(var s in _context.Stations)
-                if(s != station)
-                {
-                    var route1 = GoogleMapsAPIHandler.MakeRoute(s, station);
-                    var route2 = GoogleMapsAPIHandler.MakeRoute(station, s);
-                    _context.Routes.Add(route1);
-                    _context.Routes.Add(route2);
-                }
-
-            _context.SaveChanges();
-            return newStation;
-        }
 
         public StationDTO[] GetAllStations()
         {
@@ -97,37 +76,23 @@ namespace FreeturiloWebApi.Services
         public void UpdateAllStations(StationDTO[] newStations)
         {
             if (newStations == null) throw new Exception400();
-          
-            var routes = _context.Routes.ToArray();
-            _context.Routes.RemoveRange(routes);
+            var stations = new List<Station>();
+            foreach(var stationDTO in newStations)
+            {
+                var station = _context.Stations.Where(s => s.Id == stationDTO.Id).FirstOrDefault();
+                if (station == null) throw new Exception404();
+                stations.Add(station);
+            }
 
-            var stations = _context.Stations.ToArray();
-            _context.Stations.RemoveRange(stations);
+            for(int i=0; i<newStations.Length; i++)
+            {
+                var station = stations[i];
+                var stationDTO = newStations[i];
 
-            var newStationDTOs = _mapper.Map<Station[]>(newStations);
-            _context.Stations.AddRange(newStationDTOs);
-            int i = 0;
-            foreach(var station1 in newStationDTOs)
-                foreach(var station2 in newStationDTOs)
-                    if(station1 != station2)
-                    {
-                        var route = GoogleMapsAPIHandler.MakeRoute(station1, station2);
-                        _context.Routes.Add(route);
-                        Console.WriteLine(i++);
-                    }
+                station.AvailableBikes = stationDTO.Bikes;
+                station.AvailableRacks = stationDTO.BikeRacks;
+            }
             
-            _context.SaveChanges();
-        }
-
-        public void UpdateStation(int stationId, StationDTO newStation)
-        {
-            if (newStation == null) throw new Exception400();
-            var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
-            if (station == null) throw new Exception404();
-
-            station.AvailableRacks = newStation.BikeRacks;
-            station.AvailableBikes = newStation.Bikes;
-
             _context.SaveChanges();
         }
     }

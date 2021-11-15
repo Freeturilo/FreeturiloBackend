@@ -9,6 +9,7 @@ using NextBikeDataParser;
 
 using NextBikeApiService.Helpers;
 using FreeturiloWebApi.HttpMethods;
+using System.Linq;
 
 namespace NextBikeApiService
 {
@@ -33,32 +34,10 @@ namespace NextBikeApiService
                 (var markers, var _) = NextBikeApiHandler.GetNextBikeData(_logger, stoppingToken);
                 var freeturiloStations = StationMethods.GetAllStations(serverPath);
 
-                var globalUpdate = BikeDataComparer.Compare(markers, freeturiloStations, out var toBeAdded, out var toBeUpdated);
-
+                var toBeUpdated = BikeDataComparer.Compare(markers, freeturiloStations);
                 var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-
-                if(globalUpdate)
-                {
-                    toBeUpdated.AddRange(toBeAdded);
-                    StationMethods.UpdateAllStations(serverPath, token, toBeUpdated.ToArray());
-                    _logger.LogInformation("Global update: all stations updated");
-                }
-                else
-                {
-                    foreach(var station in toBeUpdated)
-                    {
-                        StationMethods.UpdateStation(serverPath, token, station.Id, station);
-                        _logger.LogInformation($"Station updated: {station.Name}");
-                    }
-
-                    foreach (var station in toBeAdded)
-                    {
-                        StationMethods.AddNewStation(serverPath, token, station);
-                        _logger.LogInformation($"New station added: {station.Name}");
-
-                    }
-                }
-
+                StationMethods.UpdateAllStations(serverPath, token, toBeUpdated.ToArray());
+               
                 await Task.Delay(1000 * SecondsDelay, stoppingToken);
             }
         }

@@ -28,13 +28,6 @@ namespace FreeturiloWebApi.Controllers
             var stations = _service.GetAllStations();
             return Ok(stations);
         }
-        [HttpPost]
-        [Auth]
-        public ActionResult<StationDTO> AddNewStation([FromBody] StationDTO newStation)
-        {
-            var station = _service.AddNewStation(newStation);
-            return Ok(station);
-        }
         [HttpPut]
         [Auth]
         public ActionResult UpdateAllStations([FromBody] StationDTO[] newStations)
@@ -48,13 +41,6 @@ namespace FreeturiloWebApi.Controllers
         {
             var station = _service.GetStation(id);
             return Ok(station);
-        }
-        [HttpPut("{id}")]
-        [Auth]
-        public ActionResult UpdateStation([FromRoute] int id, [FromBody] StationDTO newStation)
-        {
-            _service.UpdateStation(id, newStation);
-            return Ok();
         }
         [HttpPost("{id}/report")]
         [AppState]
