@@ -67,6 +67,7 @@ namespace FreeturiloWebApi
             services.AddScoped<IStationService, StationService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAppService, AppService>();
+            services.AddScoped<IRouteService, RouteService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddDbContext<FreeturiloContext>(options =>
