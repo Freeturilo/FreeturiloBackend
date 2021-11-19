@@ -21,7 +21,7 @@ namespace FreeturiloWebApi.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpPost]
         [AppState]
         public ActionResult<RouteDTO> GetAllStations([FromBody] RouteParametersDTO routeParameters)
         {

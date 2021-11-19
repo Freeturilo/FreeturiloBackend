@@ -5,9 +5,9 @@ namespace FreeturiloWebApi.DTO
     public class LocationDTO
     {
         [JsonPropertyName("longitude")]
-        public double? Longitude { get; set;}
+        public double Longitude { get; set;}
         [JsonPropertyName("latitude")]
-        public double? Latitude { get; set;}
+        public double Latitude { get; set;}
         [JsonPropertyName("name")]
         public string Name { get; set;}
     }
