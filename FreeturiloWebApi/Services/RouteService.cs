@@ -64,7 +64,7 @@ namespace FreeturiloWebApi.Services
             else if (routeParameters.Criterion == 1)
             {
                 var r = GetFastestRoute(stops);
-                if (r.Time <= route.DirectionsRoute.Routes[0].Legs[0].Duration.Value)
+                if (r.Time <= route.Time)
                     route = r;
             }
             else if(routeParameters.Criterion == 2)
@@ -74,6 +74,7 @@ namespace FreeturiloWebApi.Services
                     route = r;
             }
 
+            route.Parameters = routeParameters;
             return route;
         }
         private RouteDTO GetOptimalRoute(List<LocationDTO> stops)
@@ -101,11 +102,11 @@ namespace FreeturiloWebApi.Services
                 routeStops.AddRange(middleStations);
                 routeStops.Add(stop);
                 routeStops.Add(closestStation);
-
                 currentStation = closestStation;
             }
-
-            routeStops.Add(endStation);
+            var stationsToEnd = GetMiddleStations(currentStation, endStation);
+            routeStops.AddRange(stationsToEnd);
+            routeStops.Add(stops[^1]);
 
             RouteDTO route = GoogleMapsAPIHandler.GetRoute(routeStops);
             return route;
@@ -121,7 +122,7 @@ namespace FreeturiloWebApi.Services
                 var toEndRoute = _context.Routes.Where(r => r.StartId == station.Id && r.StopId == endStation.Id).FirstOrDefault();
                 double actualTime = toEndRoute == null ? double.PositiveInfinity : toEndRoute.Time;
 
-                foreach(var nextRoute in _context.Routes.Where(r => r.StartId == station.Id))
+                foreach(var nextRoute in _context.Routes.Where(r => r.StartId == station.Id).ToList())
                 {
                     var nextStation = _context.Stations.Where(s => s.Id == nextRoute.StopId).FirstOrDefault();
                     if (nextStation == null || nextStation.AvailableBikes == 0 || nextStation.State == 2) continue;
@@ -148,7 +149,7 @@ namespace FreeturiloWebApi.Services
                         {
                             minCost = routeToNextStation.Cost;
                             closest = nextStation;
-                            actualTime = nextStationToEndRoute.Time;
+                            actualTime = nextStationToEndRoute?.Time ?? 0;
                         }
                     }
                 }
@@ -162,8 +163,8 @@ namespace FreeturiloWebApi.Services
         }
         private RouteDTO GetFastestRoute(List<LocationDTO> stops)
         {
-            LocationDTO startStation = GetClosestStation(stops[0]);
-            LocationDTO endStation = GetClosestStation(stops[^1]);
+            var startStation = GetClosestStation(stops[0]);
+            var endStation = GetClosestStation(stops[^1]);
 
             stops.Insert(1, startStation);
             stops.Insert(stops.Count - 1, endStation);
@@ -175,7 +176,7 @@ namespace FreeturiloWebApi.Services
         {
             Station closestStation = null;
             double closestDistance = double.PositiveInfinity;
-            foreach(var station in _context.Stations)
+            foreach(var station in _context.Stations.ToList())
             {
                 if (station.AvailableBikes == 0 || station.State == 2) continue;
                 double distance = CalculateDistance(locationDTO, station);

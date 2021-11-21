@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.DTO.GoogleDTO
 {
+    public class ViaWaypoint
+    {
+        [JsonPropertyName("location")]
+        public Coords Location { get; set; }
+        [JsonPropertyName("step_index")]
+        public int StepIndex { get; set; }
+        [JsonPropertyName("step_interpolation")]
+        public double StepInterpolation { get; set; }
+    }
     public class GeocodedWaypoint
     {
         [JsonPropertyName("geocoder_status")]
@@ -78,7 +87,7 @@ namespace FreeturiloWebApi.DTO.GoogleDTO
         [JsonPropertyName("traffic_speed_entry")]
         public List<string> TrafficSpeedEntry { get; set; }
         [JsonPropertyName("via_waypoint")]
-        public List<string> ViaWaypoint { get; set; }
+        public List<ViaWaypoint> ViaWaypoint { get; set; }
     }
     public class Route
     {
