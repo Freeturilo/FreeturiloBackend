@@ -10,15 +10,24 @@ namespace NextBikeDataParser
     public static class Parser
     {
         private static bool _isOk = true;
+        private static readonly string xsdPath = @"../../../../NextBikeDataParser/markers.xsd";
+        private const string libUrl = @"http://example.org/mr/nextbikesdata";
         private static void ValidationHandler(object sender, ValidationEventArgs args)
         {
-            Console.WriteLine(args.Severity == XmlSeverityType.Warning ? "Warning: {0}\n" : "Error: {0}\n",
-                args.Message);
+            Console.WriteLine("Error: {0}\n", args.Message);
             _isOk = false;
         }
 
-        public static markers ReadNextBikesData(string xmlContent, string xsdPath, string libUrl)
+        public static markers ReadNextBikesData(string xmlContent)
         {
+            _isOk = true;
+
+            var xmlContentSplit = xmlContent.Split(new string[] { "markers" }, StringSplitOptions.None);
+            if(xmlContentSplit.Length < 3) throw new XmlSchemaValidationException("Invalid XML file");
+            var xmlContentJoined = xmlContentSplit[0] + $"markers xmlns=\"{libUrl}\"" + xmlContentSplit[1] +
+                                    "markers" +
+                                    xmlContentSplit[2];
+
             var settings = new XmlReaderSettings
             {
                 ValidationType = ValidationType.Schema
@@ -31,19 +40,19 @@ namespace NextBikeDataParser
             settings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
             settings.ValidationEventHandler += ValidationHandler;
 
-            var byteArray = Encoding.ASCII.GetBytes(xmlContent);
+            var byteArray = Encoding.ASCII.GetBytes(xmlContentJoined);
             var ms = new MemoryStream(byteArray);
             var reader = XmlReader.Create(ms, settings);
             while (reader.Read());
             reader.Close();
 
             if (_isOk)
-                return ReadNextBikesData(xmlContent);
+                return ReadNextBikesValidatedData(xmlContentJoined);
             else
                 throw new XmlSchemaValidationException("Invalid XML file");
         }
 
-        private static markers ReadNextBikesData(string xmlContent)
+        private static markers ReadNextBikesValidatedData(string xmlContent)
         {
             var byteArray = Encoding.ASCII.GetBytes(xmlContent);
             var ms = new MemoryStream(byteArray);

@@ -50,11 +50,7 @@ namespace NextBikeApiService.Helpers
                 }
             }
 
-            var xmlContentSplit = xmlContent.Split(new string[] { "markers" }, StringSplitOptions.None);
-            var xmlContentJoined = xmlContentSplit[0] + $"markers xmlns=\"{LibUrl}\"" + xmlContentSplit[1] +
-                                    "markers" +
-                                    xmlContentSplit[2];
-            var nextBikeData = Parser.ReadNextBikesData(xmlContentJoined, _xsdPath, LibUrl);
+            var nextBikeData = Parser.ReadNextBikesData(xmlContent);
             return nextBikeData;
             
         }

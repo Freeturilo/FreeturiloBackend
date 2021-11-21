@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<markers>
+	<country lat="52.2343" lng="21.0093" zoom="12" name="VETURILO Poland" hotline="19 115" domain="vp" language="pl" email="info@nextbike.pl" timezone="Europe/Warsaw" currency="PLN" country_calling_code="+48" system_operator_address="Nextbike Polska S.A. ul. Przasnyska 6B, 01-756 Warszawa" country="PL" country_name="Poland" terms="https://www.veturilo.waw.pl/terms/?v=202102" policy="https://zdm.waw.pl/polityka-prywatnosci/?v=202102" website="https://www.veturilo.waw.pl/" show_free_racks="1" booked_bikes="0" set_point_bikes="6309" available_bikes="4865" pricing="https://www.veturilo.waw.pl/">
+		<city uid="210" lat="52.2243" lng="21.0062" zoom="12" maps_icon="veturilo" alias="warszawa" break="0" name="Warszawa" num_places="313" refresh_rate="10120" bounds='{"south_west=""":{"lat=""":52.1311,"lng=""":20.869},"north_east=""":{"lat=""":52.3326,"lng=""":21.1201}}' booked_bikes="0" set_point_bikes="5740" available_bikes="4500" return_to_official_only="1" bike_types='{"4=""":12,"34=""":32,"35=""":32,"37=""":102,"174=""":4489,"undefined=""":0}' website="https://www.veturilo.waw.pl/">
+			<place bike="4" uid="2585259" lat="52.296298" lng="20.958358" name="Dewajtis - UKSW" spot="1" number="9402" booked_bikes="0" bikes="16" bikes_available_to_rent="16" bike_racks="30" free_racks="16" free_special_racks="16" terminal_type="7inch" bike_numbers="28011,26738,26133,25081,25062,96477,96128,97162,97118,97057,97030,97669,97781,29945,76777,76890" bike_types='{"4=""":1,"174=""":15}' place_type="0" rack_locks="1" maintenance="service">
+				<bike electric_lock="5" boardcomputer="10" number="28011" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="26738" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="26133" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="25081" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="25062" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="96477" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="96128" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="97162" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="97118" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="97057" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="97030" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="97669" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="97781" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="29945" bike_type="4" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="76777" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+				<bike number="76890" bike_type="174" lock_types="analog_code_lock,rack_adapter" active="1" state="ok" pedelec_battery=""/>
+			</place>
+		</city>
+	</country>
+</markers>
