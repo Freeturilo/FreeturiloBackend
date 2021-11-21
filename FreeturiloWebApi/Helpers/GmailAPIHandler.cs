@@ -11,7 +11,7 @@ namespace FreeturiloWebApi.Helpers
     static public class GmailAPIHandler
     {
         private static MailAddress fromAddress = new("freeturilo@gmail.com", "Freeturilo");
-        private static string fromPassword = "Freeturilo123PW!";
+        private static string fromPassword = "Freeturilo123PW!!";
         private static string subject = "Freeturilo - zgłoszenie niesprawnej stacji";
         private static string CreateBody(Administrator admin, Station station)
         {

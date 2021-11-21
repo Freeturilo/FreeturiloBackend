@@ -19,6 +19,13 @@ namespace FreeturiloWebApi.Controllers
         {
             _service = service;
         }
+        [Auth]
+        [HttpGet]
+        public ActionResult<int> Status()
+        {
+            var status = _service.Status();
+            return Ok(status);
+        }
 
         [Auth]
         [HttpPost("start")]

@@ -87,6 +87,22 @@ namespace FreeturiloWebApi.Test
             AppMethods.Start(serverPath, token);
         }
         [Test]
+        public void Status()
+        {
+            Assert.Catch<Exception401>(() =>
+            {
+                AppMethods.Status(serverPath, "");
+            });
+
+            var token = UserMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
+            
+            AppMethods.Demo(serverPath, token);
+            var state = AppMethods.Status(serverPath, token);
+            Assert.AreEqual(state, 2);
+
+            AppMethods.Start(serverPath, token);
+        }
+        [Test]
         public void SetNotifyTrashold()
         {
             var token = UserMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });

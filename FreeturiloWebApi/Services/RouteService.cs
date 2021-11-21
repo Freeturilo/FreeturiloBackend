@@ -43,6 +43,7 @@ namespace FreeturiloWebApi.Services
         {
             if (routeParameters == null) throw new Exception400();
             if (routeParameters.Start == null || routeParameters.End == null) throw new Exception400();
+            if (routeParameters.Criterion < 0 || routeParameters.Criterion > 2) throw new Exception400();
 
             var stops = new List<LocationDTO> { routeParameters.Start };
             if (routeParameters.Stops != null)
@@ -50,6 +51,7 @@ namespace FreeturiloWebApi.Services
             stops.Add(routeParameters.End);
 
             if (stops.Any(stop => !IsInWarsaw(stop))) throw new Exception404();
+
 
             RouteDTO route = GoogleMapsAPIHandler.GetRoute(stops, "walking");
 
@@ -70,10 +72,6 @@ namespace FreeturiloWebApi.Services
                 var r = GetOptimalRoute(stops);
                 if (true /*TODO optimal condition*/)
                     route = r;
-            }
-            else
-            {
-                throw new Exception400();
             }
 
             return route;

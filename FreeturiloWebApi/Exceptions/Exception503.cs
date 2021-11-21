@@ -7,7 +7,7 @@ namespace FreeturiloWebApi.Exceptions
 {
     public class Exception503: FreeturiloException
     {
-        public Exception503() : base("Servis unavailable") 
+        public Exception503() : base("Service unavailable") 
         {
             StatusCode = 503;
         }

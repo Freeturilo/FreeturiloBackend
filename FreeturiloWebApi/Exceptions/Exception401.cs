@@ -7,7 +7,7 @@ namespace FreeturiloWebApi.Exceptions
 {
     public class Exception401 : FreeturiloException
     {
-        public Exception401() : base("Unathorized") 
+        public Exception401() : base("Unauthorized") 
         {
             StatusCode = 401;
         }

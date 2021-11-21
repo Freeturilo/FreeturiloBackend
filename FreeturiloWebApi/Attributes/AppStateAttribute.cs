@@ -1,4 +1,5 @@
 ﻿using FreeturiloWebApi.Exceptions;
+using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -6,14 +7,14 @@ using System;
 namespace FreeturiloWebApi.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class AuthAttribute : Attribute, IAuthorizationFilter
+    public class AppStateAttribute : Attribute, IAuthorizationFilter
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var user = (Administrator)context.HttpContext.Items["User"];
-            if(user == null)
+            var appState = AppState.State;
+            if(appState == AppStateEnum.Stopped)
             {
-                throw new Exception401();
+                throw new Exception503();
             }
         }
     }

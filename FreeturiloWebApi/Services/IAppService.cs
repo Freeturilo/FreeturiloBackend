@@ -13,5 +13,6 @@ namespace FreeturiloWebApi.Services
         void Start();
         void Stop();
         void SetReportTrashold(int id, int number);
+        int Status();
     }
 }

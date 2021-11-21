@@ -10,6 +10,7 @@ using NextBikeDataParser;
 using NextBikeApiService.Helpers;
 using FreeturiloWebApi.HttpMethods;
 using System.Linq;
+using FreeturiloWebApi.DTO;
 
 namespace NextBikeApiService
 {
@@ -31,13 +32,40 @@ namespace NextBikeApiService
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                (var markers, var _) = NextBikeApiHandler.GetNextBikeData(_logger, stoppingToken);
-                var freeturiloStations = StationMethods.GetAllStations(serverPath);
+                int appState = 2;
+                string token = null;
 
-                var toBeUpdated = BikeDataComparer.Compare(markers, freeturiloStations);
-                var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-                StationMethods.UpdateAllStations(serverPath, token, toBeUpdated.ToArray());
-               
+                try
+                {
+                    token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+                    appState = AppMethods.Status(serverPath, token);
+                }
+                catch
+                {
+                    _logger.LogError("Could not get token or server state");
+                }
+
+                if(appState == 1)
+                {
+                    _logger.LogError("Server is stopped");
+                }
+                else
+                {
+                    try
+                    {
+                        bool readFromDump = appState == 2;
+                        var markers = NextBikeApiHandler.GetNextBikeData(_logger, readFromDump, stoppingToken);
+                        var freeturiloStations = StationMethods.GetAllStations(serverPath);
+                        var toBeUpdated = BikeDataComparer.Compare(markers, freeturiloStations);
+                        StationMethods.UpdateAllStations(serverPath, token, toBeUpdated.ToArray());
+                        _logger.LogInformation("Stations updated");
+                    }
+                    catch
+                    {
+                        _logger.LogInformation("Could not update stations");
+                    }
+                }
+                
                 await Task.Delay(1000 * SecondsDelay, stoppingToken);
             }
         }

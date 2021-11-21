@@ -4,6 +4,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.HttpMethods
@@ -13,6 +14,7 @@ namespace FreeturiloWebApi.HttpMethods
         private const string stop = "app/stop";
         private const string start = "app/start";
         private const string demo = "app/demo";
+        private const string status = "app";
 
         public static void Start(string serverPath, string token)
         {
@@ -25,6 +27,23 @@ namespace FreeturiloWebApi.HttpMethods
             request.AddHeader("api-key", token);
             var res = client.Execute(request);
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
+        }
+
+        public static int Status(string serverPath, string token)
+        {
+            var client = new RestClient(serverPath + status)
+            {
+                Timeout = -1
+            };
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("api-key", token);
+            var res = client.Execute(request);
+            if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
+
+            var jsonContent = res.Content;
+            var result = JsonSerializer.Deserialize<int>(jsonContent);
+            return result;
         }
 
         public static void Stop(string serverPath, string token)

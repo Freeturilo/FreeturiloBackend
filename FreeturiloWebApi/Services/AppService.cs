@@ -48,6 +48,12 @@ namespace FreeturiloWebApi.Services
         {
             AppState.Start();
         }
+
+        public int Status()
+        {
+            return (int)AppState.State;
+        }
+
         public void Stop()
         {
             AppState.Stop();
