@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.HttpMethods
 {
-    public static class UserMethods
+    public class UserMethods: IUserMethods
     {
-        public static string Authenticate(string serverPath, AuthDTO auth)
+        public string Authenticate(string serverPath, AuthDTO auth)
         {
             var client = new RestClient(serverPath + "user")
             {

@@ -1,5 +1,6 @@
 ﻿using FreeturiloWebApi.DTO;
 using FreeturiloWebApi.Exceptions;
+using FreeturiloWebApi.Services;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.HttpMethods
 {
-    public static class AppMethods
+    public class AppMethods: IAppMethods
     {
         private const string stop = "app/stop";
         private const string start = "app/start";
         private const string demo = "app/demo";
         private const string status = "app";
 
-        public static void Start(string serverPath, string token)
+        public void Start(string serverPath, string token)
         {
             var client = new RestClient(serverPath + start)
             {
@@ -29,7 +30,7 @@ namespace FreeturiloWebApi.HttpMethods
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
-        public static int Status(string serverPath, string token)
+        public int Status(string serverPath, string token)
         {
             var client = new RestClient(serverPath + status)
             {
@@ -46,7 +47,7 @@ namespace FreeturiloWebApi.HttpMethods
             return result;
         }
 
-        public static void Stop(string serverPath, string token)
+        public void Stop(string serverPath, string token)
         {
             var client = new RestClient(serverPath + stop)
             {
@@ -59,7 +60,7 @@ namespace FreeturiloWebApi.HttpMethods
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
-        public static void Demo(string serverPath, string token)
+        public void Demo(string serverPath, string token)
         {
             var client = new RestClient(serverPath + demo)
             {
@@ -71,7 +72,7 @@ namespace FreeturiloWebApi.HttpMethods
             var res = client.Execute(request);
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
-        public static void SetReportTrashold(string serverPath, string token, int number)
+        public void SetReportTrashold(string serverPath, string token, int number)
         {
             var client = new RestClient(serverPath + $"app/notify/{number}")
             {

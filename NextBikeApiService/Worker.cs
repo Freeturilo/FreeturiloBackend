@@ -6,67 +6,30 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NextBikeDataParser;
-
 using NextBikeApiService.Helpers;
 using FreeturiloWebApi.HttpMethods;
 using System.Linq;
 using FreeturiloWebApi.DTO;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NextBikeApiService
 {
+    [ExcludeFromCodeCoverage]
     public class Worker : BackgroundService
     {
-        private static readonly string serverPath = @"https://localhost:5001/";
-
-        private const string email = "freeturilo@gmail.com";
-        private const string password = "Freeturilo123PW!";
-
-        private readonly ILogger<Worker> _logger;
-        private const int SecondsDelay = 5;
-        public Worker(ILogger<Worker> logger)
+        private readonly IWorkerHandler _worker;
+        private const int _secondsDelay = 5;
+        public Worker(IWorkerHandler worker)
         {
-            _logger = logger;
+            _worker = worker;
         }
         
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                int appState = 2;
-                string token = null;
-
-                try
-                {
-                    token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-                    appState = AppMethods.Status(serverPath, token);
-                }
-                catch
-                {
-                    _logger.LogError("Could not get token or server state");
-                }
-
-                if(appState == 1)
-                {
-                    _logger.LogError("Server is stopped");
-                }
-                else
-                {
-                    try
-                    {
-                        bool readFromDump = appState == 2;
-                        var markers = NextBikeApiHandler.GetNextBikeData(_logger, readFromDump, stoppingToken);
-                        var freeturiloStations = StationMethods.GetAllStations(serverPath);
-                        var toBeUpdated = BikeDataComparer.Compare(markers, freeturiloStations);
-                        StationMethods.UpdateAllStations(serverPath, token, toBeUpdated.ToArray());
-                        _logger.LogInformation("Stations updated");
-                    }
-                    catch
-                    {
-                        _logger.LogInformation("Could not update stations");
-                    }
-                }
-                
-                await Task.Delay(1000 * SecondsDelay, stoppingToken);
+                _worker.Work();
+                await Task.Delay(1000 * _secondsDelay, stoppingToken);
             }
         }
     }

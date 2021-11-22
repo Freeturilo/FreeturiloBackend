@@ -10,15 +10,15 @@ namespace NextBikeDataParser
     public static class Parser
     {
         private static bool _isOk = true;
-        private static readonly string xsdPath = @"../../../../NextBikeDataParser/markers.xsd";
         private const string libUrl = @"http://example.org/mr/nextbikesdata";
+        private const string _xsdPath = @"../NextBikeDataParser/markers.xsd";
         private static void ValidationHandler(object sender, ValidationEventArgs args)
         {
             Console.WriteLine("Error: {0}\n", args.Message);
             _isOk = false;
         }
 
-        public static markers ReadNextBikesData(string xmlContent)
+        public static markers ReadNextBikesData(string xmlContent, string xsdPath)
         {
             _isOk = true;
 
@@ -36,7 +36,7 @@ namespace NextBikeDataParser
             settings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
             settings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
 
-            settings.Schemas.Add(libUrl, xsdPath);
+            settings.Schemas.Add(libUrl, xsdPath ?? _xsdPath);
             settings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
             settings.ValidationEventHandler += ValidationHandler;
 

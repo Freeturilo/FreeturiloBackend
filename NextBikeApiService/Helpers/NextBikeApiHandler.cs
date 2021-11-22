@@ -12,22 +12,19 @@ using System.IO;
 
 namespace NextBikeApiService.Helpers
 {
-    static class NextBikeApiHandler
+    public class NextBikeApiHandler: INextBikeApiHandler
     {
-        private static readonly string _xsdPath = @"../NextBikeDataParser/markers.xsd";
-        private static readonly string _dumpsPath = @"./xml-dumps/";
-
-        private const string LibUrl = @"http://example.org/mr/nextbikesdata";
+        private const string _dumpsPath = @"./xml-dumps/";
         private const string UrlBase = @"https://nextbike.net/maps/nextbike-live.xml";
         private const string UrlParameters = "?city=210";
 
-        public static markers GetNextBikeData(ILogger logger, bool readFromDump, CancellationToken stoppingToken)
+        public markers GetNextBikeData(ILogger logger, bool readFromDump, string xsdPath, string dumpPath = null, string url = null, string parameters = null)
         {
             string xmlContent;
 
             if(readFromDump)
             {
-                var dumpFilePath = Directory.GetFiles(_dumpsPath).Last();
+                var dumpFilePath = Directory.GetFiles(dumpPath ?? _dumpsPath).Last();
                 xmlContent = File.ReadAllText(dumpFilePath);
             }
             else
@@ -35,13 +32,13 @@ namespace NextBikeApiService.Helpers
                 try
                 {
                     HttpResponseMessage nextBikeResponse;
-                    using (HttpClient client = new() { BaseAddress = new Uri(UrlBase) })
+                    using (HttpClient client = new() { BaseAddress = new Uri(url ?? UrlBase) })
                     {
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
-                        nextBikeResponse = client.GetAsync(UrlParameters, stoppingToken).Result;
+                        nextBikeResponse = client.GetAsync(parameters ?? UrlParameters).Result;
                     }
 
-                    xmlContent = nextBikeResponse.Content.ReadAsStringAsync(stoppingToken).Result;
+                    xmlContent = nextBikeResponse.Content.ReadAsStringAsync().Result;
                 }
                 catch
                 {
@@ -50,7 +47,7 @@ namespace NextBikeApiService.Helpers
                 }
             }
 
-            var nextBikeData = Parser.ReadNextBikesData(xmlContent);
+            var nextBikeData = Parser.ReadNextBikesData(xmlContent, xsdPath);
             return nextBikeData;
             
         }

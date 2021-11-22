@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.HttpMethods
 {
-    public static class RouteMethods
+    public class RouteMethods: IRouteMethods
     {
         const string nmspace = "route";
-        public static RouteDTO GetRoute(string serverPath, RouteParametersDTO parameters)
+        public RouteDTO GetRoute(string serverPath, RouteParametersDTO parameters)
         {
             var client = new RestClient(serverPath + nmspace)
             {

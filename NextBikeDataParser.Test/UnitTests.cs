@@ -17,7 +17,7 @@ namespace NextBikeDataParser.Test
         public void ValidFile()
         {
             var xmlContent = File.ReadAllText("../../../TestFile.xml");
-            var markers = Parser.ReadNextBikesData(xmlContent);
+            var markers = Parser.ReadNextBikesData(xmlContent, "../../../../NextBikeDataParser/markers.xsd");
 
             foreach (var property in typeof(markers).GetProperties())
             {
@@ -50,14 +50,20 @@ namespace NextBikeDataParser.Test
         {
             Assert.Catch<XmlSchemaValidationException>(() =>
             {
-                var markers = Parser.ReadNextBikesData("invalid content");
+                var markers = Parser.ReadNextBikesData("invalid content", "../../../../NextBikeDataParser/markers.xsd");
                 Assert.IsNotNull(markers);
             });
 
             Assert.Catch<XmlSchemaValidationException>(() =>
             {
-                var markers = Parser.ReadNextBikesData("<?xml version=\"1.0\" encoding=\"utf-8\"?><markers></markers>");
+                var markers = Parser.ReadNextBikesData("<?xml version=\"1.0\" encoding=\"utf-8\"?><markers></markers>", "../../../../NextBikeDataParser/markers.xsd");
                 Assert.IsNotNull(markers);
+            });
+
+            Assert.Catch<Exception>(() =>
+            {
+                var xmlContent = File.ReadAllText("../../../TestFile.xml");
+                Parser.ReadNextBikesData(xmlContent, null);
             });
         }
     }

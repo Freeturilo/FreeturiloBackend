@@ -24,6 +24,10 @@ namespace FreeturiloWebApi.Test
         private const string email = "mikolajryll@gmail.com";
         private const string password = "password";
 
+        private readonly IAppMethods appMethods = new AppMethods();
+        private readonly IUserMethods userMethods = new UserMethods();
+        private readonly IRouteMethods routeMethods = new RouteMethods();
+
         private IHost host;
 
         [OneTimeSetUp]
@@ -49,26 +53,26 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void GetRouteWhenSystemStopped()
         {
-            var token = UserMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
+            var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
 
-            AppMethods.Stop(serverPath, token);
+            appMethods.Stop(serverPath, token);
             Assert.Catch<Exception503>(() =>
             {
-                RouteMethods.GetRoute(serverPath, new RouteParametersDTO());
+                routeMethods.GetRoute(serverPath, new RouteParametersDTO());
             });
-            AppMethods.Start(serverPath, token);
+            appMethods.Start(serverPath, token);
         }
         [Test]
         public void GetRouteWithNullArgument()
         {
             Assert.Catch<Exception400>(() =>
             {
-                RouteMethods.GetRoute(serverPath, null);
+                routeMethods.GetRoute(serverPath, null);
             });
 
             Assert.Catch<Exception400>(() =>
             {
-                RouteMethods.GetRoute(serverPath, new RouteParametersDTO()
+                routeMethods.GetRoute(serverPath, new RouteParametersDTO()
                 {
                     Start = new LocationDTO()
                 });
@@ -76,7 +80,7 @@ namespace FreeturiloWebApi.Test
 
             Assert.Catch<Exception400>(() =>
             {
-                RouteMethods.GetRoute(serverPath, new RouteParametersDTO()
+                routeMethods.GetRoute(serverPath, new RouteParametersDTO()
                 {
                     End = new LocationDTO()
                 });
@@ -101,7 +105,7 @@ namespace FreeturiloWebApi.Test
                         Longitude = 10.0,
                     }
                 };
-                RouteMethods.GetRoute(serverPath, parameters);
+                routeMethods.GetRoute(serverPath, parameters);
             });
         }
         [Test]
@@ -123,7 +127,7 @@ namespace FreeturiloWebApi.Test
                         Longitude = 21.0,
                     }
                 };
-                RouteMethods.GetRoute(serverPath, parameters);
+                routeMethods.GetRoute(serverPath, parameters);
             });
         }
     }

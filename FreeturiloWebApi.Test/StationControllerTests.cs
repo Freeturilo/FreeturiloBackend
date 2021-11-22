@@ -24,6 +24,10 @@ namespace FreeturiloWebApi.Test
         private const string email = "mikolajryll@gmail.com";
         private const string password = "password";
 
+        private readonly IAppMethods appMethods = new AppMethods();
+        private readonly IUserMethods userMethods = new UserMethods();
+        private readonly IStationMethods stationMethods = new StationMethods();
+
         private readonly StationDTO[] defaultStations = new StationDTO[]
         {
                 new StationDTO() { Id = 1, Bikes = 10, BikeRacks = 15, State = 0, Name = "Trasa £azienkowska x Marsza³kowska", Latitude = 52.296298, Longitude = 20.958358 },
@@ -57,40 +61,40 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void GetAllStations()
         {
-            var stations = StationMethods.GetAllStations(serverPath);
+            var stations = stationMethods.GetAllStations(serverPath);
             Assert.AreEqual(stations.Length, 3);
 
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
 
             Assert.Catch<Exception503>(() =>
             {
-                AppMethods.Stop(serverPath, token);
-                StationMethods.GetAllStations(serverPath);
+                appMethods.Stop(serverPath, token);
+                stationMethods.GetAllStations(serverPath);
             });
 
-            AppMethods.Start(serverPath, token);
+            appMethods.Start(serverPath, token);
         }
 
         [Test]
         public void GetStation()
         {
-            var station = StationMethods.GetStation(serverPath, 1);
+            var station = stationMethods.GetStation(serverPath, 1);
             Assert.AreEqual(station.Id, 1);
 
             Assert.Catch<Exception404>(() =>
             {
-                StationMethods.GetStation(serverPath, 123);
+                stationMethods.GetStation(serverPath, 123);
             });
 
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
 
             Assert.Catch<Exception503>(() =>
             {
-                AppMethods.Stop(serverPath, token);
-                StationMethods.GetStation(serverPath, 1);
+                appMethods.Stop(serverPath, token);
+                stationMethods.GetStation(serverPath, 1);
             });
 
-            AppMethods.Start(serverPath, token);
+            appMethods.Start(serverPath, token);
         }
 
         [Test]
@@ -101,9 +105,9 @@ namespace FreeturiloWebApi.Test
                 new StationDTO() { Id = 1, Bikes = 10, BikeRacks = 20},
                 new StationDTO() { Id = 2, Bikes = 15, BikeRacks = 20},
             };
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-            StationMethods.UpdateAllStations(serverPath, token, newStations);
-            var stations = StationMethods.GetAllStations(serverPath);
+            var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            stationMethods.UpdateAllStations(serverPath, token, newStations);
+            var stations = stationMethods.GetAllStations(serverPath);
             Assert.AreEqual(stations.Length, 3);
             Assert.AreEqual(stations[0].Bikes, 10);
             Assert.AreEqual(stations[1].Bikes, 15);
@@ -115,76 +119,76 @@ namespace FreeturiloWebApi.Test
 
             Assert.Catch<Exception400>(() =>
             {
-                StationMethods.UpdateAllStations(serverPath, token, null);
+                stationMethods.UpdateAllStations(serverPath, token, null);
             });
 
-            StationMethods.UpdateAllStations(serverPath, token, defaultStations);
+            stationMethods.UpdateAllStations(serverPath, token, defaultStations);
 
             Assert.Catch<Exception401>(() =>
             {
-                StationMethods.UpdateAllStations(serverPath, "", Array.Empty<StationDTO>());
+                stationMethods.UpdateAllStations(serverPath, "", Array.Empty<StationDTO>());
             });
 
             Assert.Catch<Exception404>(() =>
             {
-                StationMethods.UpdateAllStations(serverPath, token, new[] { new StationDTO() { Id = 19 } });
+                stationMethods.UpdateAllStations(serverPath, token, new[] { new StationDTO() { Id = 19 } });
             });
         }
 
         [Test]
         public void ReportStation()
         {
-            StationMethods.ReportStation(serverPath, 1);
-            var station = StationMethods.GetStation(serverPath, 1);
+            stationMethods.ReportStation(serverPath, 1);
+            var station = stationMethods.GetStation(serverPath, 1);
 
             Assert.AreEqual(station.State, 1);
 
             Assert.Catch<Exception404>(() =>
             {
-                StationMethods.ReportStation(serverPath, 123);
+                stationMethods.ReportStation(serverPath, 123);
             });
 
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-            AppMethods.Stop(serverPath, token);
+            var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            appMethods.Stop(serverPath, token);
 
             Assert.Catch<Exception503>(() =>
             {
-                StationMethods.ReportStation(serverPath, 1);
+                stationMethods.ReportStation(serverPath, 1);
             });
 
-            AppMethods.Start(serverPath, token);
+            appMethods.Start(serverPath, token);
         }
 
         [Test]
         public void SetStationAsBrokenOrWorking()
         {
-            var token = UserMethods.Authenticate(serverPath, new() { Email = email, Password = password });
-            StationMethods.SetStationAsBroken(serverPath, token, 1);
-            var station = StationMethods.GetStation(serverPath, 1);
+            var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
+            stationMethods.SetStationAsBroken(serverPath, token, 1);
+            var station = stationMethods.GetStation(serverPath, 1);
             Assert.AreEqual(station.State, 2);
 
-            StationMethods.SetStationAsWorking(serverPath, token, 1);
-            station = StationMethods.GetStation(serverPath, 1);
+            stationMethods.SetStationAsWorking(serverPath, token, 1);
+            station = stationMethods.GetStation(serverPath, 1);
             Assert.AreEqual(station.State, 0);
 
             Assert.Catch<Exception401>(() =>
             {
-                StationMethods.SetStationAsBroken(serverPath, "", 1);
+                stationMethods.SetStationAsBroken(serverPath, "", 1);
             });
 
             Assert.Catch<Exception401>(() =>
             {
-                StationMethods.SetStationAsWorking(serverPath, "", 1);
+                stationMethods.SetStationAsWorking(serverPath, "", 1);
             });
 
             Assert.Catch<Exception404>(() =>
             {
-                StationMethods.SetStationAsBroken(serverPath, token, 123);
+                stationMethods.SetStationAsBroken(serverPath, token, 123);
             });
 
             Assert.Catch<Exception404>(() =>
             {
-                StationMethods.SetStationAsWorking(serverPath, token, 123);
+                stationMethods.SetStationAsWorking(serverPath, token, 123);
             });
         }
     }

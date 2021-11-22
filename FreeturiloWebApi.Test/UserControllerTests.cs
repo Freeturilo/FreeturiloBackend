@@ -24,6 +24,7 @@ namespace FreeturiloWebApi.Test
         private static readonly string serverPath = @"https://localhost:5003/";
         private const string email = "mikolajryll@gmail.com";
         private const string password = "password";
+        private readonly IUserMethods userMethods = new UserMethods();
 
         private IHost host; 
 
@@ -51,7 +52,7 @@ namespace FreeturiloWebApi.Test
         [Test]
         public void CorrectAuthenticate()
         {
-            var token = UserMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
+            var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
             Assert.IsTrue(token.Length > 40);
         }
 
@@ -60,27 +61,27 @@ namespace FreeturiloWebApi.Test
         {
             Assert.Catch<Exception401>(() =>
             {
-                UserMethods.Authenticate(serverPath, new AuthDTO { Email = "incorrect", Password = "made up" });
+                userMethods.Authenticate(serverPath, new AuthDTO { Email = "incorrect", Password = "made up" });
             });
 
             Assert.Catch<Exception401>(() =>
             {
-                UserMethods.Authenticate(serverPath, new AuthDTO { Password = password });
+                userMethods.Authenticate(serverPath, new AuthDTO { Password = password });
             });
 
             Assert.Catch<Exception401>(() =>
             {
-                UserMethods.Authenticate(serverPath, new AuthDTO { Email = email });
+                userMethods.Authenticate(serverPath, new AuthDTO { Email = email });
             });
 
             Assert.Catch<Exception401>(() =>
             {
-                UserMethods.Authenticate(serverPath, new AuthDTO());
+                userMethods.Authenticate(serverPath, new AuthDTO());
             });
 
             Assert.Catch<Exception401>(() =>
             {
-                UserMethods.Authenticate(serverPath, null);
+                userMethods.Authenticate(serverPath, null);
             });
         }
     }

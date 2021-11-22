@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace FreeturiloWebApi.HttpMethods
 {
-    public static class StationMethods
+    public class StationMethods: IStationMethods
     {
         const string nmspace = "station";
-        public static StationDTO[] GetAllStations(string serverPath)
+        public StationDTO[] GetAllStations(string serverPath)
         {
             var client = new RestClient(serverPath + nmspace)
             {
@@ -30,7 +30,7 @@ namespace FreeturiloWebApi.HttpMethods
             return stations;
         }
 
-        public static void UpdateAllStations(string serverPath, string token, StationDTO[] newStations)
+        public void UpdateAllStations(string serverPath, string token, StationDTO[] newStations)
         {
             var client = new RestClient(serverPath + nmspace)
             {
@@ -51,7 +51,7 @@ namespace FreeturiloWebApi.HttpMethods
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
 
-        public static StationDTO GetStation(string serverPath, int id)
+        public StationDTO GetStation(string serverPath, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString())
             {
@@ -69,7 +69,7 @@ namespace FreeturiloWebApi.HttpMethods
             return station;
         }
 
-        public static void ReportStation(string serverPath, int id)
+        public void ReportStation(string serverPath, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/report")
             {
@@ -82,7 +82,7 @@ namespace FreeturiloWebApi.HttpMethods
             if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503();
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
-        public static void SetStationAsBroken(string serverPath, string token, int id)
+        public void SetStationAsBroken(string serverPath, string token, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/broken")
             {
@@ -97,7 +97,7 @@ namespace FreeturiloWebApi.HttpMethods
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
 
-        public static void SetStationAsWorking(string serverPath, string token, int id)
+        public void SetStationAsWorking(string serverPath, string token, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/working")
             {

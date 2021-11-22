@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace NextBikeApiService.Helpers
 {
-    static class BikeDataComparer
+    public static class BikeDataComparer
     {
         public static IEnumerable<StationDTO> Compare(markers nextbikeData, StationDTO[] freeturiloData)
         {
