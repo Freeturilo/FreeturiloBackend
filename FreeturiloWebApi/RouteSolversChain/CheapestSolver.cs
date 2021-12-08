@@ -1,5 +1,7 @@
-﻿using FreeturiloWebApi.DTO;
+﻿using AutoMapper;
+using FreeturiloWebApi.DTO;
 using FreeturiloWebApi.Helpers.Graph;
+using FreeturiloWebApi.Models;
 using QuikGraph;
 using System;
 using System.Collections.Generic;
@@ -11,10 +13,6 @@ namespace FreeturiloWebApi.RouteSolversChain
     class CheapestRouteSolver: RouteSolver
     {
         public CheapestRouteSolver(IRouteSolver next) : base(next) { }
-        protected override BidirectionalGraph<LocationDTO, GraphEdge> CreateLocationsGraph()
-        {
-            throw new NotImplementedException();
-        }
 
         protected override double EdgeWeight(GraphEdge e)
         {
@@ -24,6 +22,11 @@ namespace FreeturiloWebApi.RouteSolversChain
         protected override bool SelectSolver(RouteParametersDTO parameters)
         {
             return parameters.Criterion == 0;
+        }
+
+        protected override (List<LocationDTO> stops, string mode) UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
+        {
+            throw new NotImplementedException();
         }
     }
 }

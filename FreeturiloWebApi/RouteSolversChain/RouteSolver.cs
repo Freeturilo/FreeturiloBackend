@@ -1,6 +1,8 @@
-﻿using FreeturiloWebApi.DTO;
+﻿using AutoMapper;
+using FreeturiloWebApi.DTO;
 using FreeturiloWebApi.Exceptions;
 using FreeturiloWebApi.Helpers.Graph;
+using FreeturiloWebApi.Models;
 using QuikGraph;
 using QuikGraph.Algorithms.Observers;
 using QuikGraph.Algorithms.ShortestPath;
@@ -14,51 +16,18 @@ namespace FreeturiloWebApi.RouteSolversChain
     public abstract class RouteSolver : IRouteSolver
     {
         public IRouteSolver Next { get; }
-        protected abstract BidirectionalGraph<LocationDTO, GraphEdge> CreateLocationsGraph();
         protected abstract double EdgeWeight(GraphEdge e);
-        protected List<LocationDTO> UseSolver(List<LocationDTO> stops)
-        {
-            //TODO poprawić to
-            var graph = CreateLocationsGraph();
-            var finalStops = new List<LocationDTO>();
-
-            for (int i = 0; i < stops.Count - 1; i++)
-            {
-                var algorithm = new DijkstraShortestPathAlgorithm<LocationDTO, GraphEdge>(graph, EdgeWeight);
-                var observer = new VertexPredecessorPathRecorderObserver<LocationDTO, GraphEdge>();
-
-                using (observer.Attach(algorithm))
-                {
-                    algorithm.Compute(stops[0]);
-                    var path = observer.AllPaths().Where(path =>
-                    {
-                        var last = path.LastOrDefault();
-                        if (last == null) throw new Exception404();
-
-                        return last.Target == stops[i + 1];
-                    }).FirstOrDefault();
-
-                    if (path == null) throw new Exception404();
-                    foreach (var edge in path)
-                    {
-                        finalStops.Add(edge.Target);
-                    }
-                }
-
-            }
-
-            return finalStops;
-        }
+        protected abstract (List<LocationDTO> stops, string mode) UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper);
         protected abstract bool SelectSolver(RouteParametersDTO parameters);
         public RouteSolver(IRouteSolver next)
         {
             Next = next;
         }
-        public List<LocationDTO> Solve(RouteParametersDTO parametersDTO, List<LocationDTO> stops)
+        public (List<LocationDTO> stops, string mode) Solve(RouteParametersDTO parametersDTO, List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
-            if (SelectSolver(parametersDTO)) return UseSolver(stops);
-            if (Next != null) return Next.Solve(parametersDTO, stops);
-            return null;
+            if (SelectSolver(parametersDTO)) return UseSolver(stops, context, mapper);
+            if (Next != null) return Next.Solve(parametersDTO, stops, context, mapper);
+            return (null, null);
         }
     }
 }

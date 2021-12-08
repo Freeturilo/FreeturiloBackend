@@ -42,57 +42,7 @@ namespace FreeturiloWebApi.Services
 
             return false;
         }
-        
-        
-        private BidirectionalGraph<LocationDTO, Edge> CreateStationsGraph()
-        {
-            var graph = new BidirectionalGraph<LocationDTO, Edge>();
-            var stations = _context.Stations.Where(s => s.AvailableBikes > 0 && s.State != 2).ToArray();
-            var mappedStations = _mapper.Map<LocationDTO[]>(stations);
 
-            graph.AddVertexRange(mappedStations);
-
-            foreach(var source in stations)
-            {
-                foreach(var target in stations)
-                {
-                    if (target == source) continue;
-                   
-                    var route = _context.Routes.Where(r => r.StartId == source.Id && r.StopId == target.Id).FirstOrDefault();
-                    if (route == null) continue;
-
-                    var mappedSource = _mapper.Map<LocationDTO>(source);
-                    var mappedTarget = _mapper.Map<LocationDTO>(target);
-                    var edge = new Edge(mappedSource, mappedTarget, route.Cost, route.Time);
-
-                    graph.AddVerticesAndEdge(edge);
-                }
-            }
-
-            return graph;            
-        }
-        private void ExtendGraphWithStops(BidirectionalGraph<LocationDTO, Edge>  graph, IEnumerable<LocationDTO> stops)
-        {
-            graph.AddVertexRange(stops);
-
-            foreach(var stop in stops)
-            {
-                var stations = GetClosestStations(stop);
-                var mappedStation = _mapper.Map<LocationDTO[]>(stations);
-
-                foreach (var station in mappedStation)
-                {
-                    var toRoute = GoogleMapsAPIHandler.GetRoute(new() { station, stop });
-                    var fromRoute = GoogleMapsAPIHandler.GetRoute(new() { stop, station });
-
-                    var toEdge = new Edge(station, stop, toRoute.Cost, toRoute.Time);
-                    var fromEdge = new Edge(stop, station, fromRoute.Cost, fromRoute.Time);
-
-                    graph.AddEdge(toEdge);
-                    graph.AddEdge(fromEdge);
-                }
-            }
-        }
         public RouteDTO GetRoute(RouteParametersDTO routeParameters)
         {
             if (routeParameters == null) throw new Exception400();
@@ -109,8 +59,8 @@ namespace FreeturiloWebApi.Services
             solver = new CheapestRouteSolver(solver);
             solver = new OptimalRouteSolver(solver);
 
-            var finalStops = solver.Solve(routeParameters, stops);
-            return GoogleMapsAPIHandler.GetRoute(finalStops);     
+            (var finalStops, var mode) = solver.Solve(routeParameters, stops, _context, _mapper);
+            return GoogleMapsAPIHandler.GetRoute(finalStops, mode);     
         }
     }
 }

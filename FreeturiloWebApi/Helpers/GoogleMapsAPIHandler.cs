@@ -45,26 +45,33 @@ namespace FreeturiloWebApi.Helpers
 
             if(mode == "bicycling")
             {
-                int i = 2;
-                StationDTO station = stops[1] as StationDTO;
-                int step = direction.Routes[0].Legs[0].ViaWaypoint[0].StepIndex;
-                while (station.Id != (stops[^2] as StationDTO).Id)
+                if (stops.Count == 2)
                 {
-                    while(!(stops[i] is StationDTO))
+                    cost = CalculateCost(direction.Routes[0].Legs[0].Duration.Value);
+                }
+                else
+                {
+                    int i = 2;
+                    StationDTO station = stops[1] as StationDTO;
+                    int step = direction.Routes[0].Legs[0].ViaWaypoint[0].StepIndex;
+                    while (station.Id != (stops[^2] as StationDTO).Id)
                     {
+                        while (!(stops[i] is StationDTO))
+                        {
+                            i++;
+                        }
+                        int nextStep = direction.Routes[0].Legs[0].ViaWaypoint[i - 1].StepIndex;
+                        var time = 0;
+                        for (int j = step; j < nextStep; j++)
+                        {
+                            time += direction.Routes[0].Legs[0].Steps[j].Duration.Value;
+                        }
+                        cost += CalculateCost(time);
+
+                        station = stops[i] as StationDTO;
+                        step = nextStep;
                         i++;
                     }
-                    int nextStep = direction.Routes[0].Legs[0].ViaWaypoint[i-1].StepIndex;
-                    var time = 0;
-                    for(int j=step; j< nextStep; j++)
-                    {
-                        time += direction.Routes[0].Legs[0].Steps[j].Duration.Value;
-                    }
-                    cost += CalculateCost(time);
-
-                    station = stops[i] as StationDTO;
-                    step = nextStep;
-                    i ++;
                 }
             }
 
