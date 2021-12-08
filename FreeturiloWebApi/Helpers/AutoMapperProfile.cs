@@ -19,6 +19,11 @@ namespace FreeturiloWebApi.Helpers
                 .ForMember(dest => dest.Lon, opts => opts.MapFrom(src => src.Longitude))
                 .ForMember(dest => dest.AvailableRacks, opts => opts.MapFrom(src => src.BikeRacks))
                 .ForMember(dest => dest.AvailableBikes, opts => opts.MapFrom(src => src.Bikes));
+
+            CreateMap<Station, LocationDTO>()
+                .ForMember(dest => dest.Latitude, opts => opts.MapFrom(src => src.Lat))
+                .ForMember(dest => dest.Longitude, opts => opts.MapFrom(src => src.Lon))
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
         }
     }
 }

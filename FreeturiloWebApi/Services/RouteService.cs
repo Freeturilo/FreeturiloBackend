@@ -3,8 +3,11 @@ using FreeturiloWebApi.DTO;
 using FreeturiloWebApi.Exceptions;
 using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.Models;
+using FreeturiloWebApi.RouteSolversChain;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using QuikGraph;
+using QuikGraph.Algorithms.Observers;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -39,11 +42,61 @@ namespace FreeturiloWebApi.Services
 
             return false;
         }
+        
+        
+        private BidirectionalGraph<LocationDTO, Edge> CreateStationsGraph()
+        {
+            var graph = new BidirectionalGraph<LocationDTO, Edge>();
+            var stations = _context.Stations.Where(s => s.AvailableBikes > 0 && s.State != 2).ToArray();
+            var mappedStations = _mapper.Map<LocationDTO[]>(stations);
+
+            graph.AddVertexRange(mappedStations);
+
+            foreach(var source in stations)
+            {
+                foreach(var target in stations)
+                {
+                    if (target == source) continue;
+                   
+                    var route = _context.Routes.Where(r => r.StartId == source.Id && r.StopId == target.Id).FirstOrDefault();
+                    if (route == null) continue;
+
+                    var mappedSource = _mapper.Map<LocationDTO>(source);
+                    var mappedTarget = _mapper.Map<LocationDTO>(target);
+                    var edge = new Edge(mappedSource, mappedTarget, route.Cost, route.Time);
+
+                    graph.AddVerticesAndEdge(edge);
+                }
+            }
+
+            return graph;            
+        }
+        private void ExtendGraphWithStops(BidirectionalGraph<LocationDTO, Edge>  graph, IEnumerable<LocationDTO> stops)
+        {
+            graph.AddVertexRange(stops);
+
+            foreach(var stop in stops)
+            {
+                var stations = GetClosestStations(stop);
+                var mappedStation = _mapper.Map<LocationDTO[]>(stations);
+
+                foreach (var station in mappedStation)
+                {
+                    var toRoute = GoogleMapsAPIHandler.GetRoute(new() { station, stop });
+                    var fromRoute = GoogleMapsAPIHandler.GetRoute(new() { stop, station });
+
+                    var toEdge = new Edge(station, stop, toRoute.Cost, toRoute.Time);
+                    var fromEdge = new Edge(stop, station, fromRoute.Cost, fromRoute.Time);
+
+                    graph.AddEdge(toEdge);
+                    graph.AddEdge(fromEdge);
+                }
+            }
+        }
         public RouteDTO GetRoute(RouteParametersDTO routeParameters)
         {
             if (routeParameters == null) throw new Exception400();
             if (routeParameters.Start == null || routeParameters.End == null) throw new Exception400();
-            if (routeParameters.Criterion < 0 || routeParameters.Criterion > 2) throw new Exception400();
 
             var stops = new List<LocationDTO> { routeParameters.Start };
             if (routeParameters.Stops != null)
@@ -52,147 +105,12 @@ namespace FreeturiloWebApi.Services
 
             if (stops.Any(stop => !IsInWarsaw(stop))) throw new Exception404();
 
+            IRouteSolver solver = new FastestRouteSolver(null);
+            solver = new CheapestRouteSolver(solver);
+            solver = new OptimalRouteSolver(solver);
 
-            RouteDTO route = GoogleMapsAPIHandler.GetRoute(stops, "walking");
-
-            if (routeParameters.Criterion == 0)
-            {
-                var r = GetCheapestRoute(stops);
-                if (r.Cost <= route.Cost)
-                    route = r;
-            }
-            else if (routeParameters.Criterion == 1)
-            {
-                var r = GetFastestRoute(stops);
-                if (r.Time <= route.Time)
-                    route = r;
-            }
-            else if(routeParameters.Criterion == 2)
-            {
-                var r = GetOptimalRoute(stops);
-                if (true /*TODO optimal condition*/)
-                    route = r;
-            }
-
-            route.Parameters = routeParameters;
-            return route;
-        }
-        private RouteDTO GetOptimalRoute(List<LocationDTO> stops)
-        {
-            throw new NotImplementedException();
-        }
-        private RouteDTO GetCheapestRoute(List<LocationDTO> stops)
-        {
-            StationDTO startStation = GetClosestStation(stops[0]);
-            StationDTO endStation = GetClosestStation(stops[^1]);
-
-            var routeStops = new List<LocationDTO>
-            {
-                stops[0],
-                startStation
-            };
-
-            var currentStation = startStation;
-            for(int i = 1; i < stops.Count - 1; i++)
-            {
-                var stop = stops[i];
-                var closestStation = GetClosestStation(stop);
-                var middleStations = GetMiddleStations(currentStation, closestStation);
-
-                routeStops.AddRange(middleStations);
-                routeStops.Add(stop);
-                routeStops.Add(closestStation);
-                currentStation = closestStation;
-            }
-            var stationsToEnd = GetMiddleStations(currentStation, endStation);
-            routeStops.AddRange(stationsToEnd);
-            routeStops.Add(stops[^1]);
-
-            RouteDTO route = GoogleMapsAPIHandler.GetRoute(routeStops);
-            return route;
-        }
-        private List<LocationDTO> GetMiddleStations(StationDTO startStation, StationDTO endStation)
-        {
-            var middleStations = new List<LocationDTO>();
-            var station = startStation;
-            while(station.Id != endStation.Id)
-            {
-                double minCost = double.PositiveInfinity;
-                Station closest = null;
-                var toEndRoute = _context.Routes.Where(r => r.StartId == station.Id && r.StopId == endStation.Id).FirstOrDefault();
-                double actualTime = toEndRoute == null ? double.PositiveInfinity : toEndRoute.Time;
-
-                foreach(var nextRoute in _context.Routes.Where(r => r.StartId == station.Id).ToList())
-                {
-                    var nextStation = _context.Stations.Where(s => s.Id == nextRoute.StopId).FirstOrDefault();
-                    if (nextStation == null || nextStation.AvailableBikes == 0 || nextStation.State == 2) continue;
-                    var nextStationToEndRoute = _context.Routes.Where(r => r.StartId == nextStation.Id && r.StopId == endStation.Id).FirstOrDefault();
-
-                    var nextStationTime = double.PositiveInfinity;
-                    if(nextStation.Id == endStation.Id)
-                    {
-                        nextStationTime = 0;
-                    }
-                    else if(nextStationToEndRoute != null)
-                    {
-                        nextStationTime = nextStationToEndRoute.Time;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-
-                    if (nextStationTime < actualTime)
-                    {
-                        var routeToNextStation = _context.Routes.Where(r => r.StartId == station.Id && r.StopId == nextStation.Id).FirstOrDefault();
-                        if(routeToNextStation != null && routeToNextStation.Cost <= minCost)
-                        {
-                            minCost = routeToNextStation.Cost;
-                            closest = nextStation;
-                            actualTime = nextStationToEndRoute?.Time ?? 0;
-                        }
-                    }
-                }
-
-                var closestStation = _mapper.Map<StationDTO>(closest);
-                middleStations.Add(closestStation);
-                station = closestStation;
-            }
-
-            return middleStations;
-        }
-        private RouteDTO GetFastestRoute(List<LocationDTO> stops)
-        {
-            var startStation = GetClosestStation(stops[0]);
-            var endStation = GetClosestStation(stops[^1]);
-
-            stops.Insert(1, startStation);
-            stops.Insert(stops.Count - 1, endStation);
-            
-            RouteDTO route = GoogleMapsAPIHandler.GetRoute(stops);
-            return route;
-        }
-        private StationDTO GetClosestStation(LocationDTO locationDTO)
-        {
-            Station closestStation = null;
-            double closestDistance = double.PositiveInfinity;
-            foreach(var station in _context.Stations.ToList())
-            {
-                if (station.AvailableBikes == 0 || station.State == 2) continue;
-                double distance = CalculateDistance(locationDTO, station);
-                if(distance < closestDistance)
-                {
-                    closestDistance = distance;
-                    closestStation = station;
-                }
-            }
-            var closestStationDTO = _mapper.Map<StationDTO>(closestStation);
-            return closestStationDTO;
-        }
-        private static double CalculateDistance(LocationDTO l1, Station l2)
-        {
-            double c = (l1.Latitude - l2.Lat) * (l1.Latitude - l2.Lat) + (l1.Longitude - l2.Lon) * (l1.Longitude - l2.Lon);
-            return c;
+            var finalStops = solver.Solve(routeParameters, stops);
+            return GoogleMapsAPIHandler.GetRoute(finalStops);     
         }
     }
 }

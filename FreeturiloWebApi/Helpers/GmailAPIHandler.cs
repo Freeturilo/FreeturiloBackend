@@ -35,14 +35,12 @@ namespace FreeturiloWebApi.Helpers
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
 
-            using (var message = new MailMessage(fromAddress, toAddress)
+            using var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
                 Body = CreateBody(admin, station)
-            })
-            {
-                smtp.Send(message);
-            }
+            };
+            smtp.Send(message);
         }
     }
 }
