@@ -29,7 +29,7 @@ namespace NextBikeApiService.Helpers
         }
         public void Work()
         {
-            int appState = 2;
+            int appState = 1;
             string token = null;
 
             try
@@ -42,7 +42,7 @@ namespace NextBikeApiService.Helpers
                 _logger.LogError("Could not get token or server state");
             }
 
-            if (appState == 1)
+            if (appState == 2)
             {
                 _logger.LogError("Server is stopped");
             }
@@ -50,7 +50,7 @@ namespace NextBikeApiService.Helpers
             {
                 try
                 {
-                    bool readFromDump = appState == 2;
+                    bool readFromDump = appState == 1;
                     var markers = _nbHandler.GetNextBikeData(_logger, readFromDump, null, null);
                     var freeturiloStations = _stationMethods.GetAllStations(serverPath);
                     var toBeUpdated = BikeDataComparer.Compare(markers, freeturiloStations);
