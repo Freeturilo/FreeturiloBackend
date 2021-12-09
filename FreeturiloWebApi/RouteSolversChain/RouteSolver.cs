@@ -27,7 +27,8 @@ namespace FreeturiloWebApi.RouteSolversChain
         {
             if (SelectSolver(parametersDTO)) return UseSolver(stops, context, mapper);
             if (Next != null) return Next.Solve(parametersDTO, stops, context, mapper);
-            return (null, null);
+
+            throw new Exception400();
         }
     }
 }

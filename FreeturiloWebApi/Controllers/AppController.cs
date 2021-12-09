@@ -20,34 +20,17 @@ namespace FreeturiloWebApi.Controllers
             _service = service;
         }
         [Auth]
-        [HttpGet]
+        [HttpGet("state")]
         public ActionResult<int> Status()
         {
             var status = _service.Status();
             return Ok(status);
         }
-
         [Auth]
-        [HttpPost("start")]
-        public ActionResult Start()
+        [HttpPost("state/{state}")]
+        public ActionResult SetState([FromRoute] int state)
         {
-            _service.Start();
-            return Ok();
-        }
-
-        [Auth]
-        [HttpPost("stop")]
-        public ActionResult Stop()
-        {
-            _service.Stop();
-            return Ok();
-        }
-
-        [Auth]
-        [HttpPost("demo")]
-        public ActionResult Demo()
-        {
-            _service.Demo();
+            _service.SetStatus(state);
             return Ok();
         }
 
@@ -58,6 +41,12 @@ namespace FreeturiloWebApi.Controllers
             _service.SetReportTrashold(Administrator.Id, number);
             return Ok();
         }
-
+        
+        [Auth]
+        [HttpGet("notify")]
+        public ActionResult<int> GetReportTrashold()
+        {
+            return Ok(Administrator.NotifyThreshold);
+        }
     }
 }

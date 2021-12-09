@@ -63,6 +63,21 @@ namespace FreeturiloWebApi.Test
             appMethods.Start(serverPath, token);
         }
         [Test]
+        public void InvalidSetStatus()
+        {
+            var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
+            var client = new RestClient(serverPath + "app/state/7")
+            {
+                Timeout = -1
+            };
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("api-key", token);
+            var res = client.Execute(request);
+
+            Assert.AreEqual(res.StatusCode, System.Net.HttpStatusCode.BadRequest);
+        }
+        [Test]
         public void Start()
         {
             Assert.Catch<Exception401>(() =>
@@ -101,7 +116,7 @@ namespace FreeturiloWebApi.Test
             
             appMethods.Demo(serverPath, token);
             var state = appMethods.Status(serverPath, token);
-            Assert.AreEqual(state, 2);
+            Assert.AreEqual(state, 1);
 
             appMethods.Start(serverPath, token);
         }
@@ -116,10 +131,26 @@ namespace FreeturiloWebApi.Test
             stationMethods.ReportStation(serverPath, 1);
 
             appMethods.SetReportTrashold(serverPath, token, 1);
+            var trashold = appMethods.GetReportTrashold(serverPath, token);
+
+            Assert.AreEqual(trashold, 1);
+
 
             Assert.Catch<Exception401>(() =>
             {
                 appMethods.SetReportTrashold(serverPath, "", 20);
+            });
+        }
+        [Test]
+        public void GetNotifyTrashold()
+        {
+            var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
+            var trashold = appMethods.GetReportTrashold(serverPath, token);
+            Assert.AreEqual(1, trashold);
+
+            Assert.Catch<Exception401>(() =>
+            {
+                appMethods.GetReportTrashold(serverPath, "");
             });
         }
     }

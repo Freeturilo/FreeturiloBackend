@@ -9,9 +9,7 @@ namespace FreeturiloWebApi.Services
 {
     public interface IAppService
     {
-        void Demo();
-        void Start();
-        void Stop();
+        void SetStatus(int state);
         void SetReportTrashold(int id, int number);
         int Status();
     }

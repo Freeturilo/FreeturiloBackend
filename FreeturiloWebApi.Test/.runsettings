@@ -1,6 +1,6 @@
 ﻿<RunSettings>
 	<RunConfiguration>
-		<MaxCpuCount>4</MaxCpuCount>
+		<MaxCpuCount>20</MaxCpuCount>
 	</RunConfiguration>
 	<DataCollectionRunSettings>
 		<DataCollectors>

@@ -8,8 +8,8 @@ namespace FreeturiloWebApi.Helpers
     public enum AppStateEnum
     {
         Started = 0,
-        Stopped = 1,
-        Demo = 2
+        Stopped = 2,
+        Demo = 1
     }
     public static class AppState
     {

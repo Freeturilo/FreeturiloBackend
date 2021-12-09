@@ -56,7 +56,7 @@ namespace NextBikeDataParser.Test
 
             Assert.Catch<XmlSchemaValidationException>(() =>
             {
-                var markers = Parser.ReadNextBikesData("<?xml version=\"1.0\" encoding=\"utf-8\"?><markers></markers>", "../../../../NextBikeDataParser/markers.xsd");
+                var markers = Parser.ReadNextBikesData("<?xml version=\"1.0\" encoding=\"utf-8\"?><markers><fake/></markers>", "../../../../NextBikeDataParser/markers.xsd");
                 Assert.IsNotNull(markers);
             });
 

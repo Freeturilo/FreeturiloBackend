@@ -21,10 +21,6 @@ namespace FreeturiloWebApi.Services
         {
             _context = context;
         }
-        public void Demo()
-        {
-            AppState.Demo();
-        }
         public void SetReportTrashold(int id, int number)
         {
             var admin = _context.Administrators.Where(a => a.Id == id).FirstOrDefault();
@@ -44,19 +40,21 @@ namespace FreeturiloWebApi.Services
                 }
             }
         }
-        public void Start()
+        public void SetStatus(int state)
         {
-            AppState.Start();
+            if (state == 0)
+                AppState.Start();
+            else if (state == 1)
+                AppState.Demo();
+            else if (state == 2)
+                AppState.Stop();
+            else
+                throw new Exception400();
         }
 
         public int Status()
         {
             return (int)AppState.State;
-        }
-
-        public void Stop()
-        {
-            AppState.Stop();
         }
     }
 }

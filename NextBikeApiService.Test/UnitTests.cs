@@ -55,6 +55,11 @@ namespace NextBikeApiService.Test
                 state = 2;
             }
 
+            public void GetReportTrashold(string serverPath, string token)
+            {
+                throw new NotImplementedException();
+            }
+
             public void SetReportTrashold(string serverPath, string token, int number)
             {
                 throw new NotImplementedException();
