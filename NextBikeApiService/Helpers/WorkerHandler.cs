@@ -10,7 +10,7 @@ namespace NextBikeApiService.Helpers
 {
     public class WorkerHandler : IWorkerHandler
     {
-        private static readonly string serverPath = @"https://localhost:5001/";
+        private static readonly string serverPath = @"https://freeturilowebapi.azurewebsites.net/";
         private readonly ILogger<WorkerHandler> _logger;
         private readonly INextBikeApiHandler _nbHandler;
         private readonly IUserMethods _userMethods;
