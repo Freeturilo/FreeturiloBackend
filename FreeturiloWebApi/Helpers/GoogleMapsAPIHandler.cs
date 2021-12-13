@@ -78,7 +78,7 @@ namespace FreeturiloWebApi.Helpers
             var route = new RouteDTO()
             {
                 Waypoints = stops.ToArray(),
-                DirectionsRoute = direction,
+                DirectionsRoute = direction.Routes[0],
                 Time = direction.Routes[0].Legs[0].Duration.Value,
                 Cost = cost,
             };

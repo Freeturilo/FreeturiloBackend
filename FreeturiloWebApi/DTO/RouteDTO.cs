@@ -8,6 +8,6 @@ namespace FreeturiloWebApi.DTO
         public double Cost  { get; set; }
         public int Time { get; set; }
         public LocationDTO[] Waypoints { get; set; }
-        public DirectionDTO DirectionsRoute { get; set; }
+        public Route DirectionsRoute { get; set; }
     }
 }
