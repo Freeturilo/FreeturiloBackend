@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 using FreeturiloWebApi.Models;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace FreeturiloWebApi.Helpers
 {
     static public class GmailAPIHandler
     {
-        private static readonly MailAddress fromAddress = new("freeturilo@gmail.com", "Freeturilo");
-        private static readonly string fromPassword = "Freeturilo123PW!!";
         private static readonly string subject = "Freeturilo - zgłoszenie niesprawnej stacji";
         private static string CreateBody(Administrator admin, Station station)
         {
@@ -24,23 +24,15 @@ namespace FreeturiloWebApi.Helpers
         }
         public static void SendEmail(Administrator admin, Station station)
         {
-            var toAddress = new MailAddress(admin.Email, admin.Name + " " + admin.Surname);
-            var smtp = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-            };
-
-            using var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = CreateBody(admin, station)
-            };
-            smtp.Send(message);
+            var apiKey = "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";
+            var client = new SendGridClient(apiKey);
+            var from = new EmailAddress("freeturilo@gmail.com", "Freeturilo");
+            var subject = GmailAPIHandler.subject;
+            var to = new EmailAddress(admin.Email, $"{admin.Name} {admin.Surname}");
+            var plainTextContent = CreateBody(admin, station);
+            var htmlContent = "<p>" + CreateBody(admin, station) + "</p>";
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            client.SendEmailAsync(msg).Wait();
         }
     }
 }
