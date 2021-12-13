@@ -59,15 +59,10 @@ namespace FreeturiloWebApi.Services
             solver = new CheapestRouteSolver(solver);
             solver = new OptimalRouteSolver(solver);
 
-<<<<<<< HEAD
-            (var finalStops, var mode) = solver.Solve(routeParameters, stops, _context, _mapper);
-            var route =  GoogleMapsAPIHandler.GetRoute(finalStops, mode);
+            var finalStops = solver.Solve(routeParameters, stops, _context, _mapper);
+            var route =  GoogleMapsAPIHandler.GetRoute(finalStops);
             route.Parameters = routeParameters;
             return route;
-=======
-            var finalStops = solver.Solve(routeParameters, stops, _context, _mapper);
-            return GoogleMapsAPIHandler.GetRoute(finalStops);     
->>>>>>> cd
         }
     }
 }
