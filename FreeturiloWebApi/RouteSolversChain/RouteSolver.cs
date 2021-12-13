@@ -50,11 +50,11 @@ namespace FreeturiloWebApi.RouteSolversChain
                     return distances[u].path;
                 }
 
-                foreach(var node in nodes)
+                var edges = context.Routes.Where(r => r.StartId == u.Location.Id).ToArray();
+                foreach (var node in nodes)
                 {
                     if (node == u) continue;
-                    var edge = context.Routes.Where(r => r.StartId == u.Location.Id && r.StopId == node.Location.Id).FirstOrDefault();
-                    if (edge == null) continue;
+                    var edge = edges.Where(e => e.StopId == node.Location.Id).FirstOrDefault();
                     var newDistance = distances[u].distance + EdgeWeight(edge.Time, edge.Cost);
                     if (distances[node].distance > newDistance)
                     {
@@ -78,7 +78,7 @@ namespace FreeturiloWebApi.RouteSolversChain
             var mappedStations = mapper.Map<StationDTO[]>(stations);
 
 
-            var finalStops = new List<LocationDTO>() { stops[0] };
+            var finalStops = new List<LocationDTO>();
 
             var closestStations = new StationDTO[stops.Count];
             for(int i =0; i< stops.Count;i++)
@@ -88,9 +88,15 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             for (int i = 0; i < stops.Count - 1; i++)
             {
-                var directLocations = AStar(mappedStations, closestStations[i], closestStations[i + 1], context);
+                var routes = context.Routes.Where(r => r.StartId == closestStations[i].Id).ToArray();
+                var directRoute = routes.Where(r => r.StopId == closestStations[i + 1].Id).FirstOrDefault();
+                var directLocations = AStar(mappedStations.Where(s => {
+                    var route = routes.Where(r => r.StopId == s.Id).FirstOrDefault();
+                    return route != null && route.Time < directRoute.Time;
+                }).ToArray(), closestStations[i], closestStations[i + 1], context);
                 finalStops.Add(stops[i]);
                 finalStops.AddRange(directLocations);
+                finalStops.Add(closestStations[i + 1]);
             }
             finalStops.Add(stops[^1]);
 
