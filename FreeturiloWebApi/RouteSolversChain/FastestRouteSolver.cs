@@ -15,17 +15,12 @@ namespace FreeturiloWebApi.RouteSolversChain
     {
         public FastestRouteSolver(IRouteSolver next) : base(next) { }
 
-        protected override double EdgeWeight(GraphEdge e)
-        {
-            return e.Time;
-        }
-
         protected override bool SelectSolver(RouteParametersDTO parameters)
         {
             return parameters.Criterion == 1;
         }
 
-        protected override (List<LocationDTO> stops, string mode) UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
+        protected override List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             if(stops.Count == 2)
             {
@@ -38,7 +33,7 @@ namespace FreeturiloWebApi.RouteSolversChain
             
         }
 
-        private (List<LocationDTO> stops, string mode) FindLocationsWithStops(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
+        private List<LocationDTO> FindLocationsWithStops(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var start = stops[0];
             var end = stops[^1];
@@ -91,14 +86,10 @@ namespace FreeturiloWebApi.RouteSolversChain
             finalStops.Add(mapper.Map<StationDTO>(bestStation));
             finalStops.Add(end);
 
-            var walkingRoute = GoogleMapsAPIHandler.GetRoute(stops, "walking");
-            if (walkingRoute.Time < minTime)
-                return (stops, "walkikng");
-
-            return (finalStops, "bicycling");
+            return finalStops;
         }
 
-        private (List<LocationDTO> stops, string mode) FindLocationsWithoutStops(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
+        private List<LocationDTO> FindLocationsWithoutStops(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var start = stops[0];
             var end = stops[^1];
@@ -125,14 +116,16 @@ namespace FreeturiloWebApi.RouteSolversChain
                     }
                 }
 
-            var walkingRoute = GoogleMapsAPIHandler.GetRoute(new() { start, end }, "walking");
-            if (walkingRoute.Time < minTime)
-                return (new() { start, end }, "walking");
 
             if (closestStations.s1 == closestStations.s2)
-                return (new() { start, mapper.Map<StationDTO>(closestStations.s2), end }, "bicycling");
+                return new() { start, mapper.Map<StationDTO>(closestStations.s2), end };
             else
-                return (new() { start, mapper.Map<StationDTO>(closestStations.s1), mapper.Map<StationDTO>(closestStations.s2), end }, "bicycling");
+                return new() { start, mapper.Map<StationDTO>(closestStations.s1), mapper.Map<StationDTO>(closestStations.s2), end };
+        }
+
+        protected override double EdgeWeight(FastNode e1, FastNode e2)
+        {
+            throw new NotImplementedException();
         }
     }
 }

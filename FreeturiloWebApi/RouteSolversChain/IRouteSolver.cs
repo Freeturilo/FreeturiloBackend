@@ -13,6 +13,6 @@ namespace FreeturiloWebApi.RouteSolversChain
     public interface IRouteSolver
     {
         IRouteSolver Next { get; }
-        (List<LocationDTO> stops, string mode) Solve( RouteParametersDTO parametersDTO, List<LocationDTO> stops, FreeturiloContext context, IMapper mapper);
+        List<LocationDTO> Solve( RouteParametersDTO parametersDTO, List<LocationDTO> stops, FreeturiloContext context, IMapper mapper);
     }
 }
