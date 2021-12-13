@@ -60,7 +60,9 @@ namespace FreeturiloWebApi.Services
             solver = new OptimalRouteSolver(solver);
 
             (var finalStops, var mode) = solver.Solve(routeParameters, stops, _context, _mapper);
-            return GoogleMapsAPIHandler.GetRoute(finalStops, mode);     
+            var route =  GoogleMapsAPIHandler.GetRoute(finalStops, mode);
+            route.Parameters = routeParameters;
+            return route;
         }
     }
 }
