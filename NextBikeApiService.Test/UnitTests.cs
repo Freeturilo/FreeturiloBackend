@@ -79,6 +79,11 @@ namespace NextBikeApiService.Test
             {
                 state = 1;
             }
+
+            int IAppMethods.GetReportTrashold(string serverPath, string token)
+            {
+                throw new NotImplementedException();
+            }
         }
         class FakeUserMethods : IUserMethods
         {
