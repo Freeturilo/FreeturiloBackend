@@ -93,7 +93,7 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             var walkingRoute = GoogleMapsAPIHandler.GetRoute(stops, "walking");
             if (walkingRoute.Time < minTime)
-                return (new() { start, end }, "walkikng");
+                return (stops, "walkikng");
 
             return (finalStops, "bicycling");
         }

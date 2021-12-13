@@ -23,10 +23,5 @@ namespace FreeturiloWebApi.RouteSolversChain
         {
             return parameters.Criterion == 0;
         }
-
-        protected override (List<LocationDTO> stops, string mode) UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
