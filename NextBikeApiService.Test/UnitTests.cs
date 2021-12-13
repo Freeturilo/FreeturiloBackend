@@ -52,7 +52,7 @@ namespace NextBikeApiService.Test
             int state = 0;
             public void Demo(string serverPath, string token)
             {
-                state = 2;
+                state = 1;
             }
 
             public void GetReportTrashold(string serverPath, string token)
@@ -77,7 +77,7 @@ namespace NextBikeApiService.Test
 
             public void Stop(string serverPath, string token)
             {
-                state = 1;
+                state = 2;
             }
 
             int IAppMethods.GetReportTrashold(string serverPath, string token)
