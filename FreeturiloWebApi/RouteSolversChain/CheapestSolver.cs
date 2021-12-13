@@ -14,9 +14,9 @@ namespace FreeturiloWebApi.RouteSolversChain
     {
         public CheapestRouteSolver(IRouteSolver next) : base(next) { }
 
-        protected override double EdgeWeight(FastNode e1, FastNode e2)
+        protected override float EdgeWeight(int time, double cost)
         {
-            throw new NotImplementedException();
+            return (float)cost;
         }
 
         protected override bool SelectSolver(RouteParametersDTO parameters)

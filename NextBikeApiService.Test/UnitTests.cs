@@ -18,9 +18,6 @@ namespace NextBikeApiService.Test
 {
     public class Tests
     {
-        private readonly IAppMethods appMethods = new AppMethods();
-        private readonly IStationMethods stationMethods = new StationMethods();
-        private readonly IUserMethods userMethods = new UserMethods();
         class FakeNbHandler : INextBikeApiHandler
         {
             public markers GetNextBikeData(ILogger logger, bool readFromDump, string xsdPath = null, string dumpPath = null, string url = null, string parameters = null)
@@ -87,7 +84,7 @@ namespace NextBikeApiService.Test
         }
         class FakeUserMethods : IUserMethods
         {
-            bool exception = false;
+            readonly bool exception = false;
             public FakeUserMethods(bool exception = false)
             {
                 this.exception = exception;

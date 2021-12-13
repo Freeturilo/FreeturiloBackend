@@ -18,43 +18,18 @@ namespace FreeturiloWebApi.RouteSolversChain
     public abstract class RouteSolver : IRouteSolver
     {
         public IRouteSolver Next { get; }
-        protected abstract double EdgeWeight(FastNode e1, FastNode e2);
+        protected abstract float EdgeWeight(int time, double cost);
         protected abstract bool SelectSolver(RouteParametersDTO parameters);
-        private float Heuristic(FastNode source, FastNode target)
-        {
-            float R = 6371000.0F;
-            var fi1 = source.Location.Latitude * Math.PI / 180.0;
-            var fi2 = target.Location.Latitude * Math.PI / 180.0;
-            var delta_fi = fi2 - fi1;
-            var delta_hi = (source.Location.Longitude - target.Location.Longitude) * Math.PI / 180.0;
-
-            var a = Math.Sin(delta_fi / 2) * Math.Sin(delta_fi / 2) + Math.Cos(fi1) * Math.Cos(fi2) * Math.Sin(delta_hi / 2) * Math.Sin(delta_hi / 2);
-            float c = 2 * (float)Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            var d = R * c;
-
-            return d;
-        }
-        private float Heuristic(FastNode source, LocationDTO target)
-        {
-            float R = 6371000.0F;
-            var fi1 = source.Location.Latitude * Math.PI / 180.0;
-            var fi2 = target.Latitude * Math.PI / 180.0;
-            var delta_fi = fi2 - fi1;
-            var delta_hi = (source.Location.Longitude - target.Longitude) * Math.PI / 180.0;
-
-            var a = Math.Sin(delta_fi / 2) * Math.Sin(delta_fi / 2) + Math.Cos(fi1) * Math.Cos(fi2) * Math.Sin(delta_hi / 2) * Math.Sin(delta_hi / 2);
-            float c = 2 * (float)Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            var d = R * c;
-
-            return d;
-        }
-        private List<LocationDTO> AStar(StationDTO[] mappedStations, LocationDTO start, LocationDTO stop, FreeturiloContext context)
+        private List<LocationDTO> AStar(StationDTO[] mappedStations, StationDTO start, StationDTO stop, FreeturiloContext context)
         {          
             var nodes = new List<FastNode>();
             var startNode = new FastNode(start);
+            var endNode = new FastNode(stop);
+
             foreach (var station in mappedStations) 
-                if(station != start)
+                if(station != start && station != stop)
                     nodes.Add(new FastNode(station));
+            nodes.Add(endNode);
 
             var distances = new Dictionary<FastNode, (float distance, List<LocationDTO> path)>();
             foreach (var node in nodes) distances.Add(node, (float.PositiveInfinity, new()));
@@ -63,7 +38,7 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             var queue = new FastPriorityQueue<FastNode>(2 + mappedStations.Length);
             foreach (var node in nodes) queue.Enqueue(node, distances[node].distance);
-            queue.Enqueue(startNode, Heuristic(startNode, stop));
+            queue.Enqueue(startNode, 0);
 
             nodes.Add(startNode);
 
@@ -72,16 +47,26 @@ namespace FreeturiloWebApi.RouteSolversChain
                 var u = queue.Dequeue();
                 if(u.Location == stop)
                 {
-                    break; 
+                    return distances[u].path;
                 }
 
                 foreach(var node in nodes)
                 {
                     if (node == u) continue;
-                    var edge = context.Routes
-                    if(distances[node].distance > distances[u].distance + EdgeWeight()
+                    var edge = context.Routes.Where(r => r.StartId == u.Location.Id && r.StopId == node.Location.Id).FirstOrDefault();
+                    if (edge == null) continue;
+                    var newDistance = distances[u].distance + EdgeWeight(edge.Time, edge.Cost);
+                    if (distances[node].distance > newDistance)
+                    {
+                        var newPath = new List<LocationDTO>(distances[node].path);
+                        newPath.Add(u.Location);
+                        distances[node] = (newDistance, newPath);
+                        queue.UpdatePriority(node, newDistance);
+                    }
                 }
             }
+
+            throw new Exception404();
         }
 
         protected virtual List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
@@ -94,8 +79,6 @@ namespace FreeturiloWebApi.RouteSolversChain
 
 
             var finalStops = new List<LocationDTO>() { stops[0] };
-            var time = 0;
-            var cost = 0.0;
 
             var closestStations = new StationDTO[stops.Count];
             for(int i =0; i< stops.Count;i++)

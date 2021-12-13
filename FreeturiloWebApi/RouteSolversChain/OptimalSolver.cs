@@ -14,10 +14,9 @@ namespace FreeturiloWebApi.RouteSolversChain
     class OptimalRouteSolver: RouteSolver
     {
         public OptimalRouteSolver(IRouteSolver next) : base(next) { }
-
-        protected override double EdgeWeight(FastNode e1, FastNode e2)
+        protected override float EdgeWeight(int time, double cost)
         {
-            throw new NotImplementedException();
+            return (float)(time + cost * 20);
         }
 
         protected override bool SelectSolver(RouteParametersDTO parameters)

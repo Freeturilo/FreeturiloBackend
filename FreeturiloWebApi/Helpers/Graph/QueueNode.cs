@@ -9,7 +9,7 @@ namespace FreeturiloWebApi.Helpers.Graph
 {
     public class FastNode : FastPriorityQueueNode
     {
-        public LocationDTO Location { get; set; }
-        public FastNode(LocationDTO location) => Location = location;
+        public StationDTO Location { get; set; }
+        public FastNode(StationDTO location) => Location = location;
     }
 }
