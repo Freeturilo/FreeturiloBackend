@@ -24,21 +24,8 @@ namespace FreeturiloWebApi.Services
         public void SetReportTrashold(int id, int number)
         {
             var admin = _context.Administrators.Where(a => a.Id == id).FirstOrDefault();
-
-            var oldNumber = admin.NotifyThreshold;
             admin.NotifyThreshold = number;
             _context.SaveChanges();
-
-            if(number < oldNumber)
-            {
-                foreach(var station in _context.Stations)
-                {
-                    if(station.Reports > number && oldNumber > station.Reports)
-                    {
-                        GmailAPIHandler.SendEmail(admin, station);
-                    }
-                }
-            }
         }
         public void SetStatus(int state)
         {
