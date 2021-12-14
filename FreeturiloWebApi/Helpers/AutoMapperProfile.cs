@@ -12,8 +12,9 @@ namespace FreeturiloWebApi.Helpers
                 .ForMember(dest => dest.Latitude, opts => opts.MapFrom(src => src.Lat))
                 .ForMember(dest => dest.Longitude, opts => opts.MapFrom(src => src.Lon))
                 .ForMember(dest => dest.Bikes, opts => opts.MapFrom(src => src.AvailableBikes))
-                .ForMember(dest => dest.BikeRacks, opts => opts.MapFrom(src => src.AvailableRacks));
-            
+                .ForMember(dest => dest.BikeRacks, opts => opts.MapFrom(src => src.AvailableRacks))
+                .ForMember(dest => dest.Type, opts => opts.MapFrom(src => "Station"));
+
             CreateMap<StationDTO, Station>()
                 .ForMember(dest => dest.Lat, opts => opts.MapFrom(src => src.Latitude))
                 .ForMember(dest => dest.Lon, opts => opts.MapFrom(src => src.Longitude))
@@ -23,7 +24,8 @@ namespace FreeturiloWebApi.Helpers
             CreateMap<Station, LocationDTO>()
                 .ForMember(dest => dest.Latitude, opts => opts.MapFrom(src => src.Lat))
                 .ForMember(dest => dest.Longitude, opts => opts.MapFrom(src => src.Lon))
-                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name));
+                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Type, opts => opts.MapFrom(src => "Station"));
         }
     }
 }
