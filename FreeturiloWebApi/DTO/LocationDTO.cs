@@ -10,7 +10,7 @@ namespace FreeturiloWebApi.DTO
         public double Latitude { get; set;}
         [JsonPropertyName("name")]
         public string Name { get; set;}
-        [JsonPropertyName("name")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
     }
 }
