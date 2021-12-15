@@ -8,5 +8,6 @@ namespace FreeturiloWebApi.Models
         public DbSet<Station> Stations { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
+        public DbSet<State> State { get; set; }
     }
 }

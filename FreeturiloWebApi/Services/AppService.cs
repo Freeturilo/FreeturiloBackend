@@ -29,19 +29,16 @@ namespace FreeturiloWebApi.Services
         }
         public void SetStatus(int state)
         {
-            if (state == 0)
-                AppState.Start();
-            else if (state == 1)
-                AppState.Demo();
-            else if (state == 2)
-                AppState.Stop();
-            else
-                throw new Exception400();
+            if (state < 0 || state > 2) throw new Exception400();
+
+            var actualState = _context.State.FirstOrDefault();
+            actualState.Value = state;
+            _context.SaveChanges();
         }
 
         public int Status()
         {
-            return (int)AppState.State;
+            return _context.State.FirstOrDefault().Value;
         }
     }
 }

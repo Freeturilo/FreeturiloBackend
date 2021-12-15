@@ -55,6 +55,10 @@ namespace FreeturiloWebApi
                 new Route() { Id = 6, Cost = 10, RouteJSON = "", StartId = 3, StopId = 2, Time = 12 }
                 );
 
+            _context.State.Add(
+                new State() { Value = 0, Id = 1 }
+                );
+
             _context.SaveChanges();
         }
 

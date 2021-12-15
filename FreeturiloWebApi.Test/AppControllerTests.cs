@@ -59,7 +59,8 @@ namespace FreeturiloWebApi.Test
 
             var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
             appMethods.Stop(serverPath, token);
-            Assert.AreEqual(AppState.State, AppStateEnum.Stopped);
+            var state = appMethods.Status(serverPath, token);
+            Assert.AreEqual(state, 2);
             appMethods.Start(serverPath, token);
         }
         [Test]
@@ -87,8 +88,8 @@ namespace FreeturiloWebApi.Test
 
             var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
             appMethods.Start(serverPath, token);
-            Assert.AreEqual(AppState.State, AppStateEnum.Started);
-
+            var state = appMethods.Status(serverPath, token);
+            Assert.AreEqual(state, 0);
         }
         [Test]
         public void Demo()
@@ -100,8 +101,8 @@ namespace FreeturiloWebApi.Test
 
             var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
             appMethods.Demo(serverPath, token);
-            Assert.AreEqual(AppState.State, AppStateEnum.Demo);
-
+            var state = appMethods.Status(serverPath, token);
+            Assert.AreEqual(state, 1);
             appMethods.Start(serverPath, token);
         }
         [Test]

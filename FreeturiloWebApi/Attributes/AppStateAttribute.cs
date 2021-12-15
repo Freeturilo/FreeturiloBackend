@@ -3,6 +3,7 @@ using FreeturiloWebApi.Helpers;
 using FreeturiloWebApi.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
+using System.Linq;
 
 namespace FreeturiloWebApi.Attributes
 {
@@ -11,8 +12,12 @@ namespace FreeturiloWebApi.Attributes
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var appState = AppState.State;
-            if(appState == AppStateEnum.Stopped)
+            var dbContext = context.HttpContext
+                .RequestServices
+                .GetService(typeof(FreeturiloContext)) as FreeturiloContext;
+
+            var appState = dbContext.State.FirstOrDefault();
+            if (appState == null || appState.Value == 2)
             {
                 throw new Exception503();
             }
