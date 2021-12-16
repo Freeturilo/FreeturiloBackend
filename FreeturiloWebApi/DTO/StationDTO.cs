@@ -6,10 +6,6 @@ namespace FreeturiloWebApi.DTO
     {
         [JsonPropertyName("id")]
         public int Id  { get; set; }
-        [JsonPropertyName("bikeRacks")]
-        public int BikeRacks  { get; set; }
-        [JsonPropertyName("bikes")]
-        public int Bikes { get; set; }
         [JsonPropertyName("state")]
         public int State { get; set; }
     }

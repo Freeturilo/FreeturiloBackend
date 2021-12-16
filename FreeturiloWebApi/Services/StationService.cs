@@ -92,8 +92,8 @@ namespace FreeturiloWebApi.Services
                 var station = stations[i];
                 var stationDTO = newStations[i];
 
-                station.AvailableBikes = stationDTO.Bikes;
-                station.AvailableRacks = stationDTO.BikeRacks;
+                station.AvailableBikes = stationDTO.Bikes ?? 0;
+                station.AvailableRacks = stationDTO.BikeRacks ?? 0;
             }
             
             _context.SaveChanges();

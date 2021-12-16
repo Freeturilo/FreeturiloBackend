@@ -12,5 +12,9 @@ namespace FreeturiloWebApi.DTO
         public string Name { get; set;}
         [JsonPropertyName("type")]
         public string Type { get; set; }
+        [JsonPropertyName("bikeRacks")]
+        public int? BikeRacks { get; set; }
+        [JsonPropertyName("bikes")]
+        public int? Bikes { get; set; }
     }
 }
