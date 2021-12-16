@@ -95,7 +95,7 @@ namespace FreeturiloWebApi.Helpers
             int i = 0;
             while(minutes > 0)
             {
-                var costOfHour = hourCost[Math.Max(i, hourCost.Length - 1)];
+                var costOfHour = hourCost[Math.Min(i, hourCost.Length - 1)];
                 cost += costOfHour;
                 i++;
                 minutes -= 60;
