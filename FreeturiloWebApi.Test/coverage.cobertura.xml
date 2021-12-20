@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.6572" branch-rate="0.5769" version="1.9" timestamp="1639614469" lines-covered="629" lines-valid="957" branches-covered="120" branches-valid="208">
+<coverage line-rate="0.6572" branch-rate="0.5769" version="1.9" timestamp="1639680625" lines-covered="629" lines-valid="957" branches-covered="120" branches-valid="208">
   <sources>
     <source>C:\Users\hiryleu\Pulpit\FreeturiloBackend\FreeturiloWebApi\</source>
   </sources>

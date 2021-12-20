@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="1" branch-rate="1" version="1.9" timestamp="1639614491" lines-covered="79" lines-valid="79" branches-covered="18" branches-valid="18">
+<coverage line-rate="1" branch-rate="1" version="1.9" timestamp="1639680645" lines-covered="79" lines-valid="79" branches-covered="18" branches-valid="18">
   <sources>
     <source>C:\Users\hiryleu\Pulpit\FreeturiloBackend\NextBikeApiService\Helpers\</source>
   </sources>
