@@ -18,8 +18,8 @@ namespace FreeturiloWebApi.RouteSolversChain
     public abstract class RouteSolver : IRouteSolver
     {
         public IRouteSolver Next { get; }
-        public const int freeTime = 20;
-        protected abstract float EdgeWeight(int time, double cost);
+        public const int freeTime = 20 * 60;
+        protected virtual float EdgeWeight(int time, double cost) { return 0; }
         protected abstract bool SelectSolver(RouteParametersDTO parameters);
         private List<LocationDTO> AStar(StationDTO[] mappedStations, StationDTO start, StationDTO stop, FreeturiloContext context)
         {          

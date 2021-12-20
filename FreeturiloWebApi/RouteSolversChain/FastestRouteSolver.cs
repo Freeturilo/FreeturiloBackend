@@ -122,10 +122,5 @@ namespace FreeturiloWebApi.RouteSolversChain
             else
                 return new() { start, mapper.Map<StationDTO>(closestStations.s1), mapper.Map<StationDTO>(closestStations.s2), end };
         }
-
-        protected override float EdgeWeight(int time, double cost)
-        {
-            return time;
-        }
     }
 }

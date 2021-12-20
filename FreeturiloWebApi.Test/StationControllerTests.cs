@@ -62,7 +62,7 @@ namespace FreeturiloWebApi.Test
         public void GetAllStations()
         {
             var stations = stationMethods.GetAllStations(serverPath);
-            Assert.AreEqual(stations.Length, 3);
+            Assert.AreEqual(stations.Length, 8);
 
             var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
 
@@ -108,7 +108,7 @@ namespace FreeturiloWebApi.Test
             var token = userMethods.Authenticate(serverPath, new() { Email = email, Password = password });
             stationMethods.UpdateAllStations(serverPath, token, newStations);
             var stations = stationMethods.GetAllStations(serverPath);
-            Assert.AreEqual(stations.Length, 3);
+            Assert.AreEqual(stations.Length, 8);
             Assert.AreEqual(stations[0].Bikes, 10);
             Assert.AreEqual(stations[1].Bikes, 15);
             Assert.AreEqual(stations[2].Bikes, 10);

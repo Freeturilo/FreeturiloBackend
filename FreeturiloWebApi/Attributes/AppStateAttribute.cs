@@ -17,7 +17,7 @@ namespace FreeturiloWebApi.Attributes
                 .GetService(typeof(FreeturiloContext)) as FreeturiloContext;
 
             var appState = dbContext.State.FirstOrDefault();
-            if (appState == null || appState.Value == 2)
+            if (appState.Value == 2)
             {
                 throw new Exception503();
             }

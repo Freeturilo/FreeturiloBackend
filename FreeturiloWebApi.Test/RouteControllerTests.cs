@@ -96,13 +96,70 @@ namespace FreeturiloWebApi.Test
                     Criterion = 0,
                     Start = new LocationDTO()
                     {
-                        Latitude = 10.0,
+                        Latitude = 50.0,
                         Longitude = 10.0,
                     },
                     End = new LocationDTO()
                     {
                         Latitude = 50.0,
                         Longitude = 10.0,
+                    }
+                };
+                routeMethods.GetRoute(serverPath, parameters);
+            });
+
+            Assert.Catch<Exception404>(() =>
+            {
+                var parameters = new RouteParametersDTO
+                {
+                    Criterion = 0,
+                    Start = new LocationDTO()
+                    {
+                        Latitude = 59.1,
+                        Longitude = 10.0,
+                    },
+                    End = new LocationDTO()
+                    {
+                        Latitude = 52.1,
+                        Longitude = 10.0,
+                    }
+                };
+                routeMethods.GetRoute(serverPath, parameters);
+            });
+
+            Assert.Catch<Exception404>(() =>
+            {
+                var parameters = new RouteParametersDTO
+                {
+                    Criterion = 0,
+                    Start = new LocationDTO()
+                    {
+                        Latitude = 52.1,
+                        Longitude = 10.0,
+                    },
+                    End = new LocationDTO()
+                    {
+                        Latitude = 52.1,
+                        Longitude = 10.0,
+                    }
+                };
+                routeMethods.GetRoute(serverPath, parameters);
+            });
+
+            Assert.Catch<Exception404>(() =>
+            {
+                var parameters = new RouteParametersDTO
+                {
+                    Criterion = 0,
+                    Start = new LocationDTO()
+                    {
+                        Latitude = 52.1,
+                        Longitude = 100.0,
+                    },
+                    End = new LocationDTO()
+                    {
+                        Latitude = 52.1,
+                        Longitude = 100.0,
                     }
                 };
                 routeMethods.GetRoute(serverPath, parameters);
@@ -129,6 +186,104 @@ namespace FreeturiloWebApi.Test
                 };
                 routeMethods.GetRoute(serverPath, parameters);
             });
+        }
+
+        [Test]
+        public void GetCheapestRoute()
+        {
+            var parameters = new RouteParametersDTO
+            {
+                Criterion = 0,
+                Start = new LocationDTO()
+                {
+                    Longitude = 20.97481,
+                    Latitude = 52.220877,
+                },
+                End = new LocationDTO()
+                {
+                    Longitude = 21.043405,
+                    Latitude = 52.249512,
+                }
+            };
+            var r1 = routeMethods.GetRoute(serverPath, parameters);
+            Assert.IsTrue(r1.Cost == 1);
+            parameters.Stops = new LocationDTO[] {
+                new LocationDTO()
+                {
+                    Longitude = 21.043405,
+                    Latitude = 52.249512,
+                },
+                new LocationDTO()
+                {
+                    Longitude = 20.97481,
+                    Latitude = 52.220877,
+                },
+            };
+            var r2 = routeMethods.GetRoute(serverPath, parameters);
+            Assert.IsTrue(r2.Cost == 1);
+
+            parameters.Stops = new LocationDTO[] {
+                new LocationDTO()
+                {
+                    Longitude = 21.043405,
+                    Latitude = 52.220877,
+                },
+            };
+            var r3 = routeMethods.GetRoute(serverPath, parameters);
+            Assert.IsTrue(r3.Cost == 1);
+
+        }
+
+        [Test]
+        public void GetFastestRoute()
+        {
+            var parameters = new RouteParametersDTO
+            {
+                Criterion = 1,
+                Start = new LocationDTO()
+                {
+                    Longitude = 20.97481,
+                    Latitude = 52.220877,
+                },
+                End = new LocationDTO()
+                {
+                    Longitude = 20.97485,
+                    Latitude = 52.220889,
+                }
+            };
+            var r1 = routeMethods.GetRoute(serverPath, parameters);
+            Assert.IsTrue(r1.Cost == 0);
+            parameters = new RouteParametersDTO
+            {
+                Criterion = 1,
+                Start = new LocationDTO()
+                {
+                    Longitude = 20.97481,
+                    Latitude = 52.220877,
+                },
+                End = new LocationDTO()
+                {
+                    Longitude = 21.043405,
+                    Latitude = 52.249512,
+                }
+            };
+            var r2 = routeMethods.GetRoute(serverPath, parameters);
+            Assert.IsTrue(r2.Cost == 1);
+            parameters.Stops = new LocationDTO[] {
+                new LocationDTO()
+                {
+                    Longitude = 21.043405,
+                    Latitude = 52.249512,
+                },
+                new LocationDTO()
+                {
+                    Longitude = 20.97481,
+                    Latitude = 52.220877,
+                },
+            };
+            var r3 = routeMethods.GetRoute(serverPath, parameters);
+            Assert.IsTrue(r3.Cost == 4);
+
         }
     }
 }

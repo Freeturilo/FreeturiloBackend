@@ -14,11 +14,6 @@ namespace FreeturiloWebApi.RouteSolversChain
     class CheapestRouteSolver: RouteSolver
     {
         public CheapestRouteSolver(IRouteSolver next) : base(next) { }
-
-        protected override float EdgeWeight(int time, double cost)
-        {
-            return (float)cost;
-        }
         protected override List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var stations = context.Stations.Where(s => s.AvailableBikes > 0 && s.State != 2).ToArray();
@@ -31,7 +26,7 @@ namespace FreeturiloWebApi.RouteSolversChain
             var i = 0;
             LocationDTO currentStop = closestStation;
             StationDTO lastStation = closestStation;
-            var maxTime = freeTime;
+            var maxTime = 0;
             while (currentStop != stops[^1])
             {
                 (maxTime, lastStation) = FindPartOfPath(finalStops, maxTime, lastStation, stops[i+1], mappedStations, context, mapper);
@@ -41,7 +36,6 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             return finalStops;
         }
-
         private (int maxTime, StationDTO lastStation) FindPartOfPath(List<LocationDTO> finalStops, int maxTime, StationDTO lastStation, LocationDTO stop, StationDTO[] stations, FreeturiloContext context, IMapper mapper)
         {
             var closestStation = GraphMethodsProvider.GetClosestStations(stations, stop, 1)[0];
@@ -52,7 +46,7 @@ namespace FreeturiloWebApi.RouteSolversChain
             int bestTime = int.MaxValue;
             Route[] routesFromLastStation = null;
 
-            if (maxTime < freeTime && maxTime > 0)
+            if (maxTime > 0)
             {
                 bestTime = routesToStop.Where(r => r.StartId == lastStation.Id).FirstOrDefault().Time;
                 routesFromLastStation = context.Routes.Where(r => r.StartId == lastStation.Id).ToArray();
@@ -63,7 +57,9 @@ namespace FreeturiloWebApi.RouteSolversChain
 
                     if(timeToStation <= maxTime)
                     {
-                        var newTimeToStop = routesToStop.Where(r => r.StartId == station.Id).FirstOrDefault().Time;
+                        var newTimeToStop = 0;
+                        if (station != closestStation)
+                            newTimeToStop = routesToStop.Where(r => r.StartId == station.Id).FirstOrDefault().Time;
                         if(newTimeToStop < bestTime)
                         {
                             bestTime = newTimeToStop;
@@ -126,7 +122,6 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             return (freeTime - 2 * lastPartOfPath.Time, closestStation);
         }
-
         protected override bool SelectSolver(RouteParametersDTO parameters)
         {
             return parameters.Criterion == 0;

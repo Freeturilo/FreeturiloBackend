@@ -1,0 +1,1 @@
+﻿{"status":"status","geocoded_waypoints":[{"geocoder_status":"ok","place_id":"1","types":[]}],"routes":[]}

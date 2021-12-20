@@ -38,7 +38,6 @@ namespace FreeturiloWebApi.Helpers
             request.AddHeader("Content-Type", "application/json");
 
             IRestResponse response = client.Execute(request);
-            if (!response.IsSuccessful) throw new Exception404();
 
             var direction = JsonSerializer.Deserialize<DirectionDTO>(response.Content);
             var cost = 0.0;
