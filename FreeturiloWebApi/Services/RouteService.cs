@@ -43,7 +43,7 @@ namespace FreeturiloWebApi.Services
             return false;
         }
 
-        public RouteDTO GetRoute(RouteParametersDTO routeParameters)
+        public RouteDTO[] GetRoute(RouteParametersDTO routeParameters)
         {
             if (routeParameters == null) throw new Exception400();
             if (routeParameters.Start == null || routeParameters.End == null) throw new Exception400();
@@ -60,9 +60,14 @@ namespace FreeturiloWebApi.Services
             solver = new OptimalRouteSolver(solver);
 
             var finalStops = solver.Solve(routeParameters, stops, _context, _mapper);
-            var route =  GoogleMapsAPIHandler.GetRoute(finalStops);
-            route.Parameters = routeParameters;
-            return route;
+            var routes = new RouteDTO[finalStops.Count-1];
+            Parallel.For(0, finalStops.Count - 1, i =>
+            {
+                var route = GoogleMapsAPIHandler.GetRoute(new() { finalStops[i], finalStops[i + 1] });
+                route.Parameters = routeParameters;
+                routes[i] = route;
+            });
+            return routes;
         }
     }
 }
