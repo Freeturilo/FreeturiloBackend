@@ -12,6 +12,6 @@ namespace FreeturiloWebApi.HttpMethods
 {
     public interface IRouteMethods
     {
-        RouteDTO GetRoute(string serverPath, RouteParametersDTO parameters);
+        FragmentRouteDTO[] GetRoute(string serverPath, RouteParametersDTO parameters);
     }
 }

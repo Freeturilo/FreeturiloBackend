@@ -14,7 +14,7 @@ namespace FreeturiloWebApi.Helpers
     {
         private const string token = "AIzaSyDMR-9Yg8xuxBDKCpa85Rw4qT30qV8EVkE";
         private const string serverPath = @"https://maps.googleapis.com/maps/api/directions/json?";
-        public static RouteDTO GetRoute(List<LocationDTO> stops, string mode = "bicycling")
+        public static FragmentRouteDTO GetRoute(List<LocationDTO> stops, string mode = "bicycling")
         {
             var parameters = $"key={token}&mode={mode}&units=metric&";
             parameters += $"origin={stops[0].Latitude.ToString(System.Globalization.CultureInfo.InvariantCulture)},{stops[0].Longitude.ToString(System.Globalization.CultureInfo.InvariantCulture)}&";
@@ -74,7 +74,7 @@ namespace FreeturiloWebApi.Helpers
                 }
             }
 
-            var route = new RouteDTO()
+            var route = new FragmentRouteDTO()
             {
                 Waypoints = stops.ToArray(),
                 DirectionsRoute = direction.Routes[0],

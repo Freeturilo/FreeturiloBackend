@@ -28,8 +28,8 @@ namespace FreeturiloWebApi.Test
         public void Desarialize()
         {
             var json = File.ReadAllText(@"..\..\..\RouteDTOSerialized.txt", Encoding.UTF8).Replace("\r\n", "").Replace(" ", "");
-            var obj = JsonSerializer.Deserialize<RouteDTO>(json);
-            var bytes = JsonSerializer.SerializeToUtf8Bytes(obj, typeof(RouteDTO));
+            var obj = JsonSerializer.Deserialize<FragmentRouteDTO>(json);
+            var bytes = JsonSerializer.SerializeToUtf8Bytes(obj, typeof(FragmentRouteDTO));
             var serialized = Encoding.UTF8.GetString(bytes).Replace("\r\n", "").Replace(" ", "");
             Assert.AreEqual(json, serialized);
 

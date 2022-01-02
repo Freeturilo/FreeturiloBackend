@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace FreeturiloWebApi.DTO
 {
-    public class RouteDTO
+    public class FragmentRouteDTO
     {
         [JsonPropertyName("parameters")]
         public RouteParametersDTO Parameters  { get; set; }

@@ -13,7 +13,7 @@ namespace FreeturiloWebApi.HttpMethods
     public class RouteMethods: IRouteMethods
     {
         const string nmspace = "route";
-        public RouteDTO GetRoute(string serverPath, RouteParametersDTO parameters)
+        public FragmentRouteDTO[] GetRoute(string serverPath, RouteParametersDTO parameters)
         {
             var client = new RestClient(serverPath + nmspace)
             {
@@ -32,7 +32,7 @@ namespace FreeturiloWebApi.HttpMethods
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
             else if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503();
 
-            var route = JsonSerializer.Deserialize<RouteDTO>(response.Content);
+            var route = JsonSerializer.Deserialize<FragmentRouteDTO[]>(response.Content);
             return route;
         }
     }

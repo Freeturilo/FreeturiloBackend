@@ -9,6 +9,6 @@ namespace FreeturiloWebApi.Services
 {
     public interface IRouteService
     {
-        RouteDTO[] GetRoute(RouteParametersDTO routeParameters);
+        FragmentRouteDTO[] GetRoute(RouteParametersDTO routeParameters);
     }
 }

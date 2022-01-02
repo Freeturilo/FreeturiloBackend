@@ -206,7 +206,7 @@ namespace FreeturiloWebApi.Test
                 }
             };
             var r1 = routeMethods.GetRoute(serverPath, parameters);
-            Assert.IsTrue(r1.Cost == 1);
+            Assert.IsTrue(r1[0].Cost == 0);
             parameters.Stops = new LocationDTO[] {
                 new LocationDTO()
                 {
@@ -220,7 +220,7 @@ namespace FreeturiloWebApi.Test
                 },
             };
             var r2 = routeMethods.GetRoute(serverPath, parameters);
-            Assert.IsTrue(r2.Cost == 1);
+            Assert.IsTrue(r2[0].Cost == 0);
 
             parameters.Stops = new LocationDTO[] {
                 new LocationDTO()
@@ -230,7 +230,7 @@ namespace FreeturiloWebApi.Test
                 },
             };
             var r3 = routeMethods.GetRoute(serverPath, parameters);
-            Assert.IsTrue(r3.Cost == 1);
+            Assert.IsTrue(r3[0].Cost == 0);
 
         }
 
@@ -252,7 +252,7 @@ namespace FreeturiloWebApi.Test
                 }
             };
             var r1 = routeMethods.GetRoute(serverPath, parameters);
-            Assert.IsTrue(r1.Cost == 0);
+            Assert.IsTrue(r1[0].Time <= 20 * 60);
             parameters = new RouteParametersDTO
             {
                 Criterion = 1,
@@ -268,7 +268,7 @@ namespace FreeturiloWebApi.Test
                 }
             };
             var r2 = routeMethods.GetRoute(serverPath, parameters);
-            Assert.IsTrue(r2.Cost == 1);
+            Assert.IsTrue(r2[0].Time <= 20 * 60);
             parameters.Stops = new LocationDTO[] {
                 new LocationDTO()
                 {
@@ -282,7 +282,7 @@ namespace FreeturiloWebApi.Test
                 },
             };
             var r3 = routeMethods.GetRoute(serverPath, parameters);
-            Assert.IsTrue(r3.Cost == 4);
+            Assert.IsTrue(r3[0].Time <= 20 * 60);
 
         }
     }
