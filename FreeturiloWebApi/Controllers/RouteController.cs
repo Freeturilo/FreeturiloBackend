@@ -26,6 +26,10 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="routeParameters">Parameters of search</param>
         /// <returns>Returns route based on parameters</returns>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="404">Not found</response>
+        /// <response code="503">Service unavailable</response>
         [HttpPost]
         [AppState]
         public ActionResult<FragmentRouteDTO[]> GetAllStations([FromBody] RouteParametersDTO routeParameters)

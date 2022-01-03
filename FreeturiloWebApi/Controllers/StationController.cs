@@ -24,6 +24,8 @@ namespace FreeturiloWebApi.Controllers
         /// Returns all stations
         /// </summary>
         /// <returns>Return all stations</returns>
+        /// <response code="200">Success</response>
+        /// <response code="503">Service unavailable</response>
         [HttpGet]
         [AppState]
         public ActionResult<StationDTO[]> GetAllStations()
@@ -36,6 +38,9 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="newStations">Collection of stations to be updated</param>
         /// <returns>Returns information if stations has been updated properly</returns>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
         [HttpPut]
         [Auth]
         public ActionResult UpdateAllStations([FromBody] StationDTO[] newStations)
@@ -48,6 +53,9 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="id">Station id</param>
         /// <returns>Returns details of the station</returns>
+        /// <response code="200">Success</response>
+        /// <response code="404">Not found</response>
+        /// <response code="503">Service unavailable</response>
         [HttpGet("{id}")]
         [AppState]
         public ActionResult<StationDTO> GetStation([FromRoute] int id)
@@ -60,6 +68,9 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="id">Station id</param>
         /// <returns>Reports station</returns>
+        /// <response code="200">Success</response>
+        /// <response code="404">Not found</response>
+        /// <response code="503">Service unavailable</response>
         [HttpPost("{id}/report")]
         [AppState]
         public ActionResult ReportStation([FromRoute] int id)
@@ -72,6 +83,9 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="id">Station id</param>
         /// <returns>Sets station as broken</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Not found</response>
         [HttpPost("{id}/broken")]
         [Auth]
         public ActionResult SetStationAsBroken([FromRoute] int id)
@@ -84,6 +98,9 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="id">Station id</param>
         /// <returns>Set station as working</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">Unauthorized</response>
+        /// <response code="404">Not found</response>
         [HttpPost("{id}/working")]
         [Auth]
         public ActionResult SetStationAsWorking([FromRoute] int id)

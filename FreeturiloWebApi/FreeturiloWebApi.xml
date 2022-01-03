@@ -21,6 +21,8 @@
             Return current state of apllication
             </summary>
             <returns>Returns current state of application</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.AppController.SetState(System.Int32)">
             <summary>
@@ -28,19 +30,27 @@
             </summary>
             <param name="state">State to be set</param>
             <returns>Returns information if state has been properly</returns>
+            <response code="200">Success</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.AppController.SetReportTrashold(System.Int32)">
             <summary>
             Sets admin's treshold
             </summary>
             <param name="number">Treshold to be set</param>
-            <returns>Returns information if treshold has been set properly</returns>
+            <returns>Returns information if treshold has been set properly</returns> 
+            <response code="200">Success</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.AppController.GetReportTrashold">
             <summary>
             Returns admin's treshold
             </summary>
             <returns>Return treshold of admin</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="P:FreeturiloWebApi.Controllers.AuthController.Administrator">
             <summary>
@@ -53,12 +63,18 @@
             </summary>
             <param name="routeParameters">Parameters of search</param>
             <returns>Returns route based on parameters</returns>
+            <response code="200">Success</response>
+            <response code="400">Bad Request</response>
+            <response code="404">Not found</response>
+            <response code="503">Service unavailable</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.StationController.GetAllStations">
             <summary>
             Returns all stations
             </summary>
             <returns>Return all stations</returns>
+            <response code="200">Success</response>
+            <response code="503">Service unavailable</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.StationController.UpdateAllStations(FreeturiloWebApi.DTO.StationDTO[])">
             <summary>
@@ -66,6 +82,9 @@
             </summary>
             <param name="newStations">Collection of stations to be updated</param>
             <returns>Returns information if stations has been updated properly</returns>
+            <response code="200">Success</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.StationController.GetStation(System.Int32)">
             <summary>
@@ -73,6 +92,9 @@
             </summary>
             <param name="id">Station id</param>
             <returns>Returns details of the station</returns>
+            <response code="200">Success</response>
+            <response code="404">Not found</response>
+            <response code="503">Service unavailable</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.StationController.ReportStation(System.Int32)">
             <summary>
@@ -80,6 +102,9 @@
             </summary>
             <param name="id">Station id</param>
             <returns>Reports station</returns>
+            <response code="200">Success</response>
+            <response code="404">Not found</response>
+            <response code="503">Service unavailable</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.StationController.SetStationAsBroken(System.Int32)">
             <summary>
@@ -87,6 +112,9 @@
             </summary>
             <param name="id">Station id</param>
             <returns>Sets station as broken</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not found</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.StationController.SetStationAsWorking(System.Int32)">
             <summary>
@@ -94,6 +122,9 @@
             </summary>
             <param name="id">Station id</param>
             <returns>Set station as working</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
+            <response code="404">Not found</response>
         </member>
         <member name="M:FreeturiloWebApi.Controllers.UserController.Authenticate(FreeturiloWebApi.DTO.AuthDTO)">
             <summary>
@@ -101,6 +132,8 @@
             </summary>
             <param name="auth">Email and password</param>
             <returns>Returns JWT token</returns>
+            <response code="200">Success</response>
+            <response code="401">Unauthorized</response>
         </member>
         <member name="P:FreeturiloWebApi.DTO.AuthDTO.Email">
             <summary>

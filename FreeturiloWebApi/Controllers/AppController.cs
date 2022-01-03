@@ -23,6 +23,8 @@ namespace FreeturiloWebApi.Controllers
         /// Return current state of apllication
         /// </summary>
         /// <returns>Returns current state of application</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">Unauthorized</response>
         [Auth]
         [HttpGet("state")]
         public ActionResult<int> Status()
@@ -35,6 +37,9 @@ namespace FreeturiloWebApi.Controllers
         /// </summary>
         /// <param name="state">State to be set</param>
         /// <returns>Returns information if state has been properly</returns>
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
         [Auth]
         [HttpPost("state/{state}")]
         public ActionResult SetState([FromRoute] int state)
@@ -46,7 +51,10 @@ namespace FreeturiloWebApi.Controllers
         /// Sets admin's treshold
         /// </summary>
         /// <param name="number">Treshold to be set</param>
-        /// <returns>Returns information if treshold has been set properly</returns>
+        /// <returns>Returns information if treshold has been set properly</returns> 
+        /// <response code="200">Success</response>
+        /// <response code="400">Bad Request</response>
+        /// <response code="401">Unauthorized</response>
         [Auth]
         [HttpPost("notify/{number}")]
         public ActionResult SetReportTrashold([FromRoute] int number)
@@ -58,6 +66,8 @@ namespace FreeturiloWebApi.Controllers
         /// Returns admin's treshold
         /// </summary>
         /// <returns>Return treshold of admin</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">Unauthorized</response>
         [Auth]
         [HttpGet("notify")]
         public ActionResult<int> GetReportTrashold()
