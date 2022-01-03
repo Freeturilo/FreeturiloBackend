@@ -23,14 +23,21 @@ namespace FreeturiloWebApi.Services
             _context = context;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Returns all stations
+        /// </summary>
+        /// <returns></returns>
         public StationDTO[] GetAllStations()
         {
             var stations = _context.Stations.ToArray();
             var stationDTOs = _mapper.Map<StationDTO[]>(stations);
             return stationDTOs;
         }
-
+        /// <summary>
+        /// Return station of given id
+        /// </summary>
+        /// <param name="stationId"></param>
+        /// <returns></returns>
         public StationDTO GetStation(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
@@ -40,7 +47,10 @@ namespace FreeturiloWebApi.Services
 
             return stationDTO;
         }
-
+        /// <summary>
+        /// Reports station
+        /// </summary>
+        /// <param name="stationId">Station id</param>
         public void ReportStation(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
@@ -58,7 +68,10 @@ namespace FreeturiloWebApi.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Sets station as broken
+        /// </summary>
+        /// <param name="stationId">Station id</param>
         public void SetStationAsBroken(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
@@ -66,7 +79,10 @@ namespace FreeturiloWebApi.Services
             station.State = 2;
             _context.SaveChanges();
         }
-
+        /// <summary>
+        /// Sets station as working
+        /// </summary>
+        /// <param name="stationId">Station id</param>
         public void SetStationAsWorking(int stationId)
         {
             var station = _context.Stations.Where(s => s.Id == stationId).FirstOrDefault();
@@ -75,7 +91,10 @@ namespace FreeturiloWebApi.Services
             station.Reports = 0;
             _context.SaveChanges();
         }
-
+        /// <summary>
+        /// Updates all stations
+        /// </summary>
+        /// <param name="newStations">Collection of stations to be updated</param>
         public void UpdateAllStations(StationDTO[] newStations)
         {
             if (newStations == null) throw new Exception400();

@@ -24,7 +24,11 @@ namespace FreeturiloWebApi.Services
             _context = context;
             this.appSettings = appSettings;
         }
-
+        /// <summary>
+        /// Authenticates a user
+        /// </summary>
+        /// <param name="auth">Email and password</param>
+        /// <returns>Return JWT token</returns>
         public string Authenticate(AuthDTO auth)
         {
             if(auth == null || auth.Email == null || auth.Password == null)

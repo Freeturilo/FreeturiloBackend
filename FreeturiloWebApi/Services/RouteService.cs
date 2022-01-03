@@ -33,7 +33,11 @@ namespace FreeturiloWebApi.Services
         private const double maxLon = 21.271111;
         private const double minLat = 52.097777;
         private const double maxLat = 52.368055;
-
+        /// <summary>
+        /// Checks if location is in Warsaw
+        /// </summary>
+        /// <param name="location"></param>
+        /// <returns></returns>
         private static bool IsInWarsaw(LocationDTO location)
         {
             if (location.Latitude >= minLat && location.Latitude <= maxLat)
@@ -42,7 +46,11 @@ namespace FreeturiloWebApi.Services
 
             return false;
         }
-
+        /// <summary>
+        /// Return route based on route parameters
+        /// </summary>
+        /// <param name="routeParameters">Route parameters</param>
+        /// <returns></returns>
         public FragmentRouteDTO[] GetRoute(RouteParametersDTO routeParameters)
         {
             if (routeParameters == null) throw new Exception400();

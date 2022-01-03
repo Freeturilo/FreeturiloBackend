@@ -21,12 +21,21 @@ namespace FreeturiloWebApi.Services
         {
             _context = context;
         }
+        /// <summary>
+        /// Sets report treshold of admin
+        /// </summary>
+        /// <param name="id">Admin id</param>
+        /// <param name="number">Treshold value</param>
         public void SetReportTrashold(int id, int number)
         {
             var admin = _context.Administrators.Where(a => a.Id == id).FirstOrDefault();
             admin.NotifyThreshold = number;
             _context.SaveChanges();
         }
+        /// <summary>
+        /// Sets state of application
+        /// </summary>
+        /// <param name="state">State to be set</param>
         public void SetStatus(int state)
         {
             if (state < 0 || state > 2) throw new Exception400();
@@ -35,7 +44,10 @@ namespace FreeturiloWebApi.Services
             actualState.Value = state;
             _context.SaveChanges();
         }
-
+        /// <summary>
+        /// Returns curretnt state of application
+        /// </summary>
+        /// <returns></returns>
         public int Status()
         {
             return _context.State.FirstOrDefault().Value;
