@@ -7,6 +7,9 @@ namespace FreeturiloWebApi.Exceptions
 {
     public class FreeturiloException : Exception
     {
+        /// <summary>
+        /// Status code returned by endpoint
+        /// </summary>
         public int StatusCode { get; protected set; }
         public FreeturiloException(string message) : base(message) { }
     }

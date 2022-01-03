@@ -12,7 +12,17 @@ namespace FreeturiloWebApi.Helpers
 {
     static public class GmailAPIHandler
     {
+        /// <summary>
+        /// Email subject
+        /// </summary>
         private static readonly string subject = "Freeturilo - zgłoszenie niesprawnej stacji";
+
+        /// <summary>
+        /// Creates body of the email
+        /// </summary>
+        /// <param name="admin"></param>
+        /// <param name="station"></param>
+        /// <returns></returns>
         private static string CreateBody(Administrator admin, Station station)
         {
             string body = "Cześć " + admin.Name + " " + admin.Surname + "!" + "\n\n" +
@@ -22,6 +32,12 @@ namespace FreeturiloWebApi.Helpers
 
             return body;
         }
+
+        /// <summary>
+        /// Sends an email to the admin about broken station
+        /// </summary>
+        /// <param name="admin"></param>
+        /// <param name="station"></param>
         public static void SendEmail(Administrator admin, Station station)
         {
             var apiKey = "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";

@@ -8,11 +8,9 @@ namespace NextBikeDataParser.Test
 {
     public class Tests
     {
-        [SetUp]
-        public void Setup()
-        {
-        }
-
+        /// <summary>
+        /// Test checks if valid content is deserialized properly
+        /// </summary>
         [Test]
         public void ValidFile()
         {
@@ -44,7 +42,9 @@ namespace NextBikeDataParser.Test
                 Assert.IsNotNull(typeof(markersCountryCityPlaceBike).GetProperty(property.Name).GetValue(markers.country.city.place[0].bike[0]));
             }
         }
-
+        /// <summary>
+        /// Test checks if invalid content is not deserialized
+        /// </summary>
         [Test]
         public void InvalidFile()
         {

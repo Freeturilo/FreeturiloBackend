@@ -14,6 +14,12 @@ namespace FreeturiloWebApi.Helpers
     {
         private const string token = "AIzaSyDMR-9Yg8xuxBDKCpa85Rw4qT30qV8EVkE";
         private const string serverPath = @"https://maps.googleapis.com/maps/api/directions/json?";
+        /// <summary>
+        /// Returns route from Google Maps
+        /// </summary>
+        /// <param name="stops"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         public static FragmentRouteDTO GetRoute(List<LocationDTO> stops, string mode = "bicycling")
         {
             var parameters = $"key={token}&mode={mode}&units=metric&";
@@ -84,6 +90,11 @@ namespace FreeturiloWebApi.Helpers
             return route;
         }
 
+        /// <summary>
+        /// Calculates cost of a route
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         private static double CalculateCost(int time)
         {
             var cost = 0.0;

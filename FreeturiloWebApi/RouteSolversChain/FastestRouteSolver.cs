@@ -14,12 +14,22 @@ namespace FreeturiloWebApi.RouteSolversChain
     class FastestRouteSolver: RouteSolver
     {
         public FastestRouteSolver(IRouteSolver next) : base(next) { }
-
+        /// <summary>
+        /// Indicates if solver can be used
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         protected override bool SelectSolver(RouteParametersDTO parameters)
         {
             return parameters.Criterion == 1;
         }
-
+        /// <summary>
+        /// Return stops when selver selected
+        /// </summary>
+        /// <param name="stops"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         protected override List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             if(stops.Count == 2)
@@ -30,9 +40,14 @@ namespace FreeturiloWebApi.RouteSolversChain
             {
                 return FindLocationsWithStops(stops, context, mapper);
             }
-            
         }
-
+        /// <summary>
+        /// Returns stops for route with stops
+        /// </summary>
+        /// <param name="stops"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         private List<LocationDTO> FindLocationsWithStops(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var start = stops[0];
@@ -88,7 +103,13 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             return finalStops;
         }
-
+        /// <summary>
+        /// Returns stops for route without stops
+        /// </summary>
+        /// <param name="stops"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         private List<LocationDTO> FindLocationsWithoutStops(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var start = stops[0];

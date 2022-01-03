@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.WebSockets;
@@ -43,6 +44,8 @@ namespace FreeturiloWebApi
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreeturiloWebApi", Version = "v1" });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "FreeturiloWebApi.xml");
+                c.IncludeXmlComments(filePath);
             });
 
             services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
@@ -74,12 +77,10 @@ namespace FreeturiloWebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeturiloWebApi v1"));
-            }
+
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreeturiloWebApi v1"));
            
             app.UseMiddleware<JwtMiddleware>();
             app.UseMiddleware<ExceptionHandlingMiddleware>();

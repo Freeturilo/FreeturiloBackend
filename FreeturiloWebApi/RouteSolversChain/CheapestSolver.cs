@@ -14,6 +14,13 @@ namespace FreeturiloWebApi.RouteSolversChain
     class CheapestRouteSolver: RouteSolver
     {
         public CheapestRouteSolver(IRouteSolver next) : base(next) { }
+        /// <summary>
+        /// Return stops if solver used
+        /// </summary>
+        /// <param name="stops"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         protected override List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var stations = context.Stations.Where(s => s.AvailableBikes > 0 && s.State != 2).ToArray();
@@ -36,6 +43,17 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             return finalStops;
         }
+        /// <summary>
+        /// Returns parf of path based on last station and max time
+        /// </summary>
+        /// <param name="finalStops"></param>
+        /// <param name="maxTime"></param>
+        /// <param name="lastStation"></param>
+        /// <param name="stop"></param>
+        /// <param name="stations"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         private (int maxTime, StationDTO lastStation) FindPartOfPath(List<LocationDTO> finalStops, int maxTime, StationDTO lastStation, LocationDTO stop, StationDTO[] stations, FreeturiloContext context, IMapper mapper)
         {
             var closestStation = GraphMethodsProvider.GetClosestStations(stations, stop, 1)[0];
@@ -122,6 +140,11 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             return (freeTime - 2 * lastPartOfPath.Time, closestStation);
         }
+        /// <summary>
+        /// Indicates if solver can be used
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         protected override bool SelectSolver(RouteParametersDTO parameters)
         {
             return parameters.Criterion == 0;

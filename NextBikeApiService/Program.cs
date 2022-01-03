@@ -17,7 +17,11 @@ namespace NextBikeApiService
         {
             CreateHostBuilder(args).Build().Run();
         }
-
+        /// <summary>
+        /// Creates host builder with required dependencies
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) => 

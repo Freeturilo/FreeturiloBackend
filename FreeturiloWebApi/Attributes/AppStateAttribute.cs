@@ -10,6 +10,10 @@ namespace FreeturiloWebApi.Attributes
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AppStateAttribute : Attribute, IAuthorizationFilter
     {
+        /// <summary>
+        /// Checks if application is in stopped state
+        /// </summary>
+        /// <param name="context"></param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var dbContext = context.HttpContext

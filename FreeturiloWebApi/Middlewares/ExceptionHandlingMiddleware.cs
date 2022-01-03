@@ -9,6 +9,12 @@ namespace FreeturiloWebApi.Middlewares
 {
     public class ExceptionHandlingMiddleware : IMiddleware
     {
+        /// <summary>
+        /// Return status code based on type of exception
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try

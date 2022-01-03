@@ -7,6 +7,9 @@ namespace FreeturiloWebApi.Helpers
 {
     public class AppSettings
     {
+        /// <summary>
+        /// Secret to generate JWT tokens
+        /// </summary>
         public string Secret { get; set; }
     }
 }

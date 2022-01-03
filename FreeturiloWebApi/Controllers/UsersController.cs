@@ -18,7 +18,11 @@ namespace FreeturiloWebApi.Controllers
         {
             _service = service;
         }
-
+        /// <summary>
+        /// Allows users to authenticate
+        /// </summary>
+        /// <param name="auth">Email and password</param>
+        /// <returns>Returns JWT token</returns>
         [HttpPost]
         public ActionResult<string> Authenticate([FromBody] AuthDTO auth)
         {

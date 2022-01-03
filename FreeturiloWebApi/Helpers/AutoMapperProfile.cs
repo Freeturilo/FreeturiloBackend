@@ -6,6 +6,9 @@ namespace FreeturiloWebApi.Helpers
 {
     public class AutoMapperProfile : Profile
     {
+        /// <summary>
+        /// Add profiles to cast object
+        /// </summary>
         public AutoMapperProfile()
         {
             CreateMap<Station, StationDTO>()

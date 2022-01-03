@@ -24,6 +24,12 @@ namespace FreeturiloWebApi.Middlewares
             this.context = context;
             this.appSettings = appSettings;
         }
+        /// <summary>
+        /// Verifies token from request
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="next"></param>
+        /// <returns></returns>
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             var token = context.Request.Headers["api-key"].FirstOrDefault()?.Split(" ").Last();
@@ -35,7 +41,11 @@ namespace FreeturiloWebApi.Middlewares
 
             await next(context);
         }
-
+        /// <summary>
+        /// Attaches user to context
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="token"></param>
         private void AttachUserToContext(HttpContext context, string token)
         {
             try

@@ -13,6 +13,11 @@ namespace FreeturiloWebApi.HttpMethods
     public class StationMethods: IStationMethods
     {
         const string nmspace = "station";
+        /// <summary>
+        /// Return all stations
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <returns></returns>
         public StationDTO[] GetAllStations(string serverPath)
         {
             var client = new RestClient(serverPath + nmspace)
@@ -29,7 +34,12 @@ namespace FreeturiloWebApi.HttpMethods
             var stations = JsonSerializer.Deserialize<StationDTO[]>(jsonContent);
             return stations;
         }
-
+        /// <summary>
+        /// Updates all stations
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <param name="newStations"></param>
         public void UpdateAllStations(string serverPath, string token, StationDTO[] newStations)
         {
             var client = new RestClient(serverPath + nmspace)
@@ -50,7 +60,12 @@ namespace FreeturiloWebApi.HttpMethods
             else if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
-
+        /// <summary>
+        /// Return station of given id
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public StationDTO GetStation(string serverPath, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString())
@@ -68,7 +83,11 @@ namespace FreeturiloWebApi.HttpMethods
             var station = JsonSerializer.Deserialize<StationDTO>(jsonContent);
             return station;
         }
-
+        /// <summary>
+        /// Reports station as possibly broken
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="id"></param>
         public void ReportStation(string serverPath, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/report")
@@ -82,6 +101,12 @@ namespace FreeturiloWebApi.HttpMethods
             if (response.StatusCode == HttpStatusCode.ServiceUnavailable) throw new Exception503();
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
+        /// <summary>
+        /// Sets station as broken
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <param name="id"></param>
         public void SetStationAsBroken(string serverPath, string token, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/broken")
@@ -96,7 +121,12 @@ namespace FreeturiloWebApi.HttpMethods
             if (response.StatusCode == HttpStatusCode.Unauthorized) throw new Exception401();
             else if (response.StatusCode == HttpStatusCode.NotFound) throw new Exception404();
         }
-
+        /// <summary>
+        /// Sets station as working
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <param name="id"></param>
         public void SetStationAsWorking(string serverPath, string token, int id)
         {
             var client = new RestClient(serverPath + nmspace + @"/" + id.ToString() + @"/working")

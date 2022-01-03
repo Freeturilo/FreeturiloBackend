@@ -21,6 +21,11 @@ namespace FreeturiloWebApi.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Returns a route based on routeParameters
+        /// </summary>
+        /// <param name="routeParameters">Parameters of search</param>
+        /// <returns>Returns route based on parameters</returns>
         [HttpPost]
         [AppState]
         public ActionResult<FragmentRouteDTO[]> GetAllStations([FromBody] RouteParametersDTO routeParameters)

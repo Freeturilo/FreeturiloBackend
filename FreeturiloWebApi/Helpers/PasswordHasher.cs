@@ -9,6 +9,11 @@ namespace FreeturiloWebApi.Helpers
 {
     public class PasswordHasher
     {
+        /// <summary>
+        /// Generates hash of password
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static string Hash(string password)
         {
             using MD5 md5 = MD5.Create();
@@ -22,6 +27,5 @@ namespace FreeturiloWebApi.Helpers
             }
             return sb.ToString();
         }
-
     }
 }

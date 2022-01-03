@@ -10,12 +10,17 @@ namespace NextBikeApiService.Helpers
 {
     public class WorkerHandler : IWorkerHandler
     {
+
         private static readonly string serverPath = @"https://freeturilowebapi.azurewebsites.net/";
         private readonly ILogger<WorkerHandler> _logger;
         private readonly INextBikeApiHandler _nbHandler;
         private readonly IUserMethods _userMethods;
         private readonly IAppMethods _appMethods;
         private readonly IStationMethods _stationMethods;
+
+        /// <summary>
+        /// Email and password for admin to authenticate to update Freeturilo database
+        /// </summary>
         private const string email = "freeturilo@gmail.com";
         private const string password = "Freeturilo123PW!";
 
@@ -27,6 +32,9 @@ namespace NextBikeApiService.Helpers
             _appMethods = appMethods;
             _stationMethods = stationMethods;
         }
+        /// <summary>
+        /// Method to launch worker
+        /// </summary>
         public void Work()
         {
             int appState = 1;

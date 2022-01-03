@@ -12,11 +12,44 @@ namespace FreeturiloWebApi.HttpMethods
 {
     public interface IAppMethods
     {
+        /// <summary>
+        /// Starts the application
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
         void Start(string serverPath, string token);
+        /// <summary>
+        /// Returns state of application
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         int Status(string serverPath, string token);
+        /// <summary>
+        /// Returns report treshold of admin
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         int GetReportTrashold(string serverPath, string token);
+        /// <summary>
+        /// Stops the applciation
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
         void Stop(string serverPath, string token);
+        /// <summary>
+        /// Sets demo state of application
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
         void Demo(string serverPath, string token);
+        /// <summary>
+        /// Sets report treshold of admin
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <param name="number"></param>
         void SetReportTrashold(string serverPath, string token, int number);
     }
 }

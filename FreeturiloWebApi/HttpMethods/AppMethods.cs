@@ -17,6 +17,11 @@ namespace FreeturiloWebApi.HttpMethods
         private const string demo = "app/state/1";
         private const string status = "app/state";
 
+        /// <summary>
+        /// Starts the apllication
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
         public void Start(string serverPath, string token)
         {
             var client = new RestClient(serverPath + start)
@@ -30,6 +35,12 @@ namespace FreeturiloWebApi.HttpMethods
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
+        /// <summary>
+        /// Returns state of application
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public int Status(string serverPath, string token)
         {
             var client = new RestClient(serverPath + status)
@@ -47,6 +58,11 @@ namespace FreeturiloWebApi.HttpMethods
             return result;
         }
 
+        /// <summary>
+        /// Stops the application
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
         public void Stop(string serverPath, string token)
         {
             var client = new RestClient(serverPath + stop)
@@ -60,6 +76,11 @@ namespace FreeturiloWebApi.HttpMethods
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
+        /// <summary>
+        /// Sets demo state of application
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
         public void Demo(string serverPath, string token)
         {
             var client = new RestClient(serverPath + demo)
@@ -72,6 +93,13 @@ namespace FreeturiloWebApi.HttpMethods
             var res = client.Execute(request);
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
+
+        /// <summary>
+        /// Sets report treshold of admin
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <param name="number"></param>
         public void SetReportTrashold(string serverPath, string token, int number)
         {
             var client = new RestClient(serverPath + $"app/notify/{number}")
@@ -85,6 +113,12 @@ namespace FreeturiloWebApi.HttpMethods
             if (res.StatusCode == System.Net.HttpStatusCode.Unauthorized) throw new Exception401();
         }
 
+        /// <summary>
+        /// Return reporrt treshold of admin
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         public int GetReportTrashold(string serverPath, string token)
         {
             var client = new RestClient(serverPath + $"app/notify")

@@ -10,6 +10,12 @@ namespace NextBikeApiService.Helpers
 {
     public static class BikeDataComparer
     {
+        /// <summary>
+        /// Compares data from NextBike and data from Freeturilo
+        /// </summary>
+        /// <param name="nextbikeData"></param>
+        /// <param name="freeturiloData"></param>
+        /// <returns></returns>
         public static IEnumerable<StationDTO> Compare(markers nextbikeData, StationDTO[] freeturiloData)
         {
             var toBeUpdated = new List<StationDTO>();

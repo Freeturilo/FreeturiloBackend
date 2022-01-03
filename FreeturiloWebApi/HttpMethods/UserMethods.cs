@@ -11,6 +11,12 @@ namespace FreeturiloWebApi.HttpMethods
 {
     public class UserMethods: IUserMethods
     {
+        /// <summary>
+        /// Returns token
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="auth"></param>
+        /// <returns></returns>
         public string Authenticate(string serverPath, AuthDTO auth)
         {
             var client = new RestClient(serverPath + "user")

@@ -19,8 +19,27 @@ namespace FreeturiloWebApi.RouteSolversChain
     {
         public IRouteSolver Next { get; }
         public const int freeTime = 20 * 60;
+        /// <summary>
+        /// Returns edge weights besad on time and cost
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="cost"></param>
+        /// <returns></returns>
         protected virtual float EdgeWeight(int time, double cost) { return 0; }
+        /// <summary>
+        /// Indicates if solver can be selected
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         protected abstract bool SelectSolver(RouteParametersDTO parameters);
+        /// <summary>
+        /// A* algorithm to establish stops of route
+        /// </summary>
+        /// <param name="mappedStations"></param>
+        /// <param name="start"></param>
+        /// <param name="stop"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
         private List<LocationDTO> AStar(StationDTO[] mappedStations, StationDTO start, StationDTO stop, FreeturiloContext context)
         {          
             var nodes = new List<FastNode>();
@@ -69,7 +88,13 @@ namespace FreeturiloWebApi.RouteSolversChain
 
             throw new Exception404();
         }
-
+        /// <summary>
+        /// Methed to find stops when solver is selected
+        /// </summary>
+        /// <param name="stops"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         protected virtual List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             var stations = context.Stations
@@ -107,6 +132,14 @@ namespace FreeturiloWebApi.RouteSolversChain
         {
             Next = next;
         }
+        /// <summary>
+        /// Return stops of delegates call to another solver in chain
+        /// </summary>
+        /// <param name="parametersDTO"></param>
+        /// <param name="stops"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
         public List<LocationDTO> Solve(RouteParametersDTO parametersDTO, List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
             if (SelectSolver(parametersDTO)) return UseSolver(stops, context, mapper);

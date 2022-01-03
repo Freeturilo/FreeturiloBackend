@@ -11,6 +11,9 @@ namespace FreeturiloWebApi.Controllers
     [Controller]
     public abstract class AuthController : ControllerBase
     {
+        /// <summary>
+        /// Attached administrator
+        /// </summary>
         public Administrator Administrator => (Administrator)HttpContext.Items["User"];
     }
 }

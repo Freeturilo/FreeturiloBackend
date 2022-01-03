@@ -12,12 +12,22 @@ namespace NextBikeDataParser
         private static bool _isOk = true;
         private const string libUrl = @"http://example.org/mr/nextbikesdata";
         private const string _xsdPath = @"../NextBikeDataParser/markers.xsd";
+        /// <summary>
+        /// Validation error handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private static void ValidationHandler(object sender, ValidationEventArgs args)
         {
             Console.WriteLine("Error: {0}\n", args.Message);
             _isOk = false;
         }
-
+        /// <summary>
+        /// Method checks if xml content matcg xsd validation
+        /// </summary>
+        /// <param name="xmlContent"></param>
+        /// <param name="xsdPath"></param>
+        /// <returns></returns>
         public static markers ReadNextBikesData(string xmlContent, string xsdPath)
         {
             _isOk = true;
@@ -51,7 +61,11 @@ namespace NextBikeDataParser
             else
                 throw new XmlSchemaValidationException("Invalid XML file");
         }
-
+        /// <summary>
+        /// Method to deserialize validated data
+        /// </summary>
+        /// <param name="xmlContent"></param>
+        /// <returns></returns>
         private static markers ReadNextBikesValidatedData(string xmlContent)
         {
             var byteArray = Encoding.ASCII.GetBytes(xmlContent);

@@ -8,6 +8,9 @@ namespace NextBikeApiService.Helpers
 {
     public interface IWorkerHandler
     {
+        /// <summary>
+        /// Method to launch worker
+        /// </summary>
         void Work();
     }
 }

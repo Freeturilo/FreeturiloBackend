@@ -14,6 +14,16 @@ namespace NextBikeApiService.Helpers
 {
     public interface INextBikeApiHandler
     {
+        /// <summary>
+        /// Method to get data from NextBike
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="readFromDump"></param>
+        /// <param name="xsdPath"></param>
+        /// <param name="dumpPath"></param>
+        /// <param name="url"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public markers GetNextBikeData(ILogger logger, bool readFromDump, string xsdPath = null, string dumpPath = null, string url = null, string parameters = null);
     }
 }

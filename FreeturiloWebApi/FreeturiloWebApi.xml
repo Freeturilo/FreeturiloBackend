@@ -1,0 +1,637 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>FreeturiloWebApi</name>
+    </assembly>
+    <members>
+        <member name="M:FreeturiloWebApi.Attributes.AppStateAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            Checks if application is in stopped state
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.Attributes.AuthAttribute.OnAuthorization(Microsoft.AspNetCore.Mvc.Filters.AuthorizationFilterContext)">
+            <summary>
+            Checks if admin in authorized
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.AppController.Status">
+            <summary>
+            Return current state of apllication
+            </summary>
+            <returns>Returns current state of application</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.AppController.SetState(System.Int32)">
+            <summary>
+            Sets state of applciation
+            </summary>
+            <param name="state">State to be set</param>
+            <returns>Returns information if state has been properly</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.AppController.SetReportTrashold(System.Int32)">
+            <summary>
+            Sets admin's treshold
+            </summary>
+            <param name="number">Treshold to be set</param>
+            <returns>Returns information if treshold has been set properly</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.AppController.GetReportTrashold">
+            <summary>
+            Returns admin's treshold
+            </summary>
+            <returns>Return treshold of admin</returns>
+        </member>
+        <member name="P:FreeturiloWebApi.Controllers.AuthController.Administrator">
+            <summary>
+            Attached administrator
+            </summary>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.RouteController.GetAllStations(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Returns a route based on routeParameters
+            </summary>
+            <param name="routeParameters">Parameters of search</param>
+            <returns>Returns route based on parameters</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.StationController.GetAllStations">
+            <summary>
+            Returns all stations
+            </summary>
+            <returns>Return all stations</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.StationController.UpdateAllStations(FreeturiloWebApi.DTO.StationDTO[])">
+            <summary>
+            Updates all stations
+            </summary>
+            <param name="newStations">Collection of stations to be updated</param>
+            <returns>Returns information if stations has been updated properly</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.StationController.GetStation(System.Int32)">
+            <summary>
+            Returns station of given id
+            </summary>
+            <param name="id">Station id</param>
+            <returns>Returns details of the station</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.StationController.ReportStation(System.Int32)">
+            <summary>
+            Reports station of given id as possibly broken
+            </summary>
+            <param name="id">Station id</param>
+            <returns>Reports station</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.StationController.SetStationAsBroken(System.Int32)">
+            <summary>
+            Sets station of given id as broken
+            </summary>
+            <param name="id">Station id</param>
+            <returns>Sets station as broken</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.StationController.SetStationAsWorking(System.Int32)">
+            <summary>
+            Sets station of given id as working
+            </summary>
+            <param name="id">Station id</param>
+            <returns>Set station as working</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Controllers.UserController.Authenticate(FreeturiloWebApi.DTO.AuthDTO)">
+            <summary>
+            Allows users to authenticate
+            </summary>
+            <param name="auth">Email and password</param>
+            <returns>Returns JWT token</returns>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.AuthDTO.Email">
+            <summary>
+            Email for authentication
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.AuthDTO.Password">
+            <summary>
+            Password for authentication
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.FragmentRouteDTO.Parameters">
+            <summary>
+            Parameters of route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.FragmentRouteDTO.Cost">
+            <summary>
+            Cost of route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.FragmentRouteDTO.Time">
+            <summary>
+            Time of route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.FragmentRouteDTO.Waypoints">
+            <summary>
+            Waypoints of route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.FragmentRouteDTO.DirectionsRoute">
+            <summary>
+            Google Maps route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.LocationDTO.Longitude">
+            <summary>
+            Longitude of location
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.LocationDTO.Latitude">
+            <summary>
+            Latitude of location
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.LocationDTO.Name">
+            <summary>
+            Name of location
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.LocationDTO.Type">
+            <summary>
+            Type of location
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.LocationDTO.BikeRacks">
+            <summary>
+            Number of racks on station
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.LocationDTO.Bikes">
+            <summary>
+            Number of bikes on station
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.RouteParametersDTO.Start">
+            <summary>
+            Start location
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.RouteParametersDTO.End">
+            <summary>
+            End location
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.RouteParametersDTO.Stops">
+            <summary>
+            Stops of route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.RouteParametersDTO.Criterion">
+            <summary>
+            Criterion of route
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.StationDTO.Id">
+            <summary>
+            Station id
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.DTO.StationDTO.State">
+            <summary>
+            Station state
+            </summary>
+        </member>
+        <member name="T:FreeturiloWebApi.Exceptions.Exception400">
+            <summary>
+            Exception indicated on code 400 - Bad Request
+            </summary>
+        </member>
+        <member name="T:FreeturiloWebApi.Exceptions.Exception401">
+            <summary>
+            Exception indicated on code 401 - Unauthorized
+            </summary>
+        </member>
+        <member name="T:FreeturiloWebApi.Exceptions.Exception404">
+            <summary>
+            Exception indicated on code 404 - Not Found
+            </summary>
+        </member>
+        <member name="T:FreeturiloWebApi.Exceptions.Exception503">
+            <summary>
+            Exception indicated on code 503 - Service Unavailable
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.Exceptions.FreeturiloException.StatusCode">
+            <summary>
+            Status code returned by endpoint
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.Helpers.AppSettings.Secret">
+            <summary>
+            Secret to generate JWT tokens
+            </summary>
+        </member>
+        <member name="M:FreeturiloWebApi.Helpers.AutoMapperProfile.#ctor">
+            <summary>
+            Add profiles to cast object
+            </summary>
+        </member>
+        <member name="F:FreeturiloWebApi.Helpers.GmailAPIHandler.subject">
+            <summary>
+            Email subject
+            </summary>
+        </member>
+        <member name="M:FreeturiloWebApi.Helpers.GmailAPIHandler.CreateBody(FreeturiloWebApi.Models.Administrator,FreeturiloWebApi.Models.Station)">
+            <summary>
+            Creates body of the email
+            </summary>
+            <param name="admin"></param>
+            <param name="station"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Helpers.GmailAPIHandler.SendEmail(FreeturiloWebApi.Models.Administrator,FreeturiloWebApi.Models.Station)">
+            <summary>
+            Sends an email to the admin about broken station
+            </summary>
+            <param name="admin"></param>
+            <param name="station"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.Helpers.GoogleMapsAPIHandler.GetRoute(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},System.String)">
+            <summary>
+            Returns route from Google Maps
+            </summary>
+            <param name="stops"></param>
+            <param name="mode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Helpers.GoogleMapsAPIHandler.CalculateCost(System.Int32)">
+            <summary>
+            Calculates cost of a route
+            </summary>
+            <param name="time"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Helpers.PasswordHasher.Hash(System.String)">
+            <summary>
+            Generates hash of password
+            </summary>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.Start(System.String,System.String)">
+            <summary>
+            Starts the apllication
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.Status(System.String,System.String)">
+            <summary>
+            Returns state of application
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.Stop(System.String,System.String)">
+            <summary>
+            Stops the application
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.Demo(System.String,System.String)">
+            <summary>
+            Sets demo state of application
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.SetReportTrashold(System.String,System.String,System.Int32)">
+            <summary>
+            Sets report treshold of admin
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="number"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.GetReportTrashold(System.String,System.String)">
+            <summary>
+            Return reporrt treshold of admin
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.Start(System.String,System.String)">
+            <summary>
+            Starts the application
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.Status(System.String,System.String)">
+            <summary>
+            Returns state of application
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.GetReportTrashold(System.String,System.String)">
+            <summary>
+            Returns report treshold of admin
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.Stop(System.String,System.String)">
+            <summary>
+            Stops the applciation
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.Demo(System.String,System.String)">
+            <summary>
+            Sets demo state of application
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.SetReportTrashold(System.String,System.String,System.Int32)">
+            <summary>
+            Sets report treshold of admin
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="number"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IRouteMethods.GetRoute(System.String,FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Return route based on parameters
+            </summary>
+            <param name="serverPath"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IStationMethods.GetAllStations(System.String)">
+            <summary>
+            Returns all stations
+            </summary>
+            <param name="serverPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IStationMethods.UpdateAllStations(System.String,System.String,FreeturiloWebApi.DTO.StationDTO[])">
+            <summary>
+            Updates all stations
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="newStations"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IStationMethods.GetStation(System.String,System.Int32)">
+            <summary>
+            Returns station of given id
+            </summary>
+            <param name="serverPath"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IStationMethods.ReportStation(System.String,System.Int32)">
+            <summary>
+            Reports station as possibly broken
+            </summary>
+            <param name="serverPath"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IStationMethods.SetStationAsBroken(System.String,System.String,System.Int32)">
+            <summary>
+            Sets station as broken
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IStationMethods.SetStationAsWorking(System.String,System.String,System.Int32)">
+            <summary>
+            Sets station as working
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.IUserMethods.Authenticate(System.String,FreeturiloWebApi.DTO.AuthDTO)">
+            <summary>
+            Return token
+            </summary>
+            <param name="serverPath"></param>
+            <param name="auth"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.RouteMethods.GetRoute(System.String,FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Return route based on parameters
+            </summary>
+            <param name="serverPath"></param>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.StationMethods.GetAllStations(System.String)">
+            <summary>
+            Return all stations
+            </summary>
+            <param name="serverPath"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.StationMethods.UpdateAllStations(System.String,System.String,FreeturiloWebApi.DTO.StationDTO[])">
+            <summary>
+            Updates all stations
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="newStations"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.StationMethods.GetStation(System.String,System.Int32)">
+            <summary>
+            Return station of given id
+            </summary>
+            <param name="serverPath"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.StationMethods.ReportStation(System.String,System.Int32)">
+            <summary>
+            Reports station as possibly broken
+            </summary>
+            <param name="serverPath"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.StationMethods.SetStationAsBroken(System.String,System.String,System.Int32)">
+            <summary>
+            Sets station as broken
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.StationMethods.SetStationAsWorking(System.String,System.String,System.Int32)">
+            <summary>
+            Sets station as working
+            </summary>
+            <param name="serverPath"></param>
+            <param name="token"></param>
+            <param name="id"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.HttpMethods.UserMethods.Authenticate(System.String,FreeturiloWebApi.DTO.AuthDTO)">
+            <summary>
+            Returns token
+            </summary>
+            <param name="serverPath"></param>
+            <param name="auth"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Middlewares.ExceptionHandlingMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Return status code based on type of exception
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Middlewares.JwtMiddleware.InvokeAsync(Microsoft.AspNetCore.Http.HttpContext,Microsoft.AspNetCore.Http.RequestDelegate)">
+            <summary>
+            Verifies token from request
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Middlewares.JwtMiddleware.AttachUserToContext(Microsoft.AspNetCore.Http.HttpContext,System.String)">
+            <summary>
+            Attaches user to context
+            </summary>
+            <param name="context"></param>
+            <param name="token"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.UseSolver(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Return stops if solver used
+            </summary>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.FindPartOfPath(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},System.Int32,FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.DTO.LocationDTO,FreeturiloWebApi.DTO.StationDTO[],FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Returns parf of path based on last station and max time
+            </summary>
+            <param name="finalStops"></param>
+            <param name="maxTime"></param>
+            <param name="lastStation"></param>
+            <param name="stop"></param>
+            <param name="stations"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Indicates if solver can be used
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.FastestRouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Indicates if solver can be used
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.FastestRouteSolver.UseSolver(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Return stops when selver selected
+            </summary>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.FastestRouteSolver.FindLocationsWithStops(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Returns stops for route with stops
+            </summary>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.FastestRouteSolver.FindLocationsWithoutStops(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Returns stops for route without stops
+            </summary>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="P:FreeturiloWebApi.RouteSolversChain.IRouteSolver.Next">
+            <summary>
+            Next solver in chain
+            </summary>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.IRouteSolver.Solve(FreeturiloWebApi.DTO.RouteParametersDTO,System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Returns list of locations for a route based on parameters
+            </summary>
+            <param name="parametersDTO"></param>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.EdgeWeight(System.Int32,System.Double)">
+            <summary>
+            Returns edge weights besad on time and cost
+            </summary>
+            <param name="time"></param>
+            <param name="cost"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Indicates if solver can be selected
+            </summary>
+            <param name="parameters"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.AStar(FreeturiloWebApi.DTO.StationDTO[],FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.Models.FreeturiloContext)">
+            <summary>
+            A* algorithm to establish stops of route
+            </summary>
+            <param name="mappedStations"></param>
+            <param name="start"></param>
+            <param name="stop"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.UseSolver(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Methed to find stops when solver is selected
+            </summary>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.Solve(FreeturiloWebApi.DTO.RouteParametersDTO,System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Return stops of delegates call to another solver in chain
+            </summary>
+            <param name="parametersDTO"></param>
+            <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

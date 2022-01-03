@@ -13,6 +13,12 @@ namespace FreeturiloWebApi.HttpMethods
     public class RouteMethods: IRouteMethods
     {
         const string nmspace = "route";
+        /// <summary>
+        /// Return route based on parameters
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public FragmentRouteDTO[] GetRoute(string serverPath, RouteParametersDTO parameters)
         {
             var client = new RestClient(serverPath + nmspace)

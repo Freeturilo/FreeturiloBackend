@@ -14,10 +14,31 @@ namespace NextBikeApiService.Helpers
 {
     public class NextBikeApiHandler: INextBikeApiHandler
     {
+        /// <summary>
+        /// Default path to folder with NextBike data dumps
+        /// </summary>
         private const string _dumpsPath = @"./xml-dumps/";
+
+        /// <summary>
+        /// URL to NextBike API
+        /// </summary>
         private const string UrlBase = @"https://nextbike.net/maps/nextbike-live.xml";
+
+        /// <summary>
+        /// Parameters to get data about bikes
+        /// </summary>
         private const string UrlParameters = "?city=210";
 
+        /// <summary>
+        /// Method to get data from NextBike API or from dumps directory 
+        /// </summary>
+        /// <param name="logger"></param>
+        /// <param name="readFromDump"></param>
+        /// <param name="xsdPath"></param>
+        /// <param name="dumpPath"></param>
+        /// <param name="url"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         public markers GetNextBikeData(ILogger logger, bool readFromDump, string xsdPath, string dumpPath = null, string url = null, string parameters = null)
         {
             string xmlContent;

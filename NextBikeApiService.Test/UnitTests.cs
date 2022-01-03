@@ -139,16 +139,9 @@ namespace NextBikeApiService.Test
             }
         }
 
-        [OneTimeSetUp]
-        public void Setup()
-        {
-        }
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-        }
-
+        /// <summary>
+        /// Test checks if BikeDataComparer works properly
+        /// </summary>
         [Test]
         public void BikeDataComparerTest()
         {
@@ -228,6 +221,9 @@ namespace NextBikeApiService.Test
             Assert.AreEqual(res.Count(), 1);
         }
 
+        /// <summary>
+        /// Test checks if NextBikeApiHandler builds and executes properly
+        /// </summary>
         [Test]
         public void NextBikeApiHandlerTest()
         {
@@ -250,6 +246,10 @@ namespace NextBikeApiService.Test
                 nbHandler.GetNextBikeData(logger, true, null);
             });
         }
+
+        /// <summary>
+        /// Test checks if worker calls proper methods
+        /// </summary>
         [Test]
         public void WorkerHandlerTest()
         {

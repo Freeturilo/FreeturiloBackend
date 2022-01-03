@@ -19,6 +19,10 @@ namespace FreeturiloWebApi.Controllers
         {
             _service = service;
         }
+        /// <summary>
+        /// Return current state of apllication
+        /// </summary>
+        /// <returns>Returns current state of application</returns>
         [Auth]
         [HttpGet("state")]
         public ActionResult<int> Status()
@@ -26,6 +30,11 @@ namespace FreeturiloWebApi.Controllers
             var status = _service.Status();
             return Ok(status);
         }
+        /// <summary>
+        /// Sets state of applciation
+        /// </summary>
+        /// <param name="state">State to be set</param>
+        /// <returns>Returns information if state has been properly</returns>
         [Auth]
         [HttpPost("state/{state}")]
         public ActionResult SetState([FromRoute] int state)
@@ -33,7 +42,11 @@ namespace FreeturiloWebApi.Controllers
             _service.SetStatus(state);
             return Ok();
         }
-
+        /// <summary>
+        /// Sets admin's treshold
+        /// </summary>
+        /// <param name="number">Treshold to be set</param>
+        /// <returns>Returns information if treshold has been set properly</returns>
         [Auth]
         [HttpPost("notify/{number}")]
         public ActionResult SetReportTrashold([FromRoute] int number)
@@ -41,7 +54,10 @@ namespace FreeturiloWebApi.Controllers
             _service.SetReportTrashold(Administrator.Id, number);
             return Ok();
         }
-        
+        /// <summary>
+        /// Returns admin's treshold
+        /// </summary>
+        /// <returns>Return treshold of admin</returns>
         [Auth]
         [HttpGet("notify")]
         public ActionResult<int> GetReportTrashold()

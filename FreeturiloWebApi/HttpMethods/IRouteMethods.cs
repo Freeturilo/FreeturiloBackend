@@ -12,6 +12,12 @@ namespace FreeturiloWebApi.HttpMethods
 {
     public interface IRouteMethods
     {
+        /// <summary>
+        /// Return route based on parameters
+        /// </summary>
+        /// <param name="serverPath"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         FragmentRouteDTO[] GetRoute(string serverPath, RouteParametersDTO parameters);
     }
 }

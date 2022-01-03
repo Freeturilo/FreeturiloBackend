@@ -17,13 +17,25 @@ namespace NextBikeApiService
     [ExcludeFromCodeCoverage]
     public class Worker : BackgroundService
     {
+        /// <summary>
+        /// Worker to launch
+        /// </summary>
         private readonly IWorkerHandler _worker;
+        
+        /// <summary>
+        /// Constant indicating worker interval
+        /// </summary>
         private const int _secondsDelay = 5;
+        
         public Worker(IWorkerHandler worker)
         {
             _worker = worker;
         }
-        
+        /// <summary>
+        /// Methods launch worker
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
