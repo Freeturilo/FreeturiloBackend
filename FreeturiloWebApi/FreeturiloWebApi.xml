@@ -544,27 +544,10 @@
             <param name="context"></param>
             <param name="token"></param>
         </member>
-        <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.UseSolver(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+        <member name="P:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.FreeTime">
             <summary>
-            Return stops if solver used
+            Max time of ride with one bike
             </summary>
-            <param name="stops"></param>
-            <param name="context"></param>
-            <param name="mapper"></param>
-            <returns></returns>
-        </member>
-        <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.FindPartOfPath(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},System.Int32,FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.DTO.LocationDTO,FreeturiloWebApi.DTO.StationDTO[],FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
-            <summary>
-            Returns parf of path based on last station and max time
-            </summary>
-            <param name="finalStops"></param>
-            <param name="maxTime"></param>
-            <param name="lastStation"></param>
-            <param name="stop"></param>
-            <param name="stations"></param>
-            <param name="context"></param>
-            <param name="mapper"></param>
-            <returns></returns>
         </member>
         <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
             <summary>
@@ -622,13 +605,27 @@
             <param name="mapper"></param>
             <returns></returns>
         </member>
-        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.EdgeWeight(System.Int32,System.Double)">
+        <member name="P:FreeturiloWebApi.RouteSolversChain.OptimalRouteSolver.FreeTime">
             <summary>
-            Returns edge weights besad on time and cost
+            Max time of ride with one bike
             </summary>
-            <param name="time"></param>
-            <param name="cost"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.OptimalRouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Indicates if solver can be used
+            </summary>
+            <param name="parameters"></param>
             <returns></returns>
+        </member>
+        <member name="P:FreeturiloWebApi.RouteSolversChain.RouteSolver.Next">
+            <summary>
+            Next element in chain
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.RouteSolversChain.RouteSolver.FreeTime">
+            <summary>
+            Max time of ride with one bike
+            </summary>
         </member>
         <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
             <summary>
@@ -637,21 +634,24 @@
             <param name="parameters"></param>
             <returns></returns>
         </member>
-        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.AStar(FreeturiloWebApi.DTO.StationDTO[],FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.Models.FreeturiloContext)">
-            <summary>
-            A* algorithm to establish stops of route
-            </summary>
-            <param name="mappedStations"></param>
-            <param name="start"></param>
-            <param name="stop"></param>
-            <param name="context"></param>
-            <returns></returns>
-        </member>
         <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.UseSolver(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
             <summary>
-            Methed to find stops when solver is selected
+            Return stops if solver used
             </summary>
             <param name="stops"></param>
+            <param name="context"></param>
+            <param name="mapper"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.FindPartOfPath(System.Collections.Generic.List{FreeturiloWebApi.DTO.LocationDTO},System.Int32,FreeturiloWebApi.DTO.StationDTO,FreeturiloWebApi.DTO.LocationDTO,FreeturiloWebApi.DTO.StationDTO[],FreeturiloWebApi.Models.FreeturiloContext,AutoMapper.IMapper)">
+            <summary>
+            Returns parf of path based on last station and max time
+            </summary>
+            <param name="finalStops"></param>
+            <param name="maxTime"></param>
+            <param name="lastStation"></param>
+            <param name="stop"></param>
+            <param name="stations"></param>
             <param name="context"></param>
             <param name="mapper"></param>
             <returns></returns>

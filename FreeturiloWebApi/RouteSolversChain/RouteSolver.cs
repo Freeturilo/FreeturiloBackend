@@ -17,15 +17,19 @@ namespace FreeturiloWebApi.RouteSolversChain
 {
     public abstract class RouteSolver : IRouteSolver
     {
-        public IRouteSolver Next { get; }
-        public const int freeTime = 20 * 60;
         /// <summary>
-        /// Returns edge weights besad on time and cost
+        /// Next element in chain
         /// </summary>
-        /// <param name="time"></param>
-        /// <param name="cost"></param>
-        /// <returns></returns>
-        protected virtual float EdgeWeight(int time, double cost) { return 0; }
+        public IRouteSolver Next { get; }
+        /// <summary>
+        /// Max time of ride with one bike
+        /// </summary>
+        public abstract int FreeTime { get; }
+        public RouteSolver(IRouteSolver next)
+        {
+            Next = next;
+        }
+
         /// <summary>
         /// Indicates if solver can be selected
         /// </summary>
@@ -33,63 +37,7 @@ namespace FreeturiloWebApi.RouteSolversChain
         /// <returns></returns>
         protected abstract bool SelectSolver(RouteParametersDTO parameters);
         /// <summary>
-        /// A* algorithm to establish stops of route
-        /// </summary>
-        /// <param name="mappedStations"></param>
-        /// <param name="start"></param>
-        /// <param name="stop"></param>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        private List<LocationDTO> AStar(StationDTO[] mappedStations, StationDTO start, StationDTO stop, FreeturiloContext context)
-        {          
-            var nodes = new List<FastNode>();
-            var startNode = new FastNode(start);
-            var endNode = new FastNode(stop);
-
-            foreach (var station in mappedStations) 
-                if(station != start && station != stop)
-                    nodes.Add(new FastNode(station));
-            nodes.Add(endNode);
-
-            var distances = new Dictionary<FastNode, (float distance, List<LocationDTO> path)>();
-            foreach (var node in nodes) distances.Add(node, (float.PositiveInfinity, new()));
-
-            distances.Add(startNode, (0, new()));
-
-            var queue = new FastPriorityQueue<FastNode>(2 + mappedStations.Length);
-            foreach (var node in nodes) queue.Enqueue(node, distances[node].distance);
-            queue.Enqueue(startNode, 0);
-
-            nodes.Add(startNode);
-
-            while (queue.Count > 0)
-            {
-                var u = queue.Dequeue();
-                if(u.Location == stop)
-                {
-                    return distances[u].path;
-                }
-
-                var edges = context.Routes.Where(r => r.StartId == u.Location.Id).ToArray();
-                foreach (var node in nodes)
-                {
-                    if (node == u) continue;
-                    var edge = edges.Where(e => e.StopId == node.Location.Id).FirstOrDefault();
-                    var newDistance = distances[u].distance + EdgeWeight(edge.Time, edge.Cost);
-                    if (distances[node].distance > newDistance)
-                    {
-                        var newPath = new List<LocationDTO>(distances[node].path);
-                        newPath.Add(u.Location);
-                        distances[node] = (newDistance, newPath);
-                        queue.UpdatePriority(node, newDistance);
-                    }
-                }
-            }
-
-            throw new Exception404();
-        }
-        /// <summary>
-        /// Methed to find stops when solver is selected
+        /// Return stops if solver used
         /// </summary>
         /// <param name="stops"></param>
         /// <param name="context"></param>
@@ -97,40 +45,122 @@ namespace FreeturiloWebApi.RouteSolversChain
         /// <returns></returns>
         protected virtual List<LocationDTO> UseSolver(List<LocationDTO> stops, FreeturiloContext context, IMapper mapper)
         {
-            var stations = context.Stations
-                .Where(s => s.State != 2 && s.AvailableBikes > 0)
-                .ToArray();
-            
+            var stations = context.Stations.Where(s => s.AvailableBikes > 0 && s.State != 2).ToArray();
             var mappedStations = mapper.Map<StationDTO[]>(stations);
+            var start = stops[0];
+            var closestStation = GraphMethodsProvider.GetClosestStations(mappedStations, start, 1)[0];
 
+            var finalStops = new List<LocationDTO>() { stops[0] };
 
-            var finalStops = new List<LocationDTO>();
-
-            var closestStations = new StationDTO[stops.Count];
-            for(int i =0; i< stops.Count;i++)
+            var i = 0;
+            LocationDTO currentStop = closestStation;
+            StationDTO lastStation = closestStation;
+            var maxTime = 0;
+            while (currentStop != stops[^1])
             {
-                closestStations[i] = GraphMethodsProvider.GetClosestStations(mappedStations, stops[i], 1)[0];
+                (maxTime, lastStation) = FindPartOfPath(finalStops, maxTime, lastStation, stops[i + 1], mappedStations, context, mapper);
+                i++;
+                currentStop = stops[i];
             }
-
-            for (int i = 0; i < stops.Count - 1; i++)
-            {
-                var routes = context.Routes.Where(r => r.StartId == closestStations[i].Id).ToArray();
-                var directRoute = routes.Where(r => r.StopId == closestStations[i + 1].Id).FirstOrDefault();
-                var directLocations = AStar(mappedStations.Where(s => {
-                    var route = routes.Where(r => r.StopId == s.Id).FirstOrDefault();
-                    return route != null && route.Time < directRoute.Time;
-                }).ToArray(), closestStations[i], closestStations[i + 1], context);
-                finalStops.Add(stops[i]);
-                finalStops.AddRange(directLocations);
-                finalStops.Add(closestStations[i + 1]);
-            }
-            finalStops.Add(stops[^1]);
 
             return finalStops;
         }
-        public RouteSolver(IRouteSolver next)
+        /// <summary>
+        /// Returns parf of path based on last station and max time
+        /// </summary>
+        /// <param name="finalStops"></param>
+        /// <param name="maxTime"></param>
+        /// <param name="lastStation"></param>
+        /// <param name="stop"></param>
+        /// <param name="stations"></param>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        /// <returns></returns>
+        private (int maxTime, StationDTO lastStation) FindPartOfPath(List<LocationDTO> finalStops, int maxTime, StationDTO lastStation, LocationDTO stop, StationDTO[] stations, FreeturiloContext context, IMapper mapper)
         {
-            Next = next;
+            var closestStation = GraphMethodsProvider.GetClosestStations(stations, stop, 1)[0];
+            var routesToStop = context.Routes.Where(r => r.StopId == closestStation.Id).ToArray();
+
+            StationDTO bestStation = null;
+            double bestCost = double.PositiveInfinity;
+            int bestTime = int.MaxValue;
+            Route[] routesFromLastStation = null;
+
+            if (maxTime > 0)
+            {
+                bestTime = routesToStop.Where(r => r.StartId == lastStation.Id).FirstOrDefault().Time;
+                routesFromLastStation = context.Routes.Where(r => r.StartId == lastStation.Id).ToArray();
+                foreach (var station in stations)
+                {
+                    if (station == lastStation) continue;
+                    int timeToStation = routesFromLastStation.Where(r => r.StopId == station.Id).FirstOrDefault().Time;
+
+                    if (timeToStation <= maxTime)
+                    {
+                        var newTimeToStop = 0;
+                        if (station != closestStation)
+                            newTimeToStop = routesToStop.Where(r => r.StartId == station.Id).FirstOrDefault().Time;
+                        if (newTimeToStop < bestTime)
+                        {
+                            bestTime = newTimeToStop;
+                            bestStation = station;
+                        }
+                    }
+                }
+            }
+
+            if (bestStation != null)
+            {
+                finalStops.Add(bestStation);
+                lastStation = bestStation;
+            }
+            else
+            {
+                finalStops.Add(lastStation);
+            }
+
+            bool firstTimeFlag = true;
+            while (lastStation != closestStation)
+            {
+                if (firstTimeFlag && bestStation == null && routesFromLastStation != null)
+                {
+                    firstTimeFlag = false;
+                }
+                else
+                {
+                    routesFromLastStation = context.Routes.Where(r => r.StartId == lastStation.Id).ToArray();
+                }
+
+                bestStation = null;
+                bestTime = int.MaxValue;
+                bestCost = double.PositiveInfinity;
+
+                foreach (var station in stations)
+                {
+                    if (station == lastStation) continue;
+                    double costToStation = routesFromLastStation.Where(r => r.StopId == station.Id).FirstOrDefault().Cost;
+                    if (costToStation <= bestCost)
+                    {
+                        int newTimeToStop = 0;
+                        if (station != closestStation)
+                            newTimeToStop = routesToStop.Where(r => r.StartId == station.Id).FirstOrDefault().Time;
+                        if (costToStation < bestCost || newTimeToStop < bestTime)
+                        {
+                            bestTime = newTimeToStop;
+                            bestCost = costToStation;
+                            bestStation = station;
+                        }
+                    }
+                }
+
+                finalStops.Add(bestStation);
+                lastStation = bestStation;
+            }
+
+            finalStops.Add(stop);
+            var lastPartOfPath = GoogleMapsAPIHandler.GetRoute(new List<LocationDTO>() { closestStation, stop });
+
+            return (FreeTime - 2 * lastPartOfPath.Time, closestStation);
         }
         /// <summary>
         /// Return stops of delegates call to another solver in chain

@@ -14,11 +14,15 @@ namespace FreeturiloWebApi.RouteSolversChain
     class OptimalRouteSolver: RouteSolver
     {
         public OptimalRouteSolver(IRouteSolver next) : base(next) { }
-        protected override float EdgeWeight(int time, double cost)
-        {
-            return (float)(time + cost * 20);
-        }
-
+        /// <summary>
+        /// Max time of ride with one bike
+        /// </summary>
+        public override int FreeTime => 60 * 60;
+        /// <summary>
+        /// Indicates if solver can be used
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
         protected override bool SelectSolver(RouteParametersDTO parameters)
         {
             return parameters.Criterion == 2;
