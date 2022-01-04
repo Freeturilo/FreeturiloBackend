@@ -78,7 +78,7 @@ namespace FreeturiloWebApi.Services
                 }
                 else
                 {
-                    route = GoogleMapsAPIHandler.GetRoute(new() { finalStops[i], finalStops[i + 1] }, "walking");
+                    route = GoogleMapsAPIHandler.GetRoute(new() { finalStops[i], finalStops[i + 1] });
                 }
                 route.Parameters = routeParameters;
                 routes[i] = route;
