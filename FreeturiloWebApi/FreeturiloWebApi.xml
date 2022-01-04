@@ -666,5 +666,152 @@
             <param name="mapper"></param>
             <returns></returns>
         </member>
+        <member name="M:FreeturiloWebApi.Services.AppService.SetReportTrashold(System.Int32,System.Int32)">
+            <summary>
+            Sets report treshold of admin
+            </summary>
+            <param name="id">Admin id</param>
+            <param name="number">Treshold value</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.AppService.SetStatus(System.Int32)">
+            <summary>
+            Sets state of application
+            </summary>
+            <param name="state">State to be set</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.AppService.Status">
+            <summary>
+            Returns curretnt state of application
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IAppService.SetStatus(System.Int32)">
+            <summary>
+            Sets specific status of application
+            </summary>
+            <param name="state"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IAppService.SetReportTrashold(System.Int32,System.Int32)">
+            <summary>
+            Set report treshold for admin
+            </summary>
+            <param name="id"></param>
+            <param name="number"></param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IAppService.Status">
+            <summary>
+            Returns current status of application
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IRouteService.GetRoute(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Return route based on route parameters
+            </summary>
+            <param name="routeParameters">Route parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IStationService.GetAllStations">
+            <summary>
+            Returns all stations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IStationService.UpdateAllStations(FreeturiloWebApi.DTO.StationDTO[])">
+            <summary>
+            Updates all stations
+            </summary>
+            <param name="newStations">Collection of stations to be updated</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IStationService.GetStation(System.Int32)">
+            <summary>
+            Returns station of given id
+            </summary>
+            <param name="stationId">Station id</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IStationService.ReportStation(System.Int32)">
+            <summary>
+            Reports station
+            </summary>
+            <param name="stationId">Station id</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IStationService.SetStationAsBroken(System.Int32)">
+            <summary>
+            Sets station as broken
+            </summary>
+            <param name="stationId">Station id</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IStationService.SetStationAsWorking(System.Int32)">
+            <summary>
+            Sets station as working
+            </summary>
+            <param name="stationId">Station id</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.IUserService.Authenticate(FreeturiloWebApi.DTO.AuthDTO)">
+            <summary>
+            Authenticates a user
+            </summary>
+            <param name="auth">Email and password</param>
+            <returns>Return JWT token</returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.RouteService.IsInWarsaw(FreeturiloWebApi.DTO.LocationDTO)">
+            <summary>
+            Checks if location is in Warsaw
+            </summary>
+            <param name="location"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.RouteService.GetRoute(FreeturiloWebApi.DTO.RouteParametersDTO)">
+            <summary>
+            Return route based on route parameters
+            </summary>
+            <param name="routeParameters">Route parameters</param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.StationService.GetAllStations">
+            <summary>
+            Returns all stations
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.StationService.GetStation(System.Int32)">
+            <summary>
+            Return station of given id
+            </summary>
+            <param name="stationId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.StationService.ReportStation(System.Int32)">
+            <summary>
+            Reports station
+            </summary>
+            <param name="stationId">Station id</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.StationService.SetStationAsBroken(System.Int32)">
+            <summary>
+            Sets station as broken
+            </summary>
+            <param name="stationId">Station id</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.StationService.SetStationAsWorking(System.Int32)">
+            <summary>
+            Sets station as working
+            </summary>
+            <param name="stationId">Station id</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.StationService.UpdateAllStations(FreeturiloWebApi.DTO.StationDTO[])">
+            <summary>
+            Updates all stations
+            </summary>
+            <param name="newStations">Collection of stations to be updated</param>
+        </member>
+        <member name="M:FreeturiloWebApi.Services.UserService.Authenticate(FreeturiloWebApi.DTO.AuthDTO)">
+            <summary>
+            Authenticates a user
+            </summary>
+            <param name="auth">Email and password</param>
+            <returns>Return JWT token</returns>
+        </member>
     </members>
 </doc>
