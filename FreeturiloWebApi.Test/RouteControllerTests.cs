@@ -283,7 +283,36 @@ namespace FreeturiloWebApi.Test
             };
             var r3 = routeMethods.GetRoute(serverPath, parameters);
             Assert.IsTrue(r3[0].Time <= 20 * 60);
+        }
 
+        [Test]
+        public void GetOptimalRoute()
+        {
+            var parameters = new RouteParametersDTO
+            {
+                Criterion = 1,
+                Start = new LocationDTO()
+                {
+                    Longitude = 20.97481,
+                    Latitude = 52.220877,
+                },
+                End = new LocationDTO()
+                {
+                    Longitude = 20.97485,
+                    Latitude = 52.220889,
+                }
+            };
+            var r1_fast = routeMethods.GetRoute(serverPath, parameters);
+            parameters.Criterion = 2;
+            var r1_opt = routeMethods.GetRoute(serverPath, parameters);
+            parameters.Criterion = 0;
+            var r1_cheap = routeMethods.GetRoute(serverPath, parameters);
+
+            var (t1_fast, t1_opt_, t1_cheap) = (r1_fast.Sum(e => e.Time), r1_opt.Sum(e => e.Time), r1_cheap.Sum(e => e.Time));
+            var (c1_fast, c1_opt_, c1_cheap) = (r1_fast.Sum(e => e.Cost), r1_opt.Sum(e => e.Cost), r1_cheap.Sum(e => e.Cost));
+
+            Assert.IsTrue(t1_fast <= t1_opt_ && t1_opt_ <= t1_cheap);
+            Assert.IsTrue(c1_fast >= c1_opt_ && c1_opt_ >= c1_cheap);
         }
     }
 }
