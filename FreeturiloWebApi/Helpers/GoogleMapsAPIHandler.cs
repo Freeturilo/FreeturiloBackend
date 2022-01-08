@@ -4,6 +4,7 @@ using FreeturiloWebApi.Exceptions;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace FreeturiloWebApi.Helpers
 {
     public static class GoogleMapsAPIHandler
     {
-        private const string token = "AIzaSyDMR-9Yg8xuxBDKCpa85Rw4qT30qV8EVkE";
+        private static string token = File.ReadAllText(".google-token");
         private const string serverPath = @"https://maps.googleapis.com/maps/api/directions/json?";
         /// <summary>
         /// Returns route from Google Maps

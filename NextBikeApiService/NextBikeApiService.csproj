@@ -16,6 +16,9 @@
     <ProjectReference Include="..\NextBikeDataParser\NextBikeDataParser.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update=".admin-passwd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Settings.job">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

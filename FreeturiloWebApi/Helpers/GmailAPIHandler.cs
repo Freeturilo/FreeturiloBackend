@@ -7,6 +7,7 @@ using System.Net.Mail;
 using FreeturiloWebApi.Models;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using System.IO;
 
 namespace FreeturiloWebApi.Helpers
 {
@@ -40,7 +41,7 @@ namespace FreeturiloWebApi.Helpers
         /// <param name="station"></param>
         public static void SendEmail(Administrator admin, Station station)
         {
-            var apiKey = "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";
+            var apiKey = File.ReadAllText(".sendgrid-token");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("freeturilo@gmail.com", "Freeturilo");
             var subject = GmailAPIHandler.subject;

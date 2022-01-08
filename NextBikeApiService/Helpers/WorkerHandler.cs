@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace NextBikeApiService.Helpers
         /// Email and password for admin to authenticate to update Freeturilo database
         /// </summary>
         private const string email = "freeturilo@gmail.com";
-        private const string password = "Freeturilo123PW!";
+        private string password = File.ReadAllText(".admin-passwd");
 
         public WorkerHandler(ILogger<WorkerHandler> logger, INextBikeApiHandler nbHandler, IUserMethods userMethods, IAppMethods appMethods, IStationMethods stationMethods)
         {

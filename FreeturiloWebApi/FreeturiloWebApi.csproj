@@ -29,6 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update=".google-token">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update=".sendgrid-token">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="FreeturiloWebApi.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
