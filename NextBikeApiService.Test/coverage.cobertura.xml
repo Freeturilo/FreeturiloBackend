@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="1" branch-rate="1" version="1.9" timestamp="1641673271" lines-covered="80" lines-valid="80" branches-covered="18" branches-valid="18">
+<coverage line-rate="1" branch-rate="1" version="1.9" timestamp="1641744434" lines-covered="80" lines-valid="80" branches-covered="18" branches-valid="18">
   <sources>
     <source>C:\Users\hiryleu\Pulpit\FreeturiloBackend\NextBikeApiService\Helpers\</source>
   </sources>
@@ -15,20 +15,20 @@
               <lines>
                 <line number="20" hits="5" branch="False" />
                 <line number="21" hits="5" branch="False" />
-                <line number="23" hits="655" branch="True" condition-coverage="100% (2/2)">
+                <line number="23" hits="623" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="258" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="24" hits="320" branch="False" />
-                <line number="25" hits="645" branch="False" />
-                <line number="26" hits="320" branch="True" condition-coverage="100% (2/2)">
+                <line number="24" hits="304" branch="False" />
+                <line number="25" hits="613" branch="False" />
+                <line number="26" hits="304" branch="True" condition-coverage="100% (2/2)">
                   <conditions>
                     <condition number="82" type="jump" coverage="100%" />
                   </conditions>
                 </line>
-                <line number="27" hits="314" branch="False" />
-                <line number="28" hits="314" branch="False" />
+                <line number="27" hits="298" branch="False" />
+                <line number="28" hits="298" branch="False" />
                 <line number="30" hits="6" branch="True" condition-coverage="100% (4/4)">
                   <conditions>
                     <condition number="131" type="jump" coverage="100%" />
@@ -49,20 +49,20 @@
           <lines>
             <line number="20" hits="5" branch="False" />
             <line number="21" hits="5" branch="False" />
-            <line number="23" hits="655" branch="True" condition-coverage="100% (2/2)">
+            <line number="23" hits="623" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="258" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="24" hits="320" branch="False" />
-            <line number="25" hits="645" branch="False" />
-            <line number="26" hits="320" branch="True" condition-coverage="100% (2/2)">
+            <line number="24" hits="304" branch="False" />
+            <line number="25" hits="613" branch="False" />
+            <line number="26" hits="304" branch="True" condition-coverage="100% (2/2)">
               <conditions>
                 <condition number="82" type="jump" coverage="100%" />
               </conditions>
             </line>
-            <line number="27" hits="314" branch="False" />
-            <line number="28" hits="314" branch="False" />
+            <line number="27" hits="298" branch="False" />
+            <line number="28" hits="298" branch="False" />
             <line number="30" hits="6" branch="True" condition-coverage="100% (4/4)">
               <conditions>
                 <condition number="131" type="jump" coverage="100%" />
