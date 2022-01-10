@@ -23,7 +23,7 @@ namespace FreeturiloWebApi.Controllers
         /// <summary>
         /// Returns all stations
         /// </summary>
-        /// <returns>Return all stations</returns>
+        /// <returns>Returns all stations</returns>
         /// <response code="200">Success</response>
         /// <response code="503">Service unavailable</response>
         [HttpGet]
@@ -97,7 +97,7 @@ namespace FreeturiloWebApi.Controllers
         /// Sets station of given id as working
         /// </summary>
         /// <param name="id">Station id</param>
-        /// <returns>Set station as working</returns>
+        /// <returns>Sets station as working</returns>
         /// <response code="200">Success</response>
         /// <response code="401">Unauthorized</response>
         /// <response code="404">Not found</response>

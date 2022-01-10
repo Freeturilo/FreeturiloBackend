@@ -95,12 +95,12 @@ namespace FreeturiloWebApi.HttpMethods
         }
 
         /// <summary>
-        /// Sets report treshold of admin
+        /// Sets report threshold of admin
         /// </summary>
         /// <param name="serverPath"></param>
         /// <param name="token"></param>
         /// <param name="number"></param>
-        public void SetReportTrashold(string serverPath, string token, int number)
+        public void SetReportThreshold(string serverPath, string token, int number)
         {
             var client = new RestClient(serverPath + $"app/notify/{number}")
             {
@@ -114,12 +114,12 @@ namespace FreeturiloWebApi.HttpMethods
         }
 
         /// <summary>
-        /// Return reporrt treshold of admin
+        /// Return report threshold of admin
         /// </summary>
         /// <param name="serverPath"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        public int GetReportTrashold(string serverPath, string token)
+        public int GetReportThreshold(string serverPath, string token)
         {
             var client = new RestClient(serverPath + $"app/notify")
             {

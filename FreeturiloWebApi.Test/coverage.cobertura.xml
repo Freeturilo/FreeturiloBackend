@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<coverage line-rate="0.9990000000000001" branch-rate="0.9954000000000001" version="1.9" timestamp="1641744411" lines-covered="1020" lines-valid="1021" branches-covered="217" branches-valid="218">
+<coverage line-rate="0.9990000000000001" branch-rate="0.9954000000000001" version="1.9" timestamp="1641777855" lines-covered="1020" lines-valid="1021" branches-covered="217" branches-valid="218">
   <sources>
     <source>C:\Users\hiryleu\Pulpit\FreeturiloBackend\FreeturiloWebApi\</source>
   </sources>
@@ -212,7 +212,7 @@
         </class>
         <class name="FreeturiloWebApi.Services.AppService" filename="Services\AppService.cs" line-rate="1" branch-rate="0.75" complexity="7">
           <methods>
-            <method name="SetReportTrashold" signature="(System.Int32,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="SetReportThreshold" signature="(System.Int32,System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="30" hits="3" branch="False" />
                 <line number="31" hits="3" branch="False" />
@@ -1881,7 +1881,7 @@
                 <line number="95" hits="2" branch="False" />
               </lines>
             </method>
-            <method name="SetReportTrashold" signature="(System.String,System.String,System.Int32)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="SetReportThreshold" signature="(System.String,System.String,System.Int32)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
                 <line number="104" hits="4" branch="False" />
                 <line number="105" hits="4" branch="False" />
@@ -1900,7 +1900,7 @@
                 <line number="114" hits="3" branch="False" />
               </lines>
             </method>
-            <method name="GetReportTrashold" signature="(System.String,System.String)" line-rate="1" branch-rate="1" complexity="2">
+            <method name="GetReportThreshold" signature="(System.String,System.String)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
                 <line number="123" hits="3" branch="False" />
                 <line number="124" hits="3" branch="False" />
@@ -3624,7 +3624,7 @@
                 <line number="49" hits="15" branch="False" />
               </lines>
             </method>
-            <method name="SetReportTrashold" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="1">
+            <method name="SetReportThreshold" signature="(System.Int32)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="61" hits="3" branch="False" />
                 <line number="62" hits="3" branch="False" />
@@ -3632,7 +3632,7 @@
                 <line number="64" hits="3" branch="False" />
               </lines>
             </method>
-            <method name="GetReportTrashold" signature="()" line-rate="1" branch-rate="1" complexity="1">
+            <method name="GetReportThreshold" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
                 <line number="74" hits="2" branch="False" />
                 <line number="75" hits="2" branch="False" />

@@ -52,12 +52,12 @@ namespace NextBikeApiService.Test
                 state = 1;
             }
 
-            public void GetReportTrashold(string serverPath, string token)
+            public void GetReportThreshold(string serverPath, string token)
             {
                 throw new NotImplementedException();
             }
 
-            public void SetReportTrashold(string serverPath, string token, int number)
+            public void SetReportThreshold(string serverPath, string token, int number)
             {
                 throw new NotImplementedException();
             }
@@ -77,7 +77,7 @@ namespace NextBikeApiService.Test
                 state = 2;
             }
 
-            int IAppMethods.GetReportTrashold(string serverPath, string token)
+            int IAppMethods.GetReportThreshold(string serverPath, string token)
             {
                 throw new NotImplementedException();
             }

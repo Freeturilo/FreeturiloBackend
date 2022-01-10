@@ -15,11 +15,11 @@ namespace FreeturiloWebApi.Services
         /// <param name="state"></param>
         void SetStatus(int state);
         /// <summary>
-        /// Set report treshold for admin
+        /// Set report threshold for admin
         /// </summary>
         /// <param name="id"></param>
         /// <param name="number"></param>
-        void SetReportTrashold(int id, int number);
+        void SetReportThreshold(int id, int number);
         /// <summary>
         /// Returns current status of application
         /// </summary>

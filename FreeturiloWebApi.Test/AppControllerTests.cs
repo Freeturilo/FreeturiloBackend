@@ -122,36 +122,36 @@ namespace FreeturiloWebApi.Test
             appMethods.Start(serverPath, token);
         }
         [Test]
-        public void SetNotifyTrashold()
+        public void SetNotifyThreshold()
         {
             var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
-            appMethods.SetReportTrashold(serverPath, token, 7);
-            appMethods.SetReportTrashold(serverPath, token, 3);
+            appMethods.SetReportThreshold(serverPath, token, 7);
+            appMethods.SetReportThreshold(serverPath, token, 3);
 
             stationMethods.ReportStation(serverPath, 1);
             stationMethods.ReportStation(serverPath, 1);
 
-            appMethods.SetReportTrashold(serverPath, token, 1);
-            var trashold = appMethods.GetReportTrashold(serverPath, token);
+            appMethods.SetReportThreshold(serverPath, token, 1);
+            var threshold = appMethods.GetReportThreshold(serverPath, token);
 
-            Assert.AreEqual(trashold, 1);
+            Assert.AreEqual(threshold, 1);
 
 
             Assert.Catch<Exception401>(() =>
             {
-                appMethods.SetReportTrashold(serverPath, "", 20);
+                appMethods.SetReportThreshold(serverPath, "", 20);
             });
         }
         [Test]
-        public void GetNotifyTrashold()
+        public void GetNotifyThreshold()
         {
             var token = userMethods.Authenticate(serverPath, new AuthDTO { Email = email, Password = password });
-            var trashold = appMethods.GetReportTrashold(serverPath, token);
-            Assert.AreEqual(1, trashold);
+            var threshold = appMethods.GetReportThreshold(serverPath, token);
+            Assert.AreEqual(1, threshold);
 
             Assert.Catch<Exception401>(() =>
             {
-                appMethods.GetReportTrashold(serverPath, "");
+                appMethods.GetReportThreshold(serverPath, "");
             });
         }
     }

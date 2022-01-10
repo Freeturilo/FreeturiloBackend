@@ -18,7 +18,7 @@
         </member>
         <member name="M:FreeturiloWebApi.Controllers.AppController.Status">
             <summary>
-            Return current state of apllication
+            Returns current state of apllication
             </summary>
             <returns>Returns current state of application</returns>
             <response code="200">Success</response>
@@ -29,26 +29,26 @@
             Sets state of applciation
             </summary>
             <param name="state">State to be set</param>
-            <returns>Returns information if state has been properly</returns>
+            <returns>Returns information if state has been set properly</returns>
             <response code="200">Success</response>
             <response code="400">Bad Request</response>
             <response code="401">Unauthorized</response>
         </member>
-        <member name="M:FreeturiloWebApi.Controllers.AppController.SetReportTrashold(System.Int32)">
+        <member name="M:FreeturiloWebApi.Controllers.AppController.SetReportThreshold(System.Int32)">
             <summary>
-            Sets admin's treshold
+            Sets threshold of administrator
             </summary>
-            <param name="number">Treshold to be set</param>
-            <returns>Returns information if treshold has been set properly</returns> 
+            <param name="number">Threshold to be set</param>
+            <returns>Returns information if threshold has been set properly</returns> 
             <response code="200">Success</response>
             <response code="400">Bad Request</response>
             <response code="401">Unauthorized</response>
         </member>
-        <member name="M:FreeturiloWebApi.Controllers.AppController.GetReportTrashold">
+        <member name="M:FreeturiloWebApi.Controllers.AppController.GetReportThreshold">
             <summary>
-            Returns admin's treshold
+            Returns threshold of administartor
             </summary>
-            <returns>Return treshold of admin</returns>
+            <returns>Return threshold of admin</returns>
             <response code="200">Success</response>
             <response code="401">Unauthorized</response>
         </member>
@@ -72,7 +72,7 @@
             <summary>
             Returns all stations
             </summary>
-            <returns>Return all stations</returns>
+            <returns>Returns all stations</returns>
             <response code="200">Success</response>
             <response code="503">Service unavailable</response>
         </member>
@@ -121,7 +121,7 @@
             Sets station of given id as working
             </summary>
             <param name="id">Station id</param>
-            <returns>Set station as working</returns>
+            <returns>Sets station as working</returns>
             <response code="200">Success</response>
             <response code="401">Unauthorized</response>
             <response code="404">Not found</response>
@@ -336,17 +336,17 @@
             <param name="serverPath"></param>
             <param name="token"></param>
         </member>
-        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.SetReportTrashold(System.String,System.String,System.Int32)">
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.SetReportThreshold(System.String,System.String,System.Int32)">
             <summary>
-            Sets report treshold of admin
+            Sets report threshold of admin
             </summary>
             <param name="serverPath"></param>
             <param name="token"></param>
             <param name="number"></param>
         </member>
-        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.GetReportTrashold(System.String,System.String)">
+        <member name="M:FreeturiloWebApi.HttpMethods.AppMethods.GetReportThreshold(System.String,System.String)">
             <summary>
-            Return reporrt treshold of admin
+            Return report threshold of admin
             </summary>
             <param name="serverPath"></param>
             <param name="token"></param>
@@ -367,9 +367,9 @@
             <param name="token"></param>
             <returns></returns>
         </member>
-        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.GetReportTrashold(System.String,System.String)">
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.GetReportThreshold(System.String,System.String)">
             <summary>
-            Returns report treshold of admin
+            Returns report threshold of admin
             </summary>
             <param name="serverPath"></param>
             <param name="token"></param>
@@ -389,9 +389,9 @@
             <param name="serverPath"></param>
             <param name="token"></param>
         </member>
-        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.SetReportTrashold(System.String,System.String,System.Int32)">
+        <member name="M:FreeturiloWebApi.HttpMethods.IAppMethods.SetReportThreshold(System.String,System.String,System.Int32)">
             <summary>
-            Sets report treshold of admin
+            Sets report threshold of admin
             </summary>
             <param name="serverPath"></param>
             <param name="token"></param>
@@ -666,9 +666,9 @@
             <param name="mapper"></param>
             <returns></returns>
         </member>
-        <member name="M:FreeturiloWebApi.Services.AppService.SetReportTrashold(System.Int32,System.Int32)">
+        <member name="M:FreeturiloWebApi.Services.AppService.SetReportThreshold(System.Int32,System.Int32)">
             <summary>
-            Sets report treshold of admin
+            Sets report threshold of admin
             </summary>
             <param name="id">Admin id</param>
             <param name="number">Treshold value</param>
@@ -691,9 +691,9 @@
             </summary>
             <param name="state"></param>
         </member>
-        <member name="M:FreeturiloWebApi.Services.IAppService.SetReportTrashold(System.Int32,System.Int32)">
+        <member name="M:FreeturiloWebApi.Services.IAppService.SetReportThreshold(System.Int32,System.Int32)">
             <summary>
-            Set report treshold for admin
+            Set report threshold for admin
             </summary>
             <param name="id"></param>
             <param name="number"></param>

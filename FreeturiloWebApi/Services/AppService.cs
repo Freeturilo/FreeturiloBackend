@@ -22,11 +22,11 @@ namespace FreeturiloWebApi.Services
             _context = context;
         }
         /// <summary>
-        /// Sets report treshold of admin
+        /// Sets report threshold of admin
         /// </summary>
         /// <param name="id">Admin id</param>
         /// <param name="number">Treshold value</param>
-        public void SetReportTrashold(int id, int number)
+        public void SetReportThreshold(int id, int number)
         {
             var admin = _context.Administrators.Where(a => a.Id == id).FirstOrDefault();
             admin.NotifyThreshold = number;

@@ -26,12 +26,12 @@ namespace FreeturiloWebApi.HttpMethods
         /// <returns></returns>
         int Status(string serverPath, string token);
         /// <summary>
-        /// Returns report treshold of admin
+        /// Returns report threshold of admin
         /// </summary>
         /// <param name="serverPath"></param>
         /// <param name="token"></param>
         /// <returns></returns>
-        int GetReportTrashold(string serverPath, string token);
+        int GetReportThreshold(string serverPath, string token);
         /// <summary>
         /// Stops the applciation
         /// </summary>
@@ -45,11 +45,11 @@ namespace FreeturiloWebApi.HttpMethods
         /// <param name="token"></param>
         void Demo(string serverPath, string token);
         /// <summary>
-        /// Sets report treshold of admin
+        /// Sets report threshold of admin
         /// </summary>
         /// <param name="serverPath"></param>
         /// <param name="token"></param>
         /// <param name="number"></param>
-        void SetReportTrashold(string serverPath, string token, int number);
+        void SetReportThreshold(string serverPath, string token, int number);
     }
 }

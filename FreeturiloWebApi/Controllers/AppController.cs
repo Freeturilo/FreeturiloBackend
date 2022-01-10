@@ -20,7 +20,7 @@ namespace FreeturiloWebApi.Controllers
             _service = service;
         }
         /// <summary>
-        /// Return current state of apllication
+        /// Returns current state of apllication
         /// </summary>
         /// <returns>Returns current state of application</returns>
         /// <response code="200">Success</response>
@@ -36,7 +36,7 @@ namespace FreeturiloWebApi.Controllers
         /// Sets state of applciation
         /// </summary>
         /// <param name="state">State to be set</param>
-        /// <returns>Returns information if state has been properly</returns>
+        /// <returns>Returns information if state has been set properly</returns>
         /// <response code="200">Success</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
@@ -48,29 +48,29 @@ namespace FreeturiloWebApi.Controllers
             return Ok();
         }
         /// <summary>
-        /// Sets admin's treshold
+        /// Sets threshold of administrator
         /// </summary>
-        /// <param name="number">Treshold to be set</param>
-        /// <returns>Returns information if treshold has been set properly</returns> 
+        /// <param name="number">Threshold to be set</param>
+        /// <returns>Returns information if threshold has been set properly</returns> 
         /// <response code="200">Success</response>
         /// <response code="400">Bad Request</response>
         /// <response code="401">Unauthorized</response>
         [Auth]
         [HttpPost("notify/{number}")]
-        public ActionResult SetReportTrashold([FromRoute] int number)
+        public ActionResult SetReportThreshold([FromRoute] int number)
         {
-            _service.SetReportTrashold(Administrator.Id, number);
+            _service.SetReportThreshold(Administrator.Id, number);
             return Ok();
         }
         /// <summary>
-        /// Returns admin's treshold
+        /// Returns threshold of administartor
         /// </summary>
-        /// <returns>Return treshold of admin</returns>
+        /// <returns>Return threshold of admin</returns>
         /// <response code="200">Success</response>
         /// <response code="401">Unauthorized</response>
         [Auth]
         [HttpGet("notify")]
-        public ActionResult<int> GetReportTrashold()
+        public ActionResult<int> GetReportThreshold()
         {
             return Ok(Administrator.NotifyThreshold);
         }
