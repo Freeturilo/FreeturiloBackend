@@ -37,7 +37,7 @@ namespace FreeturiloWebApi
         private static void Seed(FreeturiloContext _context)
         {
             _context.Administrators.AddRange(
-                 new Administrator() { Id = 1, Name = "Miko³aj", Surname = "Ryll", Email = "mikolajryll@gmail.com", NotifyThreshold = 1, PasswordHash = "5f4dcc3b5aa765d61d8327deb882cf99" }
+                 new Administrator() { Id = 1, Name = "Miko³aj", Surname = "Ryll", Email = "mikolajryll@gmail.com", NotifyThreshold = 1, PasswordHash = "6b3a55e0261b0304143f805a24924d0c1c44524821305f31d9277843b8a10f4e" }
                  );
 
             _context.Stations.AddRange(
