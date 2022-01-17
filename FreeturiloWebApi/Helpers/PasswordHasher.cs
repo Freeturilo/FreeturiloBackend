@@ -16,9 +16,9 @@ namespace FreeturiloWebApi.Helpers
         /// <returns></returns>
         public static string Hash(string password)
         {
-            using MD5 md5 = MD5.Create();
+            using SHA256 sha = SHA256.Create();
             byte[] inputBytes = Encoding.ASCII.GetBytes(password);
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
+            byte[] hashBytes = sha.ComputeHash(inputBytes);
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hashBytes.Length; i++)
