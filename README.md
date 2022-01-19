@@ -30,6 +30,8 @@ After tests are passed, reports are generated (`*.Test\coverage\index.html`). Yo
 
     - `.google-token` containing a key to the Google Maps API
     - `.sendgrid-token` containing a token to the SendGrid service
+
+    You also need to fill in the connection string to your database in `FreeturiloWebApi\appsettings.json`.
     
  - Usage
 
