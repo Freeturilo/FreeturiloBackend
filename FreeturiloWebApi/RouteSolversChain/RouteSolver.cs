@@ -25,6 +25,10 @@ namespace FreeturiloWebApi.RouteSolversChain
         /// Max time of ride with one bike
         /// </summary>
         public abstract int FreeTime { get; }
+        /// <summary>
+        /// Max cost of ride with one bike
+        /// </summary>
+        public abstract int FreeCost { get; }
         public RouteSolver(IRouteSolver next)
         {
             Next = next;
@@ -79,9 +83,18 @@ namespace FreeturiloWebApi.RouteSolversChain
         private (int maxTime, StationDTO lastStation) FindPartOfPath(List<LocationDTO> finalStops, int maxTime, StationDTO lastStation, LocationDTO stop, StationDTO[] stations, FreeturiloContext context, IMapper mapper)
         {
             var closestStation = GraphMethodsProvider.GetClosestStations(stations, stop, 1)[0];
+            if(closestStation == lastStation)
+            {
+                finalStops.Add(stop);
+                var toStopPath = GoogleMapsAPIHandler.GetRoute(new List<LocationDTO>() { closestStation, stop });
+
+                return (FreeTime - 2 * toStopPath.Time, closestStation);
+            }
+
             var routesToStop = context.Routes.Where(r => r.StopId == closestStation.Id).ToArray();
 
             StationDTO bestStation = null;
+            StationDTO betterStation = null;
             double bestCost = double.PositiveInfinity;
             int bestTime = int.MaxValue;
             Route[] routesFromLastStation = null;
@@ -132,6 +145,7 @@ namespace FreeturiloWebApi.RouteSolversChain
                 }
 
                 bestStation = null;
+                betterStation = null;
                 bestTime = int.MaxValue;
                 bestCost = double.PositiveInfinity;
 
@@ -139,12 +153,12 @@ namespace FreeturiloWebApi.RouteSolversChain
                 {
                     if (station == lastStation) continue;
                     double costToStation = routesFromLastStation.Where(r => r.StopId == station.Id).FirstOrDefault().Cost;
-                    if (costToStation <= bestCost)
+                    if (costToStation <= bestCost || costToStation <= FreeCost)
                     {
                         int newTimeToStop = 0;
                         if (station != closestStation)
                             newTimeToStop = routesToStop.Where(r => r.StartId == station.Id).FirstOrDefault().Time;
-                        if (costToStation < bestCost || newTimeToStop < bestTime)
+                        if ((FreeCost < bestCost && costToStation < bestCost) || (FreeCost >= bestCost && costToStation <= FreeCost && newTimeToStop < bestTime))
                         {
                             bestTime = newTimeToStop;
                             bestCost = costToStation;

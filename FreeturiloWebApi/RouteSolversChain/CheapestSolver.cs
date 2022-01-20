@@ -19,6 +19,11 @@ namespace FreeturiloWebApi.RouteSolversChain
         /// </summary>
         public override int FreeTime => 20 * 60;
         /// <summary>
+        /// Max cost of ride with one bike
+        /// </summary>
+        public override int FreeCost => 0;
+
+        /// <summary>
         /// Indicates if solver can be used
         /// </summary>
         /// <param name="parameters"></param>

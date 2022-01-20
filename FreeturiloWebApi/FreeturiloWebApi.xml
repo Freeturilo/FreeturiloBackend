@@ -549,6 +549,11 @@
             Max time of ride with one bike
             </summary>
         </member>
+        <member name="P:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.FreeCost">
+            <summary>
+            Max cost of ride with one bike
+            </summary>
+        </member>
         <member name="M:FreeturiloWebApi.RouteSolversChain.CheapestRouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
             <summary>
             Indicates if solver can be used
@@ -610,6 +615,11 @@
             Max time of ride with one bike
             </summary>
         </member>
+        <member name="P:FreeturiloWebApi.RouteSolversChain.OptimalRouteSolver.FreeCost">
+            <summary>
+            Max cost of ride with one bike
+            </summary>
+        </member>
         <member name="M:FreeturiloWebApi.RouteSolversChain.OptimalRouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">
             <summary>
             Indicates if solver can be used
@@ -625,6 +635,11 @@
         <member name="P:FreeturiloWebApi.RouteSolversChain.RouteSolver.FreeTime">
             <summary>
             Max time of ride with one bike
+            </summary>
+        </member>
+        <member name="P:FreeturiloWebApi.RouteSolversChain.RouteSolver.FreeCost">
+            <summary>
+            Max cost of ride with one bike
             </summary>
         </member>
         <member name="M:FreeturiloWebApi.RouteSolversChain.RouteSolver.SelectSolver(FreeturiloWebApi.DTO.RouteParametersDTO)">

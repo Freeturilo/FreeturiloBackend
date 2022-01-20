@@ -14,6 +14,9 @@ namespace FreeturiloWebApi.RouteSolversChain
     class FastestRouteSolver: RouteSolver
     {
         public override int FreeTime => int.MaxValue;
+
+        public override int FreeCost => int.MaxValue;
+
         public FastestRouteSolver(IRouteSolver next) : base(next) { }
         /// <summary>
         /// Indicates if solver can be used

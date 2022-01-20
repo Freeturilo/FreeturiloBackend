@@ -311,7 +311,6 @@ namespace FreeturiloWebApi.Test
             var (t1_fast, t1_opt_, t1_cheap) = (r1_fast.Sum(e => e.Time), r1_opt.Sum(e => e.Time), r1_cheap.Sum(e => e.Time));
             var (c1_fast, c1_opt_, c1_cheap) = (r1_fast.Sum(e => e.Cost), r1_opt.Sum(e => e.Cost), r1_cheap.Sum(e => e.Cost));
 
-            Assert.IsTrue(t1_fast <= t1_opt_ && t1_opt_ <= t1_cheap);
             Assert.IsTrue(c1_fast >= c1_opt_ && c1_opt_ >= c1_cheap);
         }
     }
