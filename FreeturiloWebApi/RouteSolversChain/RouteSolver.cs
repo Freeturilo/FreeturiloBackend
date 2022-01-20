@@ -55,7 +55,7 @@ namespace FreeturiloWebApi.RouteSolversChain
             var i = 0;
             LocationDTO currentStop = closestStation;
             StationDTO lastStation = closestStation;
-            var maxTime = 0;
+            var maxTime = FreeTime;
             while (currentStop != stops[^1])
             {
                 (maxTime, lastStation) = FindPartOfPath(finalStops, maxTime, lastStation, stops[i + 1], mappedStations, context, mapper);
