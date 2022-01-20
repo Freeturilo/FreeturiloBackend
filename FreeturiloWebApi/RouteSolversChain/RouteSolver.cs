@@ -59,7 +59,7 @@ namespace FreeturiloWebApi.RouteSolversChain
             var i = 0;
             LocationDTO currentStop = closestStation;
             StationDTO lastStation = closestStation;
-            var maxTime = FreeTime;
+            var maxTime = 0;
             while (currentStop != stops[^1])
             {
                 (maxTime, lastStation) = FindPartOfPath(finalStops, maxTime, lastStation, stops[i + 1], mappedStations, context, mapper);
@@ -94,7 +94,6 @@ namespace FreeturiloWebApi.RouteSolversChain
             var routesToStop = context.Routes.Where(r => r.StopId == closestStation.Id).ToArray();
 
             StationDTO bestStation = null;
-            StationDTO betterStation = null;
             double bestCost = double.PositiveInfinity;
             int bestTime = int.MaxValue;
             Route[] routesFromLastStation = null;
@@ -145,7 +144,6 @@ namespace FreeturiloWebApi.RouteSolversChain
                 }
 
                 bestStation = null;
-                betterStation = null;
                 bestTime = int.MaxValue;
                 bestCost = double.PositiveInfinity;
 
