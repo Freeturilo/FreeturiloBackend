@@ -96,7 +96,7 @@ namespace FreeturiloWebApi.Helpers
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        private static double CalculateCost(int time)
+        public static double CalculateCost(int time)
         {
             var cost = 0.0;
             int minutes = (int)Math.Ceiling(time / 60.0);
