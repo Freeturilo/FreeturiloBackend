@@ -94,7 +94,8 @@ namespace FreeturiloWebApi.Services
                 }
 
                 var cost = GoogleMapsAPIHandler.CalculateCost(totalTime);
-                routes[^1].Cost = cost;
+                if(routes.Length > 1)
+                    routes[^2].Cost = cost;
             }
 
             return routes;
