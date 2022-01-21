@@ -84,18 +84,19 @@ namespace FreeturiloWebApi.Services
                 routes[i] = route;
             });
 
-            if(routeParameters.Criterion == 1)
+            var totalTime = 0;
+            for (int i=1; i<routes.Length-1; i++)
             {
-                var totalTime = 0;
-                for(int i=1;i<routes.Length-1;i++)
+                totalTime += routes[i].Time;
+                if(finalStops[i+1] is StationDTO)
                 {
-                    totalTime += routes[i].Time;
+                    routes[i].Cost = GoogleMapsAPIHandler.CalculateCost(totalTime);
+                    totalTime = 0;
+                }
+                else
+                {
                     routes[i].Cost = 0;
                 }
-
-                var cost = GoogleMapsAPIHandler.CalculateCost(totalTime);
-                if(routes.Length > 1)
-                    routes[^2].Cost = cost;
             }
 
             return routes;
